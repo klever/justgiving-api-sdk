@@ -2,22 +2,6 @@
 
 namespace Klever\JustGivingApiSdk;
 
-//
-//include_once 'ApiClients/PageApi.php';
-//include_once 'ApiClients/AccountApi.php';
-//include_once 'ApiClients/CharityApi.php';
-//include_once 'ApiClients/DonationApi.php';
-//include_once 'ApiClients/SearchApi.php';
-//include_once 'ApiClients/EventApi.php';
-//include_once 'ApiClients/TeamApi.php';
-//include_once 'ApiClients/CountriesApi.php';
-//include_once 'ApiClients/CurrencyApi.php';
-//include_once 'ApiClients/OneSearchApi.php';
-//include_once 'ApiClients/ProjectApi.php';
-//include_once 'ApiClients/SmsApi.php';
-//include_once 'ApiClients/LeaderboardApi.php';
-//include_once 'ApiClients/CampaignApi.php';
-
 use Klever\JustGivingApiSdk\Clients\AccountApi;
 use Klever\JustGivingApiSdk\Clients\CampaignApi;
 use Klever\JustGivingApiSdk\Clients\CharityApi;

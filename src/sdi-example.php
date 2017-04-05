@@ -6,6 +6,8 @@
 
 <?php
 
+use Klever\JustGivingApiSdk\JustGivingClient;
+
 if (isset($_GET['donationId'])) {
     $donationId = $_GET['donationId'];
 }

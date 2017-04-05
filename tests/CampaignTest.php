@@ -7,7 +7,7 @@ class CampaignTest extends Base
     public function testRetrieveV2_WhenSuppliedCharityNameAndCampaignName_ReturnsCampaignDetails()
     {
         //arrange
-        $charityName = "j_g_demo";
+        $charityName = "jgdemo";
         $campaignName = "test_sandbox_campaign";
         $expectedCampaignPageName = "The name of my campaign";
 
