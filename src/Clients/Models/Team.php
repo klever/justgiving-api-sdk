@@ -13,11 +13,6 @@ class Team
     public $targetType;
     public $teamType;
     public $target;
-    public $teamMembers;
-
-    public function __construct()
-    {
-        $this->teamMembers = array();
-    }
+    public $teamMembers = [];
 }
 

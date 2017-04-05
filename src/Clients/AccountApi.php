@@ -1,6 +1,7 @@
 <?php namespace Klever\JustGivingApiSdk\Clients;
 
 use Klever\JustGivingApiSdk\Clients\Http\CurlWrapper;
+use Klever\JustGivingApiSdk\Clients\Http\HTTPResponse;
 
 include_once 'ClientBase.php';
 include_once 'Http/CurlWrapper.php';

@@ -5,6 +5,7 @@
 //include_once 'Model/RegisterPageRequest.php';
 //include_once 'Model/StoryUpdateRequest.php';
 
+use Klever\JustGivingApiSdk\Clients\Http\HTTPResponse;
 use Klever\JustGivingApiSdk\Clients\Models\StoryUpdateRequest;
 
 class PageApi extends ClientBase

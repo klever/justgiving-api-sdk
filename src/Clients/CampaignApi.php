@@ -1,5 +1,7 @@
 <?php namespace Klever\JustGivingApiSdk\Clients;
 
+use Klever\JustGivingApiSdk\Clients\Http\HTTPResponse;
+
 class CampaignApi extends ClientBase
 {
 

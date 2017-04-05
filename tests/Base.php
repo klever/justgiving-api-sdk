@@ -2,15 +2,6 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
-//    include_once "../src/JustGivingClient.php";
-//    include_once "../src/ApiClients/Model/AddPostToPageUpdateRequest.php";
-//    include_once '../src/ApiClients/Model/CreateAccountRequest.php';
-//    include_once '../src/ApiClients/Model/ValidateAccountRequest.php';
-//    include_once '../src/ApiClients/Model/ChangePasswordRequest.php';
-//    include_once '../src/ApiClients/Model/RateContentRequest.php';
-//    include_once '../src/ApiClients/Model/AddInterestRequest.php';
-
-
 use Klever\JustGivingApiSdk\JustGivingClient;
 
 class Base extends \PHPUnit\Framework\TestCase

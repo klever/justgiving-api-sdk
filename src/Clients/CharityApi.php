@@ -44,7 +44,7 @@ class CharityApi extends ClientBase
         return json_decode($json);
     }
 
-    public function DeleteFundraisingPageAttribution($fundraisingPageAttributionRequest)
+    public function DeleteFundraisingPageAttribution($deleteFundraisingPageAttributionRequest)
     {
         $request = $deleteFundraisingPageAttributionRequest;
         $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
