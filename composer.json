@@ -1,0 +1,12 @@
+{
+    "name": "klever/justgiving-api-sdk",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Robin D'Arcy",
+            "email": "robin@klever.co.uk"
+        }
+    ],
+    "require": {}
+}
