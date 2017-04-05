@@ -7,11 +7,9 @@ include_once 'Http/CurlWrapper.php';
 
 class DonationApi extends ClientBase
 {
-
-
     public function Retrieve($donationId)
     {
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/donation/" . $donationId;
+        $locationFormat = $this->Parent->baseUrl() . "donation/" . $donationId;
         $url = $this->BuildUrl($locationFormat);
         $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 
@@ -21,7 +19,7 @@ class DonationApi extends ClientBase
     public function RetrieveV2($donationId)
     {
         $httpResponse = new HTTPResponse();
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/donation/" . $donationId;
+        $locationFormat = $this->Parent->baseUrl() . "donation/" . $donationId;
         $url = $this->BuildUrl($locationFormat);
         $result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
@@ -32,7 +30,7 @@ class DonationApi extends ClientBase
 
     public function RetrieveStatus($donationId)
     {
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/donation/" . $donationId . "/status";
+        $locationFormat = $this->Parent->baseUrl() . "donation/" . $donationId . "/status";
         $url = $this->BuildUrl($locationFormat);
         $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 
@@ -41,7 +39,7 @@ class DonationApi extends ClientBase
 
     public function RetrieveDetails($thirdPartReference)
     {
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/donation/ref/" . $thirdPartReference;
+        $locationFormat = $this->Parent->baseUrl() . "donation/ref/" . $thirdPartReference;
         $url = $this->BuildUrl($locationFormat);
         $json = $this->curlWrapper->Get($url);
 

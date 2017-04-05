@@ -19,7 +19,7 @@ class LeaderboardApi extends ClientBase
     public function GetCharityLeaderboard($charityId)
     {
         $httpResponse = new HTTPResponse();
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/" . $charityId . "/leaderboard";
+        $locationFormat = $this->Parent->baseUrl() . "charity/" . $charityId . "/leaderboard";
         $url = $this->BuildUrl($locationFormat);
         $result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
@@ -31,7 +31,7 @@ class LeaderboardApi extends ClientBase
     public function GetEventLeaderboard($eventId)
     {
         $httpResponse = new HTTPResponse();
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/event/" . $eventId . "/leaderboard";
+        $locationFormat = $this->Parent->baseUrl() . "event/" . $eventId . "/leaderboard";
         $url = $this->BuildUrl($locationFormat);
         $result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);

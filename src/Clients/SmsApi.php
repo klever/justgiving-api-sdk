@@ -9,7 +9,7 @@ class SmsApi extends ClientBase
 
     public function RetrievePageSmsCode($pageShortName)
     {
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/" . $pageShortName . "/sms";
+        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/sms";
         $url = $this->BuildUrl($locationFormat);
         $json = $this->curlWrapper->Get($url);
 
@@ -19,7 +19,7 @@ class SmsApi extends ClientBase
     public function UpdatePageSmsCode($pageShortName, $updatePageSmsCodeRequest)
     {
         $requestBody = $updatePageSmsCodeRequest;
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/pages/" . $pageShortName . "/sms";
+        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/sms";
         $payload = json_encode($requestBody);
         $url = $this->BuildUrl($locationFormat);
         $httpInfo = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload, true);
@@ -32,7 +32,7 @@ class SmsApi extends ClientBase
 
     public function CheckSmsCodeAvailability($urn)
     {
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/sms/urn/" . $urn . "/check";
+        $locationFormat = $this->Parent->baseUrl() . "sms/urn/" . $urn . "/check";
         $url = $this->BuildUrl($locationFormat);
         $httpInfo = $this->curlWrapper->Post($url);
         if ($httpInfo['http_code'] == 200) {

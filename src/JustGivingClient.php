@@ -17,6 +17,7 @@ use Klever\JustGivingApiSdk\Clients\ProjectApi;
 use Klever\JustGivingApiSdk\Clients\SearchApi;
 use Klever\JustGivingApiSdk\Clients\SmsApi;
 use Klever\JustGivingApiSdk\Clients\TeamApi;
+use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 
 class JustGivingClient
 {
@@ -26,22 +27,31 @@ class JustGivingClient
     public $Password;
     public $RootDomain;
 
-    public $Page;
-    public $Account;
-    public $Charity;
-    public $Donation;
-    public $Search;
-    public $Event;
-    public $Team;
-    public $Countries;
-    public $Currency;
-    public $OneSearch;
-    public $Project;
-    public $Sms;
-    public $Leaderboard;
-    public $Campaign;
+//    public $Page;
+//    public $Account;
+//    public $Charity;
+//    public $Donation;
+//    public $Search;
+//    public $Event;
+//    public $Team;
+//    public $Countries;
+//    public $Currency;
+//    public $OneSearch;
+//    public $Project;
+//    public $Sms;
+//    public $Leaderboard;
+//    public $Campaign;
 
-    public function __construct($rootDomain, $apiKey, $apiVersion, $username = "", $password = "")
+    /**
+     * JustGivingClient constructor.
+     *
+     * @param string $rootDomain
+     * @param string $apiKey
+     * @param string $apiVersion
+     * @param string $username
+     * @param string $password
+     */
+    public function __construct($rootDomain, $apiKey, $apiVersion, $username = '', $password = '')
     {
         $this->RootDomain = (string) $rootDomain;
         $this->ApiKey = (string) $apiKey;
@@ -52,19 +62,45 @@ class JustGivingClient
         $this->debug = false;
 
         // Init API clients
-        $this->Page = new PageApi($this);
-        $this->Account = new AccountApi($this);
-        $this->Charity = new CharityApi($this);
-        $this->Donation = new DonationApi($this);
-        $this->Search = new SearchApi($this);
-        $this->Event = new EventApi($this);
-        $this->Team = new TeamApi($this);
-        $this->Countries = new CountriesApi($this);
-        $this->Currency = new CurrencyApi($this);
-        $this->OneSearch = new OneSearchApi($this);
-        $this->Project = new ProjectApi($this);
-        $this->Sms = new SmsApi($this);
-        $this->Leaderboard = new LeaderboardApi($this);
-        $this->Campaign = new CampaignApi($this);
+//        $this->Page = new PageApi($this);
+//        $this->Account = new AccountApi($this);
+//        $this->Charity = new CharityApi($this);
+//        $this->Donation = new DonationApi($this);
+//        $this->Search = new SearchApi($this);
+//        $this->Event = new EventApi($this);
+//        $this->Team = new TeamApi($this);
+//        $this->Countries = new CountriesApi($this);
+//        $this->Currency = new CurrencyApi($this);
+//        $this->OneSearch = new OneSearchApi($this);
+//        $this->Project = new ProjectApi($this);
+//        $this->Sms = new SmsApi($this);
+//        $this->Leaderboard = new LeaderboardApi($this);
+//        $this->Campaign = new CampaignApi($this);
+    }
+
+    /**
+     * @param string $property
+     * @return mixed
+     * @throws \Exception
+     */
+    public function __get($property)
+    {
+        $class = __NAMESPACE__ . '\\Clients\\' . $property . 'Api';
+
+        if (class_exists($class)) {
+            return new $class($this);
+        }
+
+        throw new ClassNotFoundException($class);
+    }
+
+    /**
+     * Return the base URL string for the API call.
+     *
+     * @return string
+     */
+    public function baseUrl()
+    {
+        return $this->RootDomain . $this->ApiKey . '/v' . $this->ApiVersion . '/';
     }
 }

@@ -9,7 +9,7 @@ class CharityApi extends ClientBase
 
     public function Retrieve($charityId)
     {
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/" . $charityId;
+        $locationFormat = $this->Parent->baseUrl() . "charity/" . $charityId;
         $url = $this->BuildUrl($locationFormat);
         $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 
@@ -18,7 +18,7 @@ class CharityApi extends ClientBase
 
     public function Authenticate($authenticateCharityAccountRequest)
     {
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/authenticate";
+        $locationFormat = $this->Parent->baseUrl() . "charity/authenticate";
         $url = $this->BuildUrl($locationFormat);
         $payload = json_encode($authenticateCharityAccountRequest);
         $json = $this->curlWrapper->PostAndGetResponse($url, "", $payload);
@@ -28,7 +28,7 @@ class CharityApi extends ClientBase
 
     public function GetEventsByCharityId($charityId)
     {
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/" . $charityId . "/events";
+        $locationFormat = $this->Parent->baseUrl() . "charity/" . $charityId . "/events";
         $url = $this->BuildUrl($locationFormat);
         $json = $this->curlWrapper->Get($url);
 
@@ -37,7 +37,7 @@ class CharityApi extends ClientBase
 
     public function GetDonations($charityId)
     {
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/" . $charityId . "/donations";
+        $locationFormat = $this->Parent->baseUrl() . "charity/" . $charityId . "/donations";
         $url = $this->BuildUrl($locationFormat);
         $json = $this->curlWrapper->Get($url);
 
@@ -47,7 +47,7 @@ class CharityApi extends ClientBase
     public function DeleteFundraisingPageAttribution($deleteFundraisingPageAttributionRequest)
     {
         $request = $deleteFundraisingPageAttributionRequest;
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
+        $locationFormat = $this->Parent->baseUrl() . "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
         $url = $this->BuildUrl($locationFormat);
         $json = $this->curlWrapper->Delete($url);
 
@@ -61,7 +61,7 @@ class CharityApi extends ClientBase
     public function UpdateFundraisingPageAttribution($fundraisingPageAttributionRequest, $updateFundraisingPageAttributionRequest)
     {
         $request = $fundraisingPageAttributionRequest;
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
+        $locationFormat = $this->Parent->baseUrl() . "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
         $url = $this->BuildUrl($locationFormat);
         $payload = json_encode($updateFundraisingPageAttributionRequest);
         $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload, true);
@@ -75,7 +75,7 @@ class CharityApi extends ClientBase
     public function AppendFundraisingPageAttribution($fundraisingPageAttributionRequest, $updateFundraisingPageAttributionRequest)
     {
         $request = $fundraisingPageAttributionRequest;
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
+        $locationFormat = $this->Parent->baseUrl() . "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
         $url = $this->BuildUrl($locationFormat);
         $payload = json_encode($updateFundraisingPageAttributionRequest);
         $json = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $payload);
@@ -89,7 +89,7 @@ class CharityApi extends ClientBase
     public function GetFundraisingPageAttribution($fundraisingPageAttributionRequest, $updateFundraisingPageAttributionRequest)
     {
         $request = $fundraisingPageAttributionRequest;
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
+        $locationFormat = $this->Parent->baseUrl() . "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
         $url = $this->BuildUrl($locationFormat);
         $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 
@@ -98,7 +98,7 @@ class CharityApi extends ClientBase
 
     public function Categories()
     {
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/charity/categories";
+        $locationFormat = $this->Parent->baseUrl() . "charity/categories";
         $url = $this->BuildUrl($locationFormat);
         $json = $this->curlWrapper->Get($url);
 

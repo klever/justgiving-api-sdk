@@ -17,7 +17,7 @@ class CurrencyApi extends ClientBase
 
     public function ValidCurrencies()
     {
-        $locationFormat = $this->Parent->RootDomain . "{apiKey}/v{apiVersion}/fundraising/currencies";
+        $locationFormat = $this->Parent->baseUrl() . "fundraising/currencies";
         $url = $this->BuildUrl($locationFormat);
         $json = $this->curlWrapper->Get($url);
 
