@@ -1,19 +1,37 @@
 <?php
 
-include_once 'ApiClients/PageApi.php';
-include_once 'ApiClients/AccountApi.php';
-include_once 'ApiClients/CharityApi.php';
-include_once 'ApiClients/DonationApi.php';
-include_once 'ApiClients/SearchApi.php';
-include_once 'ApiClients/EventApi.php';
-include_once 'ApiClients/TeamApi.php';
-include_once 'ApiClients/CountriesApi.php';
-include_once 'ApiClients/CurrencyApi.php';
-include_once 'ApiClients/OneSearchApi.php';
-include_once 'ApiClients/ProjectApi.php';
-include_once 'ApiClients/SmsApi.php';
-include_once 'ApiClients/LeaderboardApi.php';
-include_once 'ApiClients/CampaignApi.php';
+namespace Klever\JustGivingApiSdk;
+//
+//include_once 'ApiClients/PageApi.php';
+//include_once 'ApiClients/AccountApi.php';
+//include_once 'ApiClients/CharityApi.php';
+//include_once 'ApiClients/DonationApi.php';
+//include_once 'ApiClients/SearchApi.php';
+//include_once 'ApiClients/EventApi.php';
+//include_once 'ApiClients/TeamApi.php';
+//include_once 'ApiClients/CountriesApi.php';
+//include_once 'ApiClients/CurrencyApi.php';
+//include_once 'ApiClients/OneSearchApi.php';
+//include_once 'ApiClients/ProjectApi.php';
+//include_once 'ApiClients/SmsApi.php';
+//include_once 'ApiClients/LeaderboardApi.php';
+//include_once 'ApiClients/CampaignApi.php';
+
+use Klever\JustGivingApiSdk\Clients\AccountApi;
+use Klever\JustGivingApiSdk\Clients\CampaignApi;
+use Klever\JustGivingApiSdk\Clients\CharityApi;
+use Klever\JustGivingApiSdk\Clients\CountriesApi;
+use Klever\JustGivingApiSdk\Clients\CurrencyApi;
+use Klever\JustGivingApiSdk\Clients\DonationApi;
+use Klever\JustGivingApiSdk\Clients\EventApi;
+use Klever\JustGivingApiSdk\Clients\Http\CurlWrapper;
+use Klever\JustGivingApiSdk\Clients\LeaderboardApi;
+use Klever\JustGivingApiSdk\Clients\OneSearchApi;
+use Klever\JustGivingApiSdk\Clients\PageApi;
+use Klever\JustGivingApiSdk\Clients\ProjectApi;
+use Klever\JustGivingApiSdk\Clients\SearchApi;
+use Klever\JustGivingApiSdk\Clients\SmsApi;
+use Klever\JustGivingApiSdk\Clients\TeamApi;
 
 class JustGivingClient
 {	
