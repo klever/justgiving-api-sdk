@@ -2,6 +2,6 @@
 
 class ValidateAccountRequest
 {
-	public $email;
-	public $password;	
+    public $email;
+    public $password;
 }

@@ -2,6 +2,6 @@
 
 class FundraisingPageAttributionRequest
 {
-	public $pageShortName;
-	public $charityId;
+    public $pageShortName;
+    public $charityId;
 }

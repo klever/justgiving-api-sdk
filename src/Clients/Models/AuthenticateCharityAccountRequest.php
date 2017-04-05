@@ -2,7 +2,7 @@
 
 class AuthenticateCharityAccountRequest
 {
-	public $password;
-	public $pin;
-	public $username;
+    public $password;
+    public $pin;
+    public $username;
 }

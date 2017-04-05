@@ -2,5 +2,5 @@
 
 class AddInterestRequest
 {
-	public $interest;
+    public $interest;
 }

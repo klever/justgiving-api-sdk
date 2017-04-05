@@ -1,10 +1,14 @@
 <?php
+
 namespace Klever\JustGivingApiSdk\Tests;
+
 use Klever\JustGivingApiSdk\Clients\Models\AddPostToPageUpdateRequest;
 use Klever\JustGivingApiSdk\Clients\Models\RegisterPageRequest;
 
-class PageTest extends Base {
-    public function testRetrieve_WhenSuppliedWithValidPage_ReturnsPageData() {
+class PageTest extends Base
+{
+    public function testRetrieve_WhenSuppliedWithValidPage_ReturnsPageData()
+    {
         $json = $this->client->Page->Retrieve("rasha25");
         $this->assertEquals($json->pageId, 640916);
         $this->assertEquals($json->activityId, 73347);
@@ -13,14 +17,18 @@ class PageTest extends Base {
         $this->assertEquals($json->status, "Active");
         $this->assertEquals($json->owner, "Itgtm Wqepuy");
     }
-    public function testListAll_WithValidCredentials_ReturnsListOfUserPages() {
+
+    public function testListAll_WithValidCredentials_ReturnsListOfUserPages()
+    {
         $pages = $this->client->Page->ListAll();
         $this->assertTrue(count($pages) > 0);
     }
+
     /**
-    * test creating a page with a custom story.
-    */
-    public function testCreatePageWithStory() {
+     * test creating a page with a custom story.
+     */
+    public function testCreatePageWithStory()
+    {
         $dto = new RegisterPageRequest();
         $dto->reference = "12345";
         $dto->pageShortName = "api-test-" . uniqid();
@@ -40,9 +48,11 @@ class PageTest extends Base {
         $this->assertNotNull($page->next->uri);
         $this->assertNotNull($page->pageId);
         $json = $this->client->Page->Retrieve($dto->pageShortName);
-        $this->assertEquals($json->story,'<p>This is my custom page story, which will override the default.</p>');
+        $this->assertEquals($json->story, '<p>This is my custom page story, which will override the default.</p>');
     }
-    public function testCreate_ValidCredentials_CreatesNewPage() {
+
+    public function testCreate_ValidCredentials_CreatesNewPage()
+    {
         $dto = new RegisterPageRequest();
         $dto->reference = "12345";
         $dto->pageShortName = "api-test-" . uniqid();
@@ -60,7 +70,9 @@ class PageTest extends Base {
         $this->assertNotNull($page->next->uri);
         $this->assertNotNull($page->pageId);
     }
-    public function IsShortNameRegistered_KnownPage_Returns() {
+
+    public function IsShortNameRegistered_KnownPage_Returns()
+    {
         $pageShortName = "rasha25";
         $booleanResponse = $this->client->Page->IsShortNameRegistered($pageShortName);
         $this->assertTrue($booleanResponse);
@@ -68,7 +80,9 @@ class PageTest extends Base {
         $booleanResponse = $client->Page->IsShortNameRegistered($pageShortName);
         $this->assertFalse($booleanResponse);
     }
-    public function testUpdatePageStory_ForKnownPageWithValidCredentials_UpdatesStory() {
+
+    public function testUpdatePageStory_ForKnownPageWithValidCredentials_UpdatesStory()
+    {
         $dto = new RegisterPageRequest();
         $dto->reference = "12345";
         $dto->pageShortName = "api-test-" . uniqid();
@@ -86,7 +100,9 @@ class PageTest extends Base {
         $booleanResponse = $this->client->Page->UpdateStory($dto->pageShortName, $update);
         $this->assertTrue($booleanResponse);
     }
-    public function testUploadImage_ForKnownPageWithValidCredentials_UploadsImageWithExpectedCaption() {
+
+    public function testUploadImage_ForKnownPageWithValidCredentials_UploadsImageWithExpectedCaption()
+    {
         $dto = new RegisterPageRequest();
         $dto->reference = "12345";
         $dto->pageShortName = "api-test-" . uniqid();
@@ -102,12 +118,14 @@ class PageTest extends Base {
         $page = $this->client->Page->Create($dto);
         // Act
         $caption = "PHP Image Caption - " . uniqid();
-        $filename = __DIR__ . "/jpg.jpg";
+        $filename = __DIR__ . "/img/jpg.jpg";
         $imageContentType = "image/jpeg";
         $booleanResponse = $this->client->Page->UploadImage($dto->pageShortName, $caption, $filename, $imageContentType);
         $this->assertTrue($booleanResponse);
     }
-    public function testAddPostToPageUpdate_WhenSuppliedValidRequest_ReturnResponse() {
+
+    public function testAddPostToPageUpdate_WhenSuppliedValidRequest_ReturnResponse()
+    {
         $request = new AddPostToPageUpdateRequest();
         $request->Message = "update story";
         $response = $this->client->Page->AddPostToPageUpdate("api-test-54787f3435f75", $request);

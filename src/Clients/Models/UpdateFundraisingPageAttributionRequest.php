@@ -2,5 +2,5 @@
 
 class UpdateFundraisingPageAttributionRequest
 {
-	public $attribution;
+    public $attribution;
 } 

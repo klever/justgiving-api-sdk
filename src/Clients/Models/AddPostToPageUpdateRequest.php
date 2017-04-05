@@ -2,8 +2,8 @@
 
 class AddPostToPageUpdateRequest
 {
-	public $CreatedDate;
-	public $Id;
-	public $Message;
-	public $Video; 
+    public $CreatedDate;
+    public $Id;
+    public $Message;
+    public $Video;
 }

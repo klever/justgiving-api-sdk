@@ -1,25 +1,25 @@
 {
-    "name": "klever/justgiving-api-sdk",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Robin D'Arcy",
-            "email": "robin@klever.co.uk"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "Klever\\JustGivingApiSdk\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Klever\\JustGivingApiSdk\\Tests\\": "tests/"
-        }
-    },
-    "require": {},
-    "require-dev": {
-        "phpunit/phpunit": "^6.0"
+  "name": "klever/justgiving-api-sdk",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Robin D'Arcy",
+      "email": "robin@klever.co.uk"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Klever\\JustGivingApiSdk\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Klever\\JustGivingApiSdk\\Tests\\": "tests/"
+    }
+  },
+  "require": {},
+  "require-dev": {
+    "phpunit/phpunit": "^6.0"
+  }
 }

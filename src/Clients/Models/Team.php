@@ -1,21 +1,23 @@
 <?php namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class TeamMember {
-	public $pageShortName;	           
+class TeamMember
+{
+    public $pageShortName;
 }
 
 class Team
 {
-	public $teamShortName;
+    public $teamShortName;
     public $name;
-	public $story;
-	public $targetType;
-	public $teamType;
-	public $target;
-	public $teamMembers;
+    public $story;
+    public $targetType;
+    public $teamType;
+    public $target;
+    public $teamMembers;
 
-	public function __construct(){
-		$this->teamMembers = array();
-	}
+    public function __construct()
+    {
+        $this->teamMembers = array();
+    }
 }
 

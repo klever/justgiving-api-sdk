@@ -2,5 +2,5 @@
 
 class JoinTeamRequest
 {
-	public $pageShortName;
+    public $pageShortName;
 } 

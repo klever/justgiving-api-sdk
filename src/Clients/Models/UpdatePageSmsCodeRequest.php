@@ -3,5 +3,5 @@
 
 class UpdatePageSmsCodeRequest
 {
-	public $urn;
+    public $urn;
 }

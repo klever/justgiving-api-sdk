@@ -2,7 +2,7 @@
 
 class AddVideoRequest
 {
-	public $caption;
-	public $isDefault;
-	public $url;
+    public $caption;
+    public $isDefault;
+    public $url;
 }
