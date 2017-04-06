@@ -2,21 +2,7 @@
 
 namespace Klever\JustGivingApiSdk;
 
-use Klever\JustGivingApiSdk\Clients\AccountApi;
-use Klever\JustGivingApiSdk\Clients\CampaignApi;
-use Klever\JustGivingApiSdk\Clients\CharityApi;
-use Klever\JustGivingApiSdk\Clients\CountriesApi;
-use Klever\JustGivingApiSdk\Clients\CurrencyApi;
-use Klever\JustGivingApiSdk\Clients\DonationApi;
-use Klever\JustGivingApiSdk\Clients\EventApi;
 use Klever\JustGivingApiSdk\Clients\Http\CurlWrapper;
-use Klever\JustGivingApiSdk\Clients\LeaderboardApi;
-use Klever\JustGivingApiSdk\Clients\OneSearchApi;
-use Klever\JustGivingApiSdk\Clients\PageApi;
-use Klever\JustGivingApiSdk\Clients\ProjectApi;
-use Klever\JustGivingApiSdk\Clients\SearchApi;
-use Klever\JustGivingApiSdk\Clients\SmsApi;
-use Klever\JustGivingApiSdk\Clients\TeamApi;
 use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 
 class JustGivingClient
@@ -27,20 +13,12 @@ class JustGivingClient
     public $Password;
     public $RootDomain;
 
-//    public $Page;
-//    public $Account;
-//    public $Charity;
-//    public $Donation;
-//    public $Search;
-//    public $Event;
-//    public $Team;
-//    public $Countries;
-//    public $Currency;
-//    public $OneSearch;
-//    public $Project;
-//    public $Sms;
-//    public $Leaderboard;
-//    public $Campaign;
+    /**
+     * The clients that have been instantiated.
+     *
+     * @var array
+     */
+    protected $clients = [];
 
     /**
      * JustGivingClient constructor.
@@ -60,38 +38,26 @@ class JustGivingClient
         $this->Password = (string) $password;
         $this->curlWrapper = new CurlWrapper();
         $this->debug = false;
-
-        // Init API clients
-//        $this->Page = new PageApi($this);
-//        $this->Account = new AccountApi($this);
-//        $this->Charity = new CharityApi($this);
-//        $this->Donation = new DonationApi($this);
-//        $this->Search = new SearchApi($this);
-//        $this->Event = new EventApi($this);
-//        $this->Team = new TeamApi($this);
-//        $this->Countries = new CountriesApi($this);
-//        $this->Currency = new CurrencyApi($this);
-//        $this->OneSearch = new OneSearchApi($this);
-//        $this->Project = new ProjectApi($this);
-//        $this->Sms = new SmsApi($this);
-//        $this->Leaderboard = new LeaderboardApi($this);
-//        $this->Campaign = new CampaignApi($this);
     }
 
     /**
+     * Allow API classes to be called as properties, and return a singleton client class.
+     *
      * @param string $property
      * @return mixed
      * @throws \Exception
      */
     public function __get($property)
     {
-        $class = __NAMESPACE__ . '\\Clients\\' . $property . 'Api';
+        $class = __NAMESPACE__ . '\\Clients\\' . ucfirst($property) . 'Api';
 
-        if (class_exists($class)) {
-            return new $class($this);
+        if ( ! class_exists($class)) {
+            throw new ClassNotFoundException($class);
         }
 
-        throw new ClassNotFoundException($class);
+        $this->clients[$class] = $this->clients[$class] ?? new $class($this);
+
+        return $this->clients[$class];
     }
 
     /**
