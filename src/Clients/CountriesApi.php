@@ -6,8 +6,8 @@ class CountriesApi extends ClientBase
 {
     public function Countries()
     {
-        $locationFormat = $this->Parent->baseUrl() . "countries";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "countries";
+
         $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);

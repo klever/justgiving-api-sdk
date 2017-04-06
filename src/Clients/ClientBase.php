@@ -10,20 +10,11 @@ class ClientBase
     public $Parent;
     public $curlWrapper;
 
-    public function __construct($justGivingApi)
+    public function __construct($httpClient, $justGivingApi)
     {
         $this->Parent = $justGivingApi;
-        $this->curlWrapper = new CurlWrapper();
+        $this->curlWrapper = $httpClient;
         $this->debug = false;
-    }
-
-    public function BuildUrl($locationFormat)
-    {
-        $url = $locationFormat;
-        $url = str_replace("{apiKey}", $this->Parent->ApiKey, $url);
-        $url = str_replace("{apiVersion}", $this->Parent->ApiVersion, $url);
-
-        return $url;
     }
 
     public function BuildAuthenticationValue()

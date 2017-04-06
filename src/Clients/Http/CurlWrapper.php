@@ -6,9 +6,9 @@ class CurlWrapper
 {
     protected $baseUrl;
 
-    public function __construct()
+    public function __construct($baseUrl)
     {
-
+        $this->baseUrl = $baseUrl;
 
         if ( ! function_exists('curl_init')) {
             die('CURL is not installed!');
@@ -17,6 +17,7 @@ class CurlWrapper
 
     public function GetV2($url, $base64Credentials = "")
     {
+        $url = $this->constructUrl($url);
         $ch = curl_init();
         $httpResponse = new HTTPRawResponse();
 
@@ -38,6 +39,7 @@ class CurlWrapper
 
     public function Get($url, $base64Credentials = "")
     {
+        $url = $this->constructUrl($url);
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -55,6 +57,7 @@ class CurlWrapper
 
     public function PutV2($url, $base64Credentials = "", $payload)
     {
+        $url = $this->constructUrl($url);
         $httpResponse = new HTTPRawResponse();
         $fh = fopen('php://temp', 'r+');
         fwrite($fh, $payload);
@@ -83,6 +86,7 @@ class CurlWrapper
 
     public function Put($url, $base64Credentials = "", $payload, $getHttpStatus = false)
     {
+        $url = $this->constructUrl($url);
         $fh = fopen('php://temp', 'r+');
         fwrite($fh, $payload);
         rewind($fh);
@@ -110,6 +114,7 @@ class CurlWrapper
 
     public function PostBinary($url, $base64Credentials = "", $filename, $imageContentType)
     {
+        $url = $this->constructUrl($url);
         $fh = fopen($filename, 'rb');
         $imageBytes = fread($fh, filesize($filename));
         $ch = curl_init();
@@ -135,6 +140,7 @@ class CurlWrapper
 
     public function HeadV2($url, $base64Credentials = "")
     {
+        $url = $this->constructUrl($url);
         $ch = curl_init();
         $httpResponse = new HTTPRawResponse();
 
@@ -157,6 +163,7 @@ class CurlWrapper
 
     public function Head($url, $base64Credentials = "")
     {
+        $url = $this->constructUrl($url);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -174,6 +181,7 @@ class CurlWrapper
 
     public function Post($url, $base64Credentials = "", $payload, $contentType = "application/json")
     {
+        $url = $this->constructUrl($url);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -192,6 +200,7 @@ class CurlWrapper
 
     public function PostV2($url, $base64Credentials = "", $payload, $contentType = "application/json")
     {
+        $url = $this->constructUrl($url);
         $httpResponse = new HTTPRawResponse();
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -215,6 +224,7 @@ class CurlWrapper
 
     public function PostAndGetResponse($url, $base64Credentials = "", $payload, $contentType = "application/json")
     {
+        $url = $this->constructUrl($url);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -233,6 +243,7 @@ class CurlWrapper
 
     public function Delete($url, $base64Credentials = "", $contentType = "application/json")
     {
+        $url = $this->constructUrl($url);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -254,5 +265,10 @@ class CurlWrapper
         } else {
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: ' . $contentType, 'Accept: ' . $contentType));
         }
+    }
+
+    protected function constructUrl($url)
+    {
+        return $this->baseUrl . $url;
     }
 }

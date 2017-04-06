@@ -10,8 +10,8 @@ class PageApi extends ClientBase
     public function CreateV2($pageCreationRequest)
     {
         $httpResponse = new HTTPResponse();
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages";
+
         $payload = json_encode($pageCreationRequest);
         $result = $this->curlWrapper->PutV2($url, $this->BuildAuthenticationValue(), $payload);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
@@ -22,8 +22,8 @@ class PageApi extends ClientBase
 
     public function Create($pageCreationRequest)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages";
+
         $payload = json_encode($pageCreationRequest);
         $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
 
@@ -33,8 +33,8 @@ class PageApi extends ClientBase
     public function IsShortNameRegisteredV2($pageShortName)
     {
         $httpResponse = new HTTPResponse();
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName;
+
         $result = $this->curlWrapper->HeadV2($url, $this->BuildAuthenticationValue());
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
@@ -44,8 +44,8 @@ class PageApi extends ClientBase
 
     public function IsShortNameRegistered($pageShortName)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName;
+
         $httpInfo = $this->curlWrapper->Head($url, $this->BuildAuthenticationValue());
 
         if ($httpInfo['http_code'] == 200) {
@@ -57,8 +57,8 @@ class PageApi extends ClientBase
 
     public function ListAll()
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages";
+
         $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 
         return json_decode($json);
@@ -66,8 +66,8 @@ class PageApi extends ClientBase
 
     public function Retrieve($pageShortName)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName;
+
         $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 
         return json_decode($json);
@@ -75,8 +75,8 @@ class PageApi extends ClientBase
 
     public function SuggestPageShortNames($preferredName)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/suggest?preferredName=" . urlencode($preferredName);
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/suggest?preferredName=" . urlencode($preferredName);
+
         $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 
         return json_decode($json);
@@ -84,8 +84,8 @@ class PageApi extends ClientBase
 
     public function RetrieveDonationsForPage($pageShortName, $pageSize = 50, $pageNumber = 1)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/donations" . "?PageSize=" . $pageSize . "&PageNum=" . $pageNumber;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/donations" . "?PageSize=" . $pageSize . "&PageNum=" . $pageNumber;
+
         $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 
         return json_decode($json);
@@ -93,8 +93,8 @@ class PageApi extends ClientBase
 
     public function UpdateStory($pageShortName, $storyUpdate)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName;
+
         $storyUpdateRequest = new StoryUpdateRequest();
         $storyUpdateRequest->storySupplement = $storyUpdate;
         $payload = json_encode($storyUpdateRequest);
@@ -105,8 +105,8 @@ class PageApi extends ClientBase
 
     public function UploadImage($pageShortName, $caption, $filename, $imageContentType)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/images?caption=" . urlencode($caption);
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/images?caption=" . urlencode($caption);
+
         $httpInfo = $this->curlWrapper->PostBinary($url, $this->BuildAuthenticationValue(), $filename, $imageContentType);
         if ($httpInfo['http_code'] == 200) {
             return true;
@@ -118,8 +118,8 @@ class PageApi extends ClientBase
 
     public function RetrieveDonationsForPageByReference($pageShortName, $reference, $privateData = false)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/donations/ref/" . $reference;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/donations/ref/" . $reference;
+
         if ($privateData == 1) {
             $json = $this->curlWrapper->Get($url);
         } else {
@@ -131,8 +131,8 @@ class PageApi extends ClientBase
 
     public function GetPageUpdates($pageShortName)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/updates/";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/updates/";
+
         $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
@@ -140,8 +140,8 @@ class PageApi extends ClientBase
 
     public function GetPageUpdateById($pageShortName, $updateId)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/updates/" . $updateId;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/updates/" . $updateId;
+
         $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
@@ -149,8 +149,8 @@ class PageApi extends ClientBase
 
     public function AddPostToPageUpdate($pageShortName, $addPostToPageUpdateRequest)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/updates/";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/updates/";
+
         $payload = json_encode($addPostToPageUpdateRequest);
         $json = $this->curlWrapper->PostAndGetResponse($url, $this->BuildAuthenticationValue(), $payload);
 
@@ -159,8 +159,8 @@ class PageApi extends ClientBase
 
     public function DeleteFundraisingPageAttribution($pageShortName)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/attribution";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/attribution";
+
         $json = $this->curlWrapper->Delete($url, $this->BuildAuthenticationValue());
         if ($json['http_code'] == 200) {
             return true;
@@ -172,8 +172,8 @@ class PageApi extends ClientBase
     public function UpdateFundraisingPageAttribution($pageShortName, $updateFundraisingPageAttributionRequest)
     {
         $requestBody = $updateFundraisingPageAttributionRequest;
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/attribution";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/attribution";
+
         $payload = json_encode($requestBody);
         $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload, true);
         if ($json['http_code'] == 200) {
@@ -186,8 +186,8 @@ class PageApi extends ClientBase
     public function AppendToFundraisingPageAttribution($pageShortName, $appendToFundraisingPageAttributionRequest)
     {
         $requestBody = $appendToFundraisingPageAttributionRequest;
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/attribution";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/attribution";
+
         $payload = json_encode($requestBody);
         $json = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $payload);
         if ($json['http_code'] == 200) {
@@ -199,8 +199,8 @@ class PageApi extends ClientBase
 
     public function GetFundraisingPageAttribution($pageShortName)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/attribution";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/attribution";
+
         $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
@@ -212,8 +212,8 @@ class PageApi extends ClientBase
         $imageBytes = fread($fh, filesize($filename));
         fclose($fh);
 
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/images/default";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/images/default";
+
         $httpInfo = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $imageBytes, $imageContentType);
 
         if ($httpInfo['http_code'] == 200) {
@@ -225,8 +225,8 @@ class PageApi extends ClientBase
 
     public function AddImage($pageShortName, $addImageRequest)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/images";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/images";
+
         $payload = json_encode($addImageRequest);
         $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
 
@@ -235,8 +235,8 @@ class PageApi extends ClientBase
 
     public function GetImages($pageShortName)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/images";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/images";
+
         $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
@@ -244,8 +244,8 @@ class PageApi extends ClientBase
 
     public function AddVideo($pageShortName, $addVideoRequest)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/videos";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/videos";
+
         $payload = json_encode($addVideoRequest);
         $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
 
@@ -254,8 +254,8 @@ class PageApi extends ClientBase
 
     public function GetVideos($pageShortName)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName . "/videos";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName . "/videos";
+
         $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
@@ -263,8 +263,8 @@ class PageApi extends ClientBase
 
     public function Cancel($pageShortName)
     {
-        $locationFormat = $this->Parent->baseUrl() . "fundraising/pages/" . $pageShortName;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "fundraising/pages/" . $pageShortName;
+
         $httpInfo = $this->curlWrapper->Delete($url, $this->BuildAuthenticationValue());
 
         return $httpInfo;

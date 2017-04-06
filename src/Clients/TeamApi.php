@@ -6,8 +6,8 @@ class TeamApi extends ClientBase
 {
     public function Create($team)
     {
-        $locationFormat = $this->Parent->baseUrl() . "team/" . $team->teamShortName;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "team/" . $team->teamShortName;
+
         $payload = json_encode($team);
         $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
 
@@ -16,8 +16,8 @@ class TeamApi extends ClientBase
 
     public function Team($teamShortName)
     {
-        $locationFormat = $this->Parent->baseUrl() . "team/" . $teamShortName;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "team/" . $teamShortName;
+
         $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
@@ -25,8 +25,8 @@ class TeamApi extends ClientBase
 
     public function CheckIfExist($teamShortName)
     {
-        $locationFormat = $this->Parent->baseUrl() . "team/" . $teamShortName;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "team/" . $teamShortName;
+
         $httpInfo = $this->curlWrapper->Head($url);
         if ($httpInfo['http_code'] == 200) {
             return true;
@@ -37,9 +37,9 @@ class TeamApi extends ClientBase
 
     public function JoinTeam($teamShortName, $joinTeamRequest)
     {
-        $locationFormat = $this->Parent->baseUrl() . "team/join/" . $teamShortName;
+        $url = "team/join/" . $teamShortName;
         $payload = json_encode($joinTeamRequest);
-        $url = $this->BuildUrl($locationFormat);
+
         $httpInfo = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload, true);
         if ($httpInfo['http_code'] == 200) {
             return true;

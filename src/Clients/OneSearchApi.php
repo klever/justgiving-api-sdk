@@ -18,8 +18,8 @@ class OneSearchApi extends ClientBase
 
     public function Index($searchTerm, $resultByIndex, $limit = 10)
     {
-        $locationFormat = $this->Parent->baseUrl() . "onesearch?q=" . $searchTerm . "&i=" . $resultByIndex . "&limit=" . $limit;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "onesearch?q=" . $searchTerm . "&i=" . $resultByIndex . "&limit=" . $limit;
+
         $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);

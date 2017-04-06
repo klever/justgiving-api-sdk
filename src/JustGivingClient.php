@@ -21,6 +21,13 @@ class JustGivingClient
     protected $clients = [];
 
     /**
+     * The client to execute the HTTP requests.
+     *
+     * @var CurlWrapper
+     */
+    protected $httpClient;
+
+    /**
      * JustGivingClient constructor.
      *
      * @param string $rootDomain
@@ -36,7 +43,7 @@ class JustGivingClient
         $this->ApiVersion = (string) $apiVersion;
         $this->Username = (string) $username;
         $this->Password = (string) $password;
-        $this->curlWrapper = new CurlWrapper();
+        $this->httpClient = new CurlWrapper($this->baseUrl());
         $this->debug = false;
     }
 
@@ -55,7 +62,7 @@ class JustGivingClient
             throw new ClassNotFoundException($class);
         }
 
-        $this->clients[$class] = $this->clients[$class] ?? new $class($this);
+        $this->clients[$class] = $this->clients[$class] ?? new $class($this->httpClient, $this);
 
         return $this->clients[$class];
     }

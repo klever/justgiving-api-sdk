@@ -8,8 +8,8 @@ class DonationApi extends ClientBase
 {
     public function Retrieve($donationId)
     {
-        $locationFormat = $this->Parent->baseUrl() . "donation/" . $donationId;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "donation/" . $donationId;
+
         $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 
         return json_decode($json);
@@ -18,8 +18,8 @@ class DonationApi extends ClientBase
     public function RetrieveV2($donationId)
     {
         $httpResponse = new HTTPResponse();
-        $locationFormat = $this->Parent->baseUrl() . "donation/" . $donationId;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "donation/" . $donationId;
+
         $result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
@@ -29,8 +29,8 @@ class DonationApi extends ClientBase
 
     public function RetrieveStatus($donationId)
     {
-        $locationFormat = $this->Parent->baseUrl() . "donation/" . $donationId . "/status";
-        $url = $this->BuildUrl($locationFormat);
+        $url = "donation/" . $donationId . "/status";
+
         $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
 
         return json_decode($json);
@@ -38,8 +38,8 @@ class DonationApi extends ClientBase
 
     public function RetrieveDetails($thirdPartReference)
     {
-        $locationFormat = $this->Parent->baseUrl() . "donation/ref/" . $thirdPartReference;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "donation/ref/" . $thirdPartReference;
+
         $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);

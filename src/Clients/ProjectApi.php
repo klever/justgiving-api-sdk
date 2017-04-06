@@ -6,8 +6,8 @@ class ProjectApi extends ClientBase
 {
     public function Projects($searchTerm)
     {
-        $locationFormat = $this->Parent->baseUrl() . "project?q=" . $searchTerm;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "project?q=" . $searchTerm;
+
         $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
@@ -15,8 +15,8 @@ class ProjectApi extends ClientBase
 
     public function GetProject($projectId)
     {
-        $locationFormat = $this->Parent->baseUrl() . "project/global/" . $projectId;
-        $url = $this->BuildUrl($locationFormat);
+        $url = "project/global/" . $projectId;
+
         $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
