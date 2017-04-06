@@ -1,17 +1,12 @@
-<?php namespace Klever\JustGivingApiSdk\Clients;
+<?php
 
-//include_once 'ClientBase.php';
-//include_once 'Http/CurlWrapper.php';
-//include_once 'Model/RegisterPageRequest.php';
-//include_once 'Model/StoryUpdateRequest.php';
+namespace Klever\JustGivingApiSdk\Clients;
 
 use Klever\JustGivingApiSdk\Clients\Http\HTTPResponse;
 use Klever\JustGivingApiSdk\Clients\Models\StoryUpdateRequest;
 
 class PageApi extends ClientBase
 {
-
-
     public function CreateV2($pageCreationRequest)
     {
         $httpResponse = new HTTPResponse();

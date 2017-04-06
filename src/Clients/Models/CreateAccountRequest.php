@@ -1,6 +1,6 @@
-<?php namespace Klever\JustGivingApiSdk\Clients\Models;
+<?php
 
-include_once 'Address.php';
+namespace Klever\JustGivingApiSdk\Clients\Models;
 
 class CreateAccountRequest
 {

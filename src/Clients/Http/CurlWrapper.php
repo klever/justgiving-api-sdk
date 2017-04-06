@@ -4,8 +4,12 @@ namespace Klever\JustGivingApiSdk\Clients\Http;
 
 class CurlWrapper
 {
+    protected $baseUrl;
+
     public function __construct()
     {
+
+
         if ( ! function_exists('curl_init')) {
             die('CURL is not installed!');
         }

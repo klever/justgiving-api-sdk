@@ -1,11 +1,11 @@
-<?php namespace Klever\JustGivingApiSdk\Clients;
+<?php
+
+namespace Klever\JustGivingApiSdk\Clients;
 
 use Klever\JustGivingApiSdk\Clients\Http\HTTPResponse;
 
 class CampaignApi extends ClientBase
 {
-
-
     public function Retrieve($charityName, $campaignName)
     {
         $locationFormat = $this->Parent->baseUrl() . "campaigns/" . $charityName . "/" . $campaignName;

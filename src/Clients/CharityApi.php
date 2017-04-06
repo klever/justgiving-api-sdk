@@ -1,7 +1,6 @@
-<?php namespace Klever\JustGivingApiSdk\Clients;
+<?php
 
-include_once 'ClientBase.php';
-include_once 'Http/CurlWrapper.php';
+namespace Klever\JustGivingApiSdk\Clients;
 
 class CharityApi extends ClientBase
 {

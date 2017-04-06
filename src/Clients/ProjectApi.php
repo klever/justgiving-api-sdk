@@ -1,22 +1,9 @@
-<?php namespace Klever\JustGivingApiSdk\Clients;
+<?php
 
-use Klever\JustGivingApiSdk\Clients\Http\CurlWrapper;
-
-include_once 'ClientBase.php';
-include_once 'Http/CurlWrapper.php';
+namespace Klever\JustGivingApiSdk\Clients;
 
 class ProjectApi extends ClientBase
 {
-
-    public $Parent;
-    public $curlWrapper;
-
-    public function __construct($justGivingApi)
-    {
-        $this->Parent = $justGivingApi;
-        $this->curlWrapper = new CurlWrapper();
-    }
-
     public function Projects($searchTerm)
     {
         $locationFormat = $this->Parent->baseUrl() . "project?q=" . $searchTerm;

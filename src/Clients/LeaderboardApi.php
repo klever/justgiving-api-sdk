@@ -1,21 +1,11 @@
-<?php namespace Klever\JustGivingApiSdk\Clients;
+<?php
+
+namespace Klever\JustGivingApiSdk\Clients;
 use Klever\JustGivingApiSdk\Clients\Http\CurlWrapper;
 use Klever\JustGivingApiSdk\Clients\Http\HTTPResponse;
 
-include_once 'ClientBase.php';
-include_once 'Http/CurlWrapper.php';
-
 class LeaderboardApi extends ClientBase
 {
-    public $Parent;
-    public $curlWrapper;
-
-    public function __construct($justGivingApi)
-    {
-        $this->Parent = $justGivingApi;
-        $this->curlWrapper = new CurlWrapper();
-    }
-
     public function GetCharityLeaderboard($charityId)
     {
         $httpResponse = new HTTPResponse();

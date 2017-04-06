@@ -1,12 +1,10 @@
-<?php namespace Klever\JustGivingApiSdk\Clients;
+<?php
 
-include_once 'ClientBase.php';
-include_once 'Http/CurlWrapper.php';
+namespace Klever\JustGivingApiSdk\Clients;
+
 
 class SearchApi extends ClientBase
 {
-
-
     public function CharitySearch($searchTerms, $pageSize = 50, $pageNumber = 1)
     {
         $locationFormat = $this->Parent->baseUrl() . "charity/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber;

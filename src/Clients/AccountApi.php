@@ -1,22 +1,12 @@
-<?php namespace Klever\JustGivingApiSdk\Clients;
+<?php
 
-use Klever\JustGivingApiSdk\Clients\Http\CurlWrapper;
+namespace Klever\JustGivingApiSdk\Clients;
+
+use Exception;
 use Klever\JustGivingApiSdk\Clients\Http\HTTPResponse;
-
-include_once 'ClientBase.php';
-include_once 'Http/CurlWrapper.php';
 
 class AccountApi extends ClientBase
 {
-    public $Parent;
-    public $curlWrapper;
-
-    public function __construct($justGivingApi)
-    {
-        $this->Parent = $justGivingApi;
-        $this->curlWrapper = new CurlWrapper();
-    }
-
     public function AccountDetailsV2()
     {
         $httpResponse = new HTTPResponse();

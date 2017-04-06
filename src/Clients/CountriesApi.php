@@ -1,20 +1,9 @@
-<?php namespace Klever\JustGivingApiSdk\Clients;
+<?php
 
-use Klever\JustGivingApiSdk\Clients\Http\CurlWrapper;
-
-include_once 'ClientBase.php';
+namespace Klever\JustGivingApiSdk\Clients;
 
 class CountriesApi extends ClientBase
 {
-    public $Parent;
-    public $curlWrapper;
-
-    public function __construct($justGivingApi)
-    {
-        $this->Parent = $justGivingApi;
-        $this->curlWrapper = new CurlWrapper();
-    }
-
     public function Countries()
     {
         $locationFormat = $this->Parent->baseUrl() . "countries";

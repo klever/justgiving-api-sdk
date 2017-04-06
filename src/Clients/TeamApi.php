@@ -1,12 +1,9 @@
-<?php namespace Klever\JustGivingApiSdk\Clients;
+<?php
 
-include_once 'ClientBase.php';
-include_once 'Http/CurlWrapper.php';
+namespace Klever\JustGivingApiSdk\Clients;
 
 class TeamApi extends ClientBase
 {
-
-
     public function Create($team)
     {
         $locationFormat = $this->Parent->baseUrl() . "team/" . $team->teamShortName;

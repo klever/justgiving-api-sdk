@@ -1,4 +1,6 @@
-<?php namespace Klever\JustGivingApiSdk\Clients;
+<?php
+
+namespace Klever\JustGivingApiSdk\Clients;
 
 use Klever\JustGivingApiSdk\Clients\Http\CurlWrapper;
 

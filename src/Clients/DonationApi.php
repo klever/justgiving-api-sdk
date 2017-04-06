@@ -1,9 +1,8 @@
-<?php namespace Klever\JustGivingApiSdk\Clients;
+<?php
+
+namespace Klever\JustGivingApiSdk\Clients;
 
 use Klever\JustGivingApiSdk\Clients\Http\HTTPResponse;
-
-include_once 'ClientBase.php';
-include_once 'Http/CurlWrapper.php';
 
 class DonationApi extends ClientBase
 {

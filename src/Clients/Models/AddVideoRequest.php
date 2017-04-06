@@ -1,4 +1,6 @@
-<?php namespace Klever\JustGivingApiSdk\Clients\Models;
+<?php
+
+namespace Klever\JustGivingApiSdk\Clients\Models;
 
 class AddVideoRequest
 {
