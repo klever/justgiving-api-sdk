@@ -2,8 +2,14 @@
 
 namespace Klever\JustGivingApiSdk;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
 use Klever\JustGivingApiSdk\Clients\Http\CurlWrapper;
 use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
+use Klever\JustGivingApiSdk\Support\Response;
+use Psr\Http\Message\ResponseInterface;
 
 class JustGivingClient
 {
@@ -43,7 +49,24 @@ class JustGivingClient
         $this->ApiVersion = (string) $apiVersion;
         $this->Username = (string) $username;
         $this->Password = (string) $password;
-        $this->httpClient = new CurlWrapper($this->baseUrl(), $username, $password);
+//        $this->httpClient = new CurlWrapper($this->baseUrl(), $username, $password);
+
+        $stack = new HandlerStack;
+        $stack->setHandler(new CurlHandler);
+        $stack->push(Middleware::mapResponse(function (ResponseInterface $response) {
+            return new Response($response);
+        }));
+
+        $this->httpClient = new Client([
+            'handler'  => $stack,
+            'base_uri' => $this->baseUrl(),
+            'headers'  => [
+                'Accept'        => 'application/json',
+                'Authorize'     => 'Basic' . $this->BuildAuthenticationValue(),
+                'Authorization' => 'Basic' . $this->BuildAuthenticationValue(),
+                'Content-type'  => 'application/json',
+            ]
+        ]);
         $this->debug = false;
     }
 
@@ -75,5 +98,12 @@ class JustGivingClient
     public function baseUrl()
     {
         return $this->RootDomain . $this->ApiKey . '/v' . $this->ApiVersion . '/';
+    }
+
+    protected function BuildAuthenticationValue()
+    {
+        return empty($this->Username)
+            ? ''
+            : base64_encode($this->Username . ":" . $this->Password);
     }
 }

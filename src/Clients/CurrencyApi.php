@@ -10,7 +10,7 @@ class CurrencyApi extends ClientBase
     {
         $url = "fundraising/currencies";
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }

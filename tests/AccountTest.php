@@ -27,6 +27,7 @@ class AccountTest extends Base
         $request->address->postcodeOrZipcode = "M130EJ";
         $request->acceptTermsAndConditions = true;
         $response = $this->client->Account->Create($request);
+
         $this->assertEquals($response->email, $request->email);
     }
 
@@ -58,6 +59,7 @@ class AccountTest extends Base
         $request->email = $this->context->TestUsername;
         $request->password = $this->context->TestValidPassword;
         $response = $this->client->Account->IsValid($request);
+        dd($response->getBody()->getContents());
         $this->assertTrue($response->consumerId > 0);
         $this->assertEquals($response->isValid, 1);
     }
@@ -74,7 +76,7 @@ class AccountTest extends Base
     }
 
     /** @test */
-    public function get_account_details_when_supplied_authentication_retrive_account_details()
+    public function get_account_details_when_supplied_authentication_retrieve_account_details()
     {
         $response = $this->client->Account->AccountDetails();
         $this->assertNotNull($response->email);

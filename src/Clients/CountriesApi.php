@@ -8,7 +8,7 @@ class CountriesApi extends ClientBase
     {
         $url = "countries";
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }

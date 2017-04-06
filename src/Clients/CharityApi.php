@@ -4,43 +4,24 @@ namespace Klever\JustGivingApiSdk\Clients;
 
 class CharityApi extends ClientBase
 {
-
-
     public function Retrieve($charityId)
     {
-        $url = "charity/" . $charityId;
-
-        $json = $this->curlWrapper->Get($url);
-
-        return json_decode($json);
+        return $this->get("charity/" . $charityId);
     }
 
     public function Authenticate($authenticateCharityAccountRequest)
     {
-        $url = "charity/authenticate";
-
-        $payload = json_encode($authenticateCharityAccountRequest);
-        $json = $this->curlWrapper->PostAndGetResponse($url, $payload);
-
-        return json_decode($json);
+        return $this->post("charity/authenticate", $authenticateCharityAccountRequest);
     }
 
     public function GetEventsByCharityId($charityId)
     {
-        $url = "charity/" . $charityId . "/events";
-
-        $json = $this->curlWrapper->Get($url);
-
-        return json_decode($json);
+        return $this->get("charity/" . $charityId . "/events");
     }
 
     public function GetDonations($charityId)
     {
-        $url = "charity/" . $charityId . "/donations";
-
-        $json = $this->curlWrapper->Get($url);
-
-        return json_decode($json);
+        return $this->get("charity/" . $charityId . "/donations");
     }
 
     public function DeleteFundraisingPageAttribution($deleteFundraisingPageAttributionRequest)
@@ -48,13 +29,7 @@ class CharityApi extends ClientBase
         $request = $deleteFundraisingPageAttributionRequest;
         $url = "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
 
-        $json = $this->curlWrapper->Delete($url);
-
-        if ($json['http_code'] == 201) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->delete($url)->wasSuccessful();
     }
 
     public function UpdateFundraisingPageAttribution($fundraisingPageAttributionRequest, $updateFundraisingPageAttributionRequest)
@@ -62,13 +37,7 @@ class CharityApi extends ClientBase
         $request = $fundraisingPageAttributionRequest;
         $url = "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
 
-        $payload = json_encode($updateFundraisingPageAttributionRequest);
-        $json = $this->curlWrapper->Put($url, $payload, true);
-        if ($json['http_code'] == 201) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->put($url, $updateFundraisingPageAttributionRequest)->wasSuccessful();
     }
 
     public function AppendFundraisingPageAttribution($fundraisingPageAttributionRequest, $updateFundraisingPageAttributionRequest)
@@ -76,31 +45,18 @@ class CharityApi extends ClientBase
         $request = $fundraisingPageAttributionRequest;
         $url = "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
 
-        $payload = json_encode($updateFundraisingPageAttributionRequest);
-        $json = $this->curlWrapper->Post($url, $payload);
-        if ($json['http_code'] == 201) {
-            return true;
-        } else {
-            return false;
-        }
+        $json = $this->Post($url, $updateFundraisingPageAttributionRequest)->wasSuccessful();
     }
 
     public function GetFundraisingPageAttribution($fundraisingPageAttributionRequest, $updateFundraisingPageAttributionRequest)
     {
         $request = $fundraisingPageAttributionRequest;
-        $url = "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
 
-        $json = $this->curlWrapper->Get($url);
-
-        return json_decode($json);
+        return $this->getContent("charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution");
     }
 
     public function Categories()
     {
-        $url = "charity/categories";
-
-        $json = $this->curlWrapper->Get($url);
-
-        return json_decode($json);
+        return $this->get("charity/categories");
     }
 }

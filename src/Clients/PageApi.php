@@ -59,7 +59,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages";
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }
@@ -68,7 +68,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/" . $pageShortName;
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }
@@ -77,7 +77,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/suggest?preferredName=" . urlencode($preferredName);
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }
@@ -86,7 +86,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/" . $pageShortName . "/donations" . "?PageSize=" . $pageSize . "&PageNum=" . $pageNumber;
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }
@@ -121,9 +121,9 @@ class PageApi extends ClientBase
         $url = "fundraising/pages/" . $pageShortName . "/donations/ref/" . $reference;
 
         if ($privateData == 1) {
-            $json = $this->curlWrapper->Get($url);
+            $json = $this->getContent($url);
         } else {
-            $json = $this->curlWrapper->Get($url);
+            $json = $this->getContent($url);
         }
 
         return json_decode($json);
@@ -133,7 +133,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/" . $pageShortName . "/updates/";
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }
@@ -142,7 +142,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/" . $pageShortName . "/updates/" . $updateId;
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }
@@ -201,7 +201,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/" . $pageShortName . "/attribution";
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }
@@ -237,7 +237,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/" . $pageShortName . "/images";
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }
@@ -256,7 +256,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/" . $pageShortName . "/videos";
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }

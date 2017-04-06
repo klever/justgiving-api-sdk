@@ -21,101 +21,32 @@ class AccountApi extends ClientBase
 
     public function AccountDetails()
     {
-        $url = "account";
-
-        $json = $this->curlWrapper->Get($url);
-
-        return json_decode($json);
-    }
-
-    public function CreateV2($createAccountRequest)
-    {
-        $httpResponse = new HTTPResponse();
-        $url = "account";
-
-        $payload = json_encode($createAccountRequest);
-        $result = $this->curlWrapper->PutV2($url, $payload);
-        $httpResponse->bodyResponse = json_decode($result->bodyResponse);
-        $httpResponse->httpStatusCode = $result->httpStatusCode;
-
-        return $httpResponse;
+        return $this->get("account");
     }
 
     public function Create($createAccountRequest)
     {
-        $url = "account";
-
-        $payload = json_encode($createAccountRequest);
-        $json = $this->curlWrapper->Put($url, $payload);
-
-        return json_decode($json);
+        return $this->put("account", $createAccountRequest);
     }
 
     public function ListAllPages($email)
     {
-        $url = "account/" . $email . "/pages";
-
-        $json = $this->curlWrapper->Get($url);
-
-        return json_decode($json);
-    }
-
-    public function IsEmailRegisteredV2($email)
-    {
-        $httpResponse = new HTTPResponse();
-        $url = "account/" . $email;
-
-        $result = $this->curlWrapper->HeadV2($url);
-        $httpResponse->bodyResponse = json_decode($result->bodyResponse);
-        $httpResponse->httpStatusCode = $result->httpStatusCode;
-
-        return $httpResponse;
+        return $this->get("account/" . $email . "/pages");
     }
 
     public function IsEmailRegistered($email)
     {
-        $url = "account/" . $email;
-
-        $httpInfo = $this->curlWrapper->Head($url);
-
-        if ($httpInfo['http_code'] == 200) {
-            return true;
-        } else if ($httpInfo['http_code'] == 404) {
-            return false;
-        } else {
-            throw new Exception('IsEmailRegistered returned a status code it wasn\'t expecting. Returned ' . $httpInfo['http_code']);
-        }
-    }
-
-    public function RequestPasswordReminderV2($email)
-    {
-        $httpResponse = new HTTPResponse();
-        $url = "account/" . $email . "/requestpasswordreminder";
-
-        $result = $this->curlWrapper->GetV2($url);
-        $httpResponse->bodyResponse = json_decode($result->bodyResponse);
-        $httpResponse->httpStatusCode = $result->httpStatusCode;
-
-        return $httpResponse;
+        return $this->head("account/" . $email)->existenceCheck();
     }
 
     public function RequestPasswordReminder($email)
     {
-        $url = "account/" . $email . "/requestpasswordreminder";
-
-        $json = $this->curlWrapper->Get($url);
-
-        return json_decode($json);
+        return $this->get("account/" . $email . "/requestpasswordreminder");
     }
 
     public function IsValid($validateAccountRequest)
     {
-        $url = "account/validate";
-
-        $payload = json_encode($validateAccountRequest);
-        $json = $this->curlWrapper->PostAndGetResponse($url, $payload);
-
-        return json_decode($json);
+        return $this->post("account/validate", $validateAccountRequest);
     }
 
     public function ChangePassword($changePasswordRequest)
@@ -130,33 +61,19 @@ class AccountApi extends ClientBase
 
     public function AllDonations()
     {
-        $url = "account/donations";
-
-        $json = $this->curlWrapper->Get($url);
-
-        return json_decode($json);
+        return $this->getContent("account/donations");
     }
 
     public function AllDonationsByCharity($charityId)
     {
-        if ($charityId > 0) {
-            $url = "account/donations?charityId=" . $charityId;
-
-            $json = $this->curlWrapper->Get($url);
-
-            return json_decode($json);
-        } else {
-            return AllDonations();
-        }
+        return $charityId > 0
+            ? $this->getContent("account/donations?charityId=" . $charityId)
+            : $this->AllDonations();
     }
 
     public function RatingHistory()
     {
-        $url = "account/rating";
-
-        $json = $this->curlWrapper->Get($url);
-
-        return json_decode($json);
+        return $this->getContent("account/rating");
     }
 
     public function RateContent($rateContentRequest)
@@ -165,29 +82,18 @@ class AccountApi extends ClientBase
 
         $payload = json_encode($rateContentRequest);
         $json = $this->curlWrapper->Post($url, $payload);
-        if ($json['http_code'] == 201) {
-            return true;
-        } else if ($json['http_code'] == 401) {
-            return false;
-        }
+
+        return $json['http_code'] == 201;
     }
 
     public function ContentFeed()
     {
-        $url = "account/feed";
-
-        $json = $this->curlWrapper->Get($url);
-
-        return json_decode($json);
+        return $this->getContent("account/feed");
     }
 
     public function GetInterests()
     {
-        $url = "account/interest";
-
-        $json = $this->curlWrapper->Get($url);
-
-        return json_decode($json);
+        return $this->getContent("account/interest");
     }
 
     public function AddInterest($addInterestRequest)
@@ -205,14 +111,9 @@ class AccountApi extends ClientBase
 
     public function ReplaceInterest($replaceInterestRequest)
     {
-        $url = "account/interest";
+        $status = $this->putStatus("account/interest", $replaceInterestRequest);
 
-        $payload = json_encode($replaceInterestRequest);
-        $json = $this->curlWrapper->Put($url, $payload, true);
-        if ($json['http_code'] == 201) {
-            return true;
-        } else if ($json['http_code'] == 401) {
-            return false;
-        }
+        return $status == 201;
     }
+
 }

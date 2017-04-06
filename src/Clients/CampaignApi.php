@@ -10,7 +10,7 @@ class CampaignApi extends ClientBase
     {
         $url = "campaigns/" . $charityName . "/" . $campaignName;
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }

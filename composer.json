@@ -16,9 +16,14 @@
   "autoload-dev": {
     "psr-4": {
       "Klever\\JustGivingApiSdk\\Tests\\": "tests/"
-    }
+    },
+    "files": [
+      "src/Support/functions.php"
+    ]
   },
-  "require": {},
+  "require": {
+    "guzzlehttp/guzzle": "^6.2"
+  },
   "require-dev": {
     "phpunit/phpunit": "^6.0"
   }

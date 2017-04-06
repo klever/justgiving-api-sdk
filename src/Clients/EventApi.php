@@ -34,7 +34,7 @@ class EventApi extends ClientBase
     {
         $url = "event/" . $eventId;
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }
@@ -43,7 +43,7 @@ class EventApi extends ClientBase
     {
         $url = "event/" . $eventId . "/pages?PageSize=" . $pageSize . "&PageNum=" . $pageNumber;
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }

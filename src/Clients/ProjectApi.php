@@ -8,7 +8,7 @@ class ProjectApi extends ClientBase
     {
         $url = "project?q=" . $searchTerm;
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }
@@ -17,7 +17,7 @@ class ProjectApi extends ClientBase
     {
         $url = "project/global/" . $projectId;
 
-        $json = $this->curlWrapper->Get($url);
+        $json = $this->getContent($url);
 
         return json_decode($json);
     }

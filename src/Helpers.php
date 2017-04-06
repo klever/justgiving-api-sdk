@@ -10,4 +10,5 @@ class Helpers
         $dt = DateTime::createFromFormat("U.u.O", vsprintf('%2$s.%3$s.%4$s', $matches));
         echo $dt->format('r');
     }
+
 }
