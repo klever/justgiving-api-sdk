@@ -7,11 +7,11 @@ use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 
 class JustGivingClient
 {
-    public $ApiKey;
-    public $ApiVersion;
-    public $Username;
-    public $Password;
-    public $RootDomain;
+    protected $ApiKey;
+    protected $ApiVersion;
+    protected $Username;
+    protected $Password;
+    protected $RootDomain;
 
     /**
      * The clients that have been instantiated.
@@ -43,7 +43,7 @@ class JustGivingClient
         $this->ApiVersion = (string) $apiVersion;
         $this->Username = (string) $username;
         $this->Password = (string) $password;
-        $this->httpClient = new CurlWrapper($this->baseUrl());
+        $this->httpClient = new CurlWrapper($this->baseUrl(), $username, $password);
         $this->debug = false;
     }
 

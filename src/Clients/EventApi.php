@@ -13,7 +13,7 @@ class EventApi extends ClientBase
         $url = "event";
 
         $payload = json_encode($event);
-        $json = $this->curlWrapper->PostAndGetResponse($url, $this->BuildAuthenticationValue(), $payload);
+        $json = $this->curlWrapper->PostAndGetResponse($url, $payload);
 
         return json_decode($json);
     }
@@ -23,7 +23,7 @@ class EventApi extends ClientBase
         $httpResponse = new HTTPResponse();
         $url = "event/" . $eventId;
 
-        $result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+        $result = $this->curlWrapper->GetV2($url);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -34,7 +34,7 @@ class EventApi extends ClientBase
     {
         $url = "event/" . $eventId;
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -43,7 +43,7 @@ class EventApi extends ClientBase
     {
         $url = "event/" . $eventId . "/pages?PageSize=" . $pageSize . "&PageNum=" . $pageNumber;
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }

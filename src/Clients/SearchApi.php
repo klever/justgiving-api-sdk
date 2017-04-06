@@ -9,7 +9,7 @@ class SearchApi extends ClientBase
     {
         $url = "charity/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber;
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }

@@ -13,7 +13,7 @@ class PageApi extends ClientBase
         $url = "fundraising/pages";
 
         $payload = json_encode($pageCreationRequest);
-        $result = $this->curlWrapper->PutV2($url, $this->BuildAuthenticationValue(), $payload);
+        $result = $this->curlWrapper->PutV2($url, $payload);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -25,7 +25,7 @@ class PageApi extends ClientBase
         $url = "fundraising/pages";
 
         $payload = json_encode($pageCreationRequest);
-        $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
+        $json = $this->curlWrapper->Put($url, $payload);
 
         return json_decode($json);
     }
@@ -35,7 +35,7 @@ class PageApi extends ClientBase
         $httpResponse = new HTTPResponse();
         $url = "fundraising/pages/" . $pageShortName;
 
-        $result = $this->curlWrapper->HeadV2($url, $this->BuildAuthenticationValue());
+        $result = $this->curlWrapper->HeadV2($url);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -46,7 +46,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/" . $pageShortName;
 
-        $httpInfo = $this->curlWrapper->Head($url, $this->BuildAuthenticationValue());
+        $httpInfo = $this->curlWrapper->Head($url);
 
         if ($httpInfo['http_code'] == 200) {
             return true;
@@ -59,7 +59,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages";
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -68,7 +68,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/" . $pageShortName;
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -77,7 +77,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/suggest?preferredName=" . urlencode($preferredName);
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -86,7 +86,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/" . $pageShortName . "/donations" . "?PageSize=" . $pageSize . "&PageNum=" . $pageNumber;
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -98,7 +98,7 @@ class PageApi extends ClientBase
         $storyUpdateRequest = new StoryUpdateRequest();
         $storyUpdateRequest->storySupplement = $storyUpdate;
         $payload = json_encode($storyUpdateRequest);
-        $httpInfo = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $payload);
+        $httpInfo = $this->curlWrapper->Post($url, $payload);
 
         return $httpInfo['http_code'] == 200;
     }
@@ -107,7 +107,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/" . $pageShortName . "/images?caption=" . urlencode($caption);
 
-        $httpInfo = $this->curlWrapper->PostBinary($url, $this->BuildAuthenticationValue(), $filename, $imageContentType);
+        $httpInfo = $this->curlWrapper->PostBinary($url, $filename, $imageContentType);
         if ($httpInfo['http_code'] == 200) {
             return true;
         } else {
@@ -123,7 +123,7 @@ class PageApi extends ClientBase
         if ($privateData == 1) {
             $json = $this->curlWrapper->Get($url);
         } else {
-            $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+            $json = $this->curlWrapper->Get($url);
         }
 
         return json_decode($json);
@@ -152,7 +152,7 @@ class PageApi extends ClientBase
         $url = "fundraising/pages/" . $pageShortName . "/updates/";
 
         $payload = json_encode($addPostToPageUpdateRequest);
-        $json = $this->curlWrapper->PostAndGetResponse($url, $this->BuildAuthenticationValue(), $payload);
+        $json = $this->curlWrapper->PostAndGetResponse($url, $payload);
 
         return json_decode($json);
     }
@@ -161,7 +161,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/" . $pageShortName . "/attribution";
 
-        $json = $this->curlWrapper->Delete($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Delete($url);
         if ($json['http_code'] == 200) {
             return true;
         } else if ($json['http_code'] == 404) {
@@ -175,7 +175,7 @@ class PageApi extends ClientBase
         $url = "fundraising/pages/" . $pageShortName . "/attribution";
 
         $payload = json_encode($requestBody);
-        $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload, true);
+        $json = $this->curlWrapper->Put($url, $payload, true);
         if ($json['http_code'] == 200) {
             return true;
         } else if ($json['http_code'] == 404) {
@@ -189,7 +189,7 @@ class PageApi extends ClientBase
         $url = "fundraising/pages/" . $pageShortName . "/attribution";
 
         $payload = json_encode($requestBody);
-        $json = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $payload);
+        $json = $this->curlWrapper->Post($url, $payload);
         if ($json['http_code'] == 200) {
             return true;
         } else if ($json['http_code'] == 404) {
@@ -214,7 +214,7 @@ class PageApi extends ClientBase
 
         $url = "fundraising/pages/" . $pageShortName . "/images/default";
 
-        $httpInfo = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $imageBytes, $imageContentType);
+        $httpInfo = $this->curlWrapper->Post($url, $imageBytes, $imageContentType);
 
         if ($httpInfo['http_code'] == 200) {
             return true;
@@ -228,7 +228,7 @@ class PageApi extends ClientBase
         $url = "fundraising/pages/" . $pageShortName . "/images";
 
         $payload = json_encode($addImageRequest);
-        $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
+        $json = $this->curlWrapper->Put($url, $payload);
 
         return json_decode($json);
     }
@@ -247,7 +247,7 @@ class PageApi extends ClientBase
         $url = "fundraising/pages/" . $pageShortName . "/videos";
 
         $payload = json_encode($addVideoRequest);
-        $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
+        $json = $this->curlWrapper->Put($url, $payload);
 
         return json_decode($json);
     }
@@ -265,7 +265,7 @@ class PageApi extends ClientBase
     {
         $url = "fundraising/pages/" . $pageShortName;
 
-        $httpInfo = $this->curlWrapper->Delete($url, $this->BuildAuthenticationValue());
+        $httpInfo = $this->curlWrapper->Delete($url);
 
         return $httpInfo;
     }

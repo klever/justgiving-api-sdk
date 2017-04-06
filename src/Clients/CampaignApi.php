@@ -10,7 +10,7 @@ class CampaignApi extends ClientBase
     {
         $url = "campaigns/" . $charityName . "/" . $campaignName;
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -20,7 +20,7 @@ class CampaignApi extends ClientBase
         $httpResponse = new HTTPResponse();
         $url = "campaigns/" . $charityName . "/" . $campaignName;
 
-        $result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+        $result = $this->curlWrapper->GetV2($url);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -32,7 +32,7 @@ class CampaignApi extends ClientBase
         $url = "campaigns";
 
         $payload = json_encode($campaignCreationRequest);
-        $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
+        $json = $this->curlWrapper->Put($url, $payload);
 
         return json_decode($json);
     }
@@ -43,7 +43,7 @@ class CampaignApi extends ClientBase
         $url = "campaigns";
 
         $payload = json_encode($campaignCreationRequest);
-        $result = $this->curlWrapper->PutV2($url, $this->BuildAuthenticationValue(), $payload);
+        $result = $this->curlWrapper->PutV2($url, $payload);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -55,7 +55,7 @@ class CampaignApi extends ClientBase
         $httpResponse = new HTTPResponse();
         $url = "campaigns/" . $charityShortName . "/" . $campaignShortUrl . "/pages";
 
-        $result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+        $result = $this->curlWrapper->GetV2($url);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -67,7 +67,7 @@ class CampaignApi extends ClientBase
         $httpResponse = new HTTPResponse();
         $url = "campaigns/" . $charityId;
 
-        $result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+        $result = $this->curlWrapper->GetV2($url);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -80,7 +80,7 @@ class CampaignApi extends ClientBase
         $url = "campaigns";
 
         $payload = json_encode($registerCampaignFundraisingPageRequest);
-        $result = $this->curlWrapper->PostV2($url, $this->BuildAuthenticationValue(), $payload);
+        $result = $this->curlWrapper->PostV2($url, $payload);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 

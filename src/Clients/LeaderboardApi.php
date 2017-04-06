@@ -11,7 +11,7 @@ class LeaderboardApi extends ClientBase
         $httpResponse = new HTTPResponse();
         $url = "charity/" . $charityId . "/leaderboard";
 
-        $result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+        $result = $this->curlWrapper->GetV2($url);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -23,7 +23,7 @@ class LeaderboardApi extends ClientBase
         $httpResponse = new HTTPResponse();
         $url = "event/" . $eventId . "/leaderboard";
 
-        $result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+        $result = $this->curlWrapper->GetV2($url);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 

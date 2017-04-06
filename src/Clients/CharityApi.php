@@ -10,7 +10,7 @@ class CharityApi extends ClientBase
     {
         $url = "charity/" . $charityId;
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -20,7 +20,7 @@ class CharityApi extends ClientBase
         $url = "charity/authenticate";
 
         $payload = json_encode($authenticateCharityAccountRequest);
-        $json = $this->curlWrapper->PostAndGetResponse($url, "", $payload);
+        $json = $this->curlWrapper->PostAndGetResponse($url, $payload);
 
         return json_decode($json);
     }
@@ -63,7 +63,7 @@ class CharityApi extends ClientBase
         $url = "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
 
         $payload = json_encode($updateFundraisingPageAttributionRequest);
-        $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload, true);
+        $json = $this->curlWrapper->Put($url, $payload, true);
         if ($json['http_code'] == 201) {
             return true;
         } else {
@@ -77,7 +77,7 @@ class CharityApi extends ClientBase
         $url = "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
 
         $payload = json_encode($updateFundraisingPageAttributionRequest);
-        $json = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $payload);
+        $json = $this->curlWrapper->Post($url, $payload);
         if ($json['http_code'] == 201) {
             return true;
         } else {
@@ -90,7 +90,7 @@ class CharityApi extends ClientBase
         $request = $fundraisingPageAttributionRequest;
         $url = "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }

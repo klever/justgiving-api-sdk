@@ -12,7 +12,7 @@ class AccountApi extends ClientBase
         $httpResponse = new HTTPResponse();
         $url = "account";
 
-        $result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+        $result = $this->curlWrapper->GetV2($url);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -23,7 +23,7 @@ class AccountApi extends ClientBase
     {
         $url = "account";
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -34,7 +34,7 @@ class AccountApi extends ClientBase
         $url = "account";
 
         $payload = json_encode($createAccountRequest);
-        $result = $this->curlWrapper->PutV2($url, $this->BuildAuthenticationValue(), $payload);
+        $result = $this->curlWrapper->PutV2($url, $payload);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -46,7 +46,7 @@ class AccountApi extends ClientBase
         $url = "account";
 
         $payload = json_encode($createAccountRequest);
-        $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload);
+        $json = $this->curlWrapper->Put($url, $payload);
 
         return json_decode($json);
     }
@@ -55,7 +55,7 @@ class AccountApi extends ClientBase
     {
         $url = "account/" . $email . "/pages";
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -65,7 +65,7 @@ class AccountApi extends ClientBase
         $httpResponse = new HTTPResponse();
         $url = "account/" . $email;
 
-        $result = $this->curlWrapper->HeadV2($url, $this->BuildAuthenticationValue());
+        $result = $this->curlWrapper->HeadV2($url);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -76,7 +76,7 @@ class AccountApi extends ClientBase
     {
         $url = "account/" . $email;
 
-        $httpInfo = $this->curlWrapper->Head($url, $this->BuildAuthenticationValue());
+        $httpInfo = $this->curlWrapper->Head($url);
 
         if ($httpInfo['http_code'] == 200) {
             return true;
@@ -92,7 +92,7 @@ class AccountApi extends ClientBase
         $httpResponse = new HTTPResponse();
         $url = "account/" . $email . "/requestpasswordreminder";
 
-        $result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+        $result = $this->curlWrapper->GetV2($url);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -103,7 +103,7 @@ class AccountApi extends ClientBase
     {
         $url = "account/" . $email . "/requestpasswordreminder";
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -113,7 +113,7 @@ class AccountApi extends ClientBase
         $url = "account/validate";
 
         $payload = json_encode($validateAccountRequest);
-        $json = $this->curlWrapper->PostAndGetResponse($url, $this->BuildAuthenticationValue(), $payload);
+        $json = $this->curlWrapper->PostAndGetResponse($url, $payload);
 
         return json_decode($json);
     }
@@ -123,7 +123,7 @@ class AccountApi extends ClientBase
         $url = "account/changePassword";
 
         $payload = json_encode($changePasswordRequest);
-        $json = $this->curlWrapper->PostAndGetResponse($url, "", $payload);
+        $json = $this->curlWrapper->PostAndGetResponse($url, $payload);
 
         return json_decode($json);
     }
@@ -132,7 +132,7 @@ class AccountApi extends ClientBase
     {
         $url = "account/donations";
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -142,7 +142,7 @@ class AccountApi extends ClientBase
         if ($charityId > 0) {
             $url = "account/donations?charityId=" . $charityId;
 
-            $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+            $json = $this->curlWrapper->Get($url);
 
             return json_decode($json);
         } else {
@@ -154,7 +154,7 @@ class AccountApi extends ClientBase
     {
         $url = "account/rating";
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -164,7 +164,7 @@ class AccountApi extends ClientBase
         $url = "account/rating";
 
         $payload = json_encode($rateContentRequest);
-        $json = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $payload);
+        $json = $this->curlWrapper->Post($url, $payload);
         if ($json['http_code'] == 201) {
             return true;
         } else if ($json['http_code'] == 401) {
@@ -176,7 +176,7 @@ class AccountApi extends ClientBase
     {
         $url = "account/feed";
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -185,7 +185,7 @@ class AccountApi extends ClientBase
     {
         $url = "account/interest";
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -195,7 +195,7 @@ class AccountApi extends ClientBase
         $url = "account/interest";
 
         $payload = json_encode($addInterestRequest);
-        $json = $this->curlWrapper->Post($url, $this->BuildAuthenticationValue(), $payload);
+        $json = $this->curlWrapper->Post($url, $payload);
         if ($json['http_code'] == 201) {
             return true;
         } else if ($json['http_code'] == 401) {
@@ -208,7 +208,7 @@ class AccountApi extends ClientBase
         $url = "account/interest";
 
         $payload = json_encode($replaceInterestRequest);
-        $json = $this->curlWrapper->Put($url, $this->BuildAuthenticationValue(), $payload, true);
+        $json = $this->curlWrapper->Put($url, $payload, true);
         if ($json['http_code'] == 201) {
             return true;
         } else if ($json['http_code'] == 401) {

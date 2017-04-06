@@ -10,7 +10,7 @@ class DonationApi extends ClientBase
     {
         $url = "donation/" . $donationId;
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
@@ -20,7 +20,7 @@ class DonationApi extends ClientBase
         $httpResponse = new HTTPResponse();
         $url = "donation/" . $donationId;
 
-        $result = $this->curlWrapper->GetV2($url, $this->BuildAuthenticationValue());
+        $result = $this->curlWrapper->GetV2($url);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -31,7 +31,7 @@ class DonationApi extends ClientBase
     {
         $url = "donation/" . $donationId . "/status";
 
-        $json = $this->curlWrapper->Get($url, $this->BuildAuthenticationValue());
+        $json = $this->curlWrapper->Get($url);
 
         return json_decode($json);
     }
