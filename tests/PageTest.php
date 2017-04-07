@@ -101,7 +101,8 @@ class PageTest extends Base
         $this->assertTrue($booleanResponse);
     }
 
-    public function testUploadImage_ForKnownPageWithValidCredentials_UploadsImageWithExpectedCaption()
+    /** @test */
+    public function it_uploads_an_image_and_caption_to_a_page()
     {
         $dto = new RegisterPageRequest();
         $dto->reference = "12345";
@@ -120,7 +121,9 @@ class PageTest extends Base
         $caption = "PHP Image Caption - " . uniqid();
         $filename = __DIR__ . "/img/jpg.jpg";
         $imageContentType = "image/jpeg";
-        $booleanResponse = $this->client->Page->UploadImage($dto->pageShortName, $caption, $filename, $imageContentType);
+        $response = $this->client->Page->UploadImage($dto->pageShortName, $caption, $filename, $imageContentType);
+
+        dd($response);
         $this->assertTrue($booleanResponse);
     }
 
@@ -130,5 +133,13 @@ class PageTest extends Base
         $request->Message = "update story";
         $response = $this->client->Page->AddPostToPageUpdate("api-test-54787f3435f75", $request);
         $this->assertNotNull($response->Created);
+    }
+
+    /** @test */
+    public function it_checks_if_a_page_short_name_is_registered()
+    {
+        $response = $this->client->page->IsShortNameRegistered('rasha25');
+
+        $this->assertTrue($response);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class ChangePasswordRequest
+class ChangePasswordRequest extends Model
 {
     public $emailaddress;
     public $newpassword;

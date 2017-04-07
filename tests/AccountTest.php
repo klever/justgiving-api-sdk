@@ -35,6 +35,8 @@ class AccountTest extends Base
     public function list_all_pages_when_supplied_with_a_valid_account_retrieves_pages()
     {
         $response = $this->client->Account->ListAllPages("apiunittest@justgiving.com");
+
+        dd($response);
         $this->assertTrue(count($response) > 0);
     }
 
@@ -79,6 +81,8 @@ class AccountTest extends Base
     public function get_account_details_when_supplied_authentication_retrieve_account_details()
     {
         $response = $this->client->Account->AccountDetails();
+
+        dd($response);
         $this->assertNotNull($response->email);
         $this->assertEquals($this->context->TestUsername, $response->email);
     }
@@ -110,6 +114,8 @@ class AccountTest extends Base
         $cpRequest->newpassword = $badPassword;
         $cpRequest->currentpassword = $badPassword;
         $response = $this->client->Account->ChangePassword($cpRequest);
+
+        dd($response);
         $this->assertEquals($response->success, 0);
     }
 
@@ -144,7 +150,8 @@ class AccountTest extends Base
     /** @test */
     public function get_all_donations_when_supplied_authentication_return_list_of_donations()
     {
-        $response = $this->client->Account->AllDonations();
+        $response = $this->client->Account->AllDonations()->getBodyAsObject();
+
         $this->assertNotNull($response);
     }
 

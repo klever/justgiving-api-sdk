@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class StoryUpdateRequest
+class StoryUpdateRequest extends Model
 {
     public $storySupplement;
 }

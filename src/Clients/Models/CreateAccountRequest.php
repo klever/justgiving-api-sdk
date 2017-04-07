@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class CreateAccountRequest
+class CreateAccountRequest extends Model
 {
     public $reference;
     public $title;

@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class RegisterPageRequest
+class RegisterPageRequest extends Model
 {
     public $reference;
     public $charityId;
@@ -22,14 +22,14 @@ class RegisterPageRequest
     public $videos;
 }
 
-class PageImage
+class PageImage extends Model
 {
     public $url;
     public $caption;
     public $isDefault;
 }
 
-class PageVideo
+class PageVideo extends Model
 {
     public $url;
     public $caption;

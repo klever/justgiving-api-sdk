@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class AuthenticateCharityAccountRequest
+class AuthenticateCharityAccountRequest extends Model
 {
     public $password;
     public $pin;

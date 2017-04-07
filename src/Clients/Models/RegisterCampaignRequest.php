@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class RegisterCampaignRequest
+class RegisterCampaignRequest extends Model
 {
     public $campaignUrl;
     public $campaignName;
@@ -18,7 +18,7 @@ class RegisterCampaignRequest
     public $fundraisingEnabled;
 }
 
-class CampaignCoverPhotos
+class CampaignCoverPhotos extends Model
 {
     public $url;
     public $caption;
@@ -26,7 +26,7 @@ class CampaignCoverPhotos
     public $alt;
 }
 
-class CampaignLogos
+class CampaignLogos extends Model
 {
     public $url;
     public $caption;
@@ -34,7 +34,7 @@ class CampaignLogos
     public $alt;
 }
 
-class CampaignPhotos
+class CampaignPhotos extends Model
 {
     public $url;
     public $caption;

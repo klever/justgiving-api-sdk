@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class Event
+class Event extends Model
 {
     public $name;
     public $description;

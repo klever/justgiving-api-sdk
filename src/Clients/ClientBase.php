@@ -3,7 +3,9 @@
 namespace Klever\JustGivingApiSdk\Clients;
 
 use GuzzleHttp\Client;
+use Klever\JustGivingApiSdk\Clients\Models\Model;
 use Psr\Http\Message\ResponseInterface;
+use function GuzzleHttp\Psr7\stream_for;
 
 class ClientBase
 {
@@ -76,9 +78,10 @@ class ClientBase
      * @param $payload
      * @return ResponseInterface
      */
-    protected function put($uri, $payload)
+    protected function put($uri, Model $payload)
     {
-        return $this->curlWrapper->put($uri, ['json' => get_object_vars($payload)]);
+        dd(json_encode(get_object_vars($payload)));
+        return $this->curlWrapper->put($uri, ['json' => $payload->getAttributes()]);
     }
 
     /**
@@ -91,6 +94,17 @@ class ClientBase
     protected function post($uri, $payload)
     {
         return $this->curlWrapper->post($uri, ['json' => get_object_vars($payload)]);
+    }
+
+    protected function postFile($uri, $filename, $contentType = null)
+    {
+        return $this->curlWrapper->post($uri, ['multipart' => [
+            [
+                'name'     => basename($filename),
+                'contents' => stream_for($filename)
+            ]
+        ]
+        ]);
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
 
-class UpdatePageSmsCodeRequest
+class UpdatePageSmsCodeRequest extends Model
 {
     public $urn;
 }

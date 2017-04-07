@@ -4,6 +4,7 @@ namespace Klever\JustGivingApiSdk\Clients;
 
 use Exception;
 use Klever\JustGivingApiSdk\Clients\Http\HTTPResponse;
+use Klever\JustGivingApiSdk\Clients\Models\CreateAccountRequest;
 
 class AccountApi extends ClientBase
 {
@@ -24,7 +25,7 @@ class AccountApi extends ClientBase
         return $this->get("account");
     }
 
-    public function Create($createAccountRequest)
+    public function Create(CreateAccountRequest $createAccountRequest)
     {
         return $this->put("account", $createAccountRequest);
     }
@@ -51,29 +52,24 @@ class AccountApi extends ClientBase
 
     public function ChangePassword($changePasswordRequest)
     {
-        $url = "account/changePassword";
-
-        $payload = json_encode($changePasswordRequest);
-        $json = $this->curlWrapper->PostAndGetResponse($url, $payload);
-
-        return json_decode($json);
+        return ($this->post("account/changePassword", $changePasswordRequest));
     }
 
     public function AllDonations()
     {
-        return $this->getContent("account/donations");
+        return $this->get("account/donations");
     }
 
     public function AllDonationsByCharity($charityId)
     {
         return $charityId > 0
-            ? $this->getContent("account/donations?charityId=" . $charityId)
+            ? $this->get("account/donations?charityId=" . $charityId)
             : $this->AllDonations();
     }
 
     public function RatingHistory()
     {
-        return $this->getContent("account/rating");
+        return $this->get("account/rating");
     }
 
     public function RateContent($rateContentRequest)
@@ -88,12 +84,12 @@ class AccountApi extends ClientBase
 
     public function ContentFeed()
     {
-        return $this->getContent("account/feed");
+        return $this->get("account/feed");
     }
 
     public function GetInterests()
     {
-        return $this->getContent("account/interest");
+        return $this->get("account/interest");
     }
 
     public function AddInterest($addInterestRequest)

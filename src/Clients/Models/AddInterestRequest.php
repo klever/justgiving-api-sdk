@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class AddInterestRequest
+class AddInterestRequest extends Model
 {
     public $interest;
 }

@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class UpdateFundraisingPageAttributionRequest
+class UpdateFundraisingPageAttributionRequest extends Model
 {
     public $attribution;
 } 

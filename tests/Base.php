@@ -22,6 +22,21 @@ class Base extends \PHPUnit\Framework\TestCase
         $foo = true;
         $this->assertTrue($foo);
     }
+
+    /**
+     * Tests if two objects have the same attributes.
+     *
+     * @param object|string $expectedObject
+     * @param object        $actualObject
+     */
+    protected function assertEqualAttributes($expectedObject, $actualObject)
+    {
+        $expectedObject = is_string($expectedObject) ? new $expectedObject : $expectedObject;
+        $expectedKeys = array_keys(get_object_vars($expectedObject));
+
+        $intersect = array_intersect($expectedKeys, array_keys(get_object_vars($actualObject)));
+        $this->assertEquals($expectedKeys, $intersect);
+    }
 }
 
 class TestContext

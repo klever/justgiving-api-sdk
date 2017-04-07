@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class RateContentRequest
+class RateContentRequest extends Model
 {
     public $intent;
     public $type;

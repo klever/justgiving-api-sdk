@@ -2,12 +2,12 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class TeamMember
+class TeamMember extends Model
 {
     public $pageShortName;
 }
 
-class Team
+class Team extends Model
 {
     public $teamShortName;
     public $name;

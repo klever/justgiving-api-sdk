@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class JoinTeamRequest
+class JoinTeamRequest extends Model
 {
     public $pageShortName;
 } 

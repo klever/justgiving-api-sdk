@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class AddImageRequest
+class AddImageRequest extends Model
 {
     public $caption;
     public $isDefault;

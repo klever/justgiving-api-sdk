@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class Address
+class Address extends Model
 {
     public $line1;
     public $line2;

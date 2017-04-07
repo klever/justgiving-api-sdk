@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class AddPostToPageUpdateRequest
+class AddPostToPageUpdateRequest extends Model
 {
     public $CreatedDate;
     public $Id;

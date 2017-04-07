@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients\Models;
 
-class ValidateAccountRequest
+class ValidateAccountRequest extends Model
 {
     public $email;
     public $password;
