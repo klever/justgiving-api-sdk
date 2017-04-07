@@ -11,33 +11,8 @@ class Model
      */
     public function getAttributes()
     {
-        $attributes = get_object_vars($this);
-
-        foreach ($attributes as $key => $value) {
-            if ($value instanceof Model) {
-                $attributes = $this->fillNestedAttributes($attributes, ucfirst($key), $value);
-                unset($attributes[$key]);
-            }
-        }
-
-        return $attributes;
+        return get_object_vars($this);
     }
-
-    /**
-     * @param array  $attributes
-     * @param string $baseName
-     * @param Model  $object
-     * @return mixed
-     */
-    protected function fillNestedAttributes(array $attributes, $baseName, Model $object)
-    {
-        foreach ($object->getAttributes() as $key => $value) {
-            $attributes[$baseName . '.' . $key] = $value;
-        }
-
-        return $attributes;
-    }
-
 
     /**
      * Get the names of the attributes on this model.

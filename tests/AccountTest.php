@@ -144,6 +144,7 @@ class AccountTest extends Base
         $cpRequest->currentpassword = $request->password;
         $response = $this->client->Account->ChangePassword($cpRequest);
 
+        dd($response);
         $this->assertEquals($response->success, 1);
     }
 

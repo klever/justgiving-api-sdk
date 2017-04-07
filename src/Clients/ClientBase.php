@@ -80,7 +80,6 @@ class ClientBase
      */
     protected function put($uri, Model $payload)
     {
-        dd(json_encode(get_object_vars($payload)));
         return $this->curlWrapper->put($uri, ['json' => $payload->getAttributes()]);
     }
 
