@@ -4,6 +4,7 @@ namespace Klever\JustGivingApiSdk\Clients;
 
 use GuzzleHttp\Client;
 use Klever\JustGivingApiSdk\Clients\Models\Model;
+use Klever\JustGivingApiSdk\Support\Response;
 use Psr\Http\Message\ResponseInterface;
 use function GuzzleHttp\Psr7\stream_for;
 
@@ -53,7 +54,7 @@ class ClientBase
      *
      * @param string $uri
      * @param        $payload
-     * @return ResponseInterface
+     * @return ResponseInterface|Response
      */
     protected function get($uri, $payload = null)
     {
@@ -64,7 +65,7 @@ class ClientBase
      * Perform a HEAD request.
      *
      * @param string $uri
-     * @return ResponseInterface
+     * @return ResponseInterface|Response
      */
     protected function head($uri)
     {
@@ -76,7 +77,7 @@ class ClientBase
      *
      * @param $uri
      * @param $payload
-     * @return ResponseInterface
+     * @return ResponseInterface|Response
      */
     protected function put($uri, Model $payload)
     {
@@ -88,7 +89,7 @@ class ClientBase
      *
      * @param $uri
      * @param $payload
-     * @return ResponseInterface
+     * @return ResponseInterface|Response
      */
     protected function post($uri, $payload)
     {
@@ -110,7 +111,7 @@ class ClientBase
      * Perform a DELETE request.
      *
      * @param $uri
-     * @return ResponseInterface
+     * @return ResponseInterface|Response
      */
     protected function delete($uri)
     {

@@ -28,7 +28,8 @@ class AccountTest extends Base
         $request->acceptTermsAndConditions = true;
         $response = $this->client->Account->Create($request);
 
-        $this->assertEquals($response->email, $request->email);
+//        dump($response);
+        $this->assertEquals(200, $response->getStatusCode());
     }
 
     /** @test */
@@ -36,53 +37,56 @@ class AccountTest extends Base
     {
         $response = $this->client->Account->ListAllPages("apiunittest@justgiving.com");
 
-        dd($response);
-        $this->assertTrue(count($response) > 0);
+        $attributes = ['pageId', 'pageTitle', 'pageStatus', 'pageShortName', 'raisedAmount', 'designId', 'companyAppealId', 'targetAmount', 'offlineDonations', 'totalRaisedOnline', 'giftAidPlusSupplement', 'pageImages'];
+        $this->assertObjectHasAttributes($attributes, $response->getBodyAsObject()[0]);
+        $this->assertTrue(is_array($response->getBodyAsObject()));
     }
 
     /** @test */
-    public function is_email_registered_when_supplied_email_unlikely_to_exist_returns_false()
+    public function it_checks_for_a_registered_email_and_returns_false_if_not_already_registered()
     {
         $booleanResponse = $this->client->Account->IsEmailRegistered(uniqid() . "@" . uniqid() . "-justgiving.com");
+
         $this->assertFalse($booleanResponse);
     }
 
     /** @test */
-    public function is_email_registered_when_supplied_known_email_returns_true()
+    public function it_checks_for_a_registered_email_and_returns_true_if_already_registered()
     {
         $booleanResponse = $this->client->Account->IsEmailRegistered($this->context->TestUsername);
+
         $this->assertTrue($booleanResponse);
     }
 
     /** @test */
-    public function is_account_valid_when_supplied_known_email_and_password_returns_valid()
+    public function it_validates_that_supplied_account_credentials_are_correct()
     {
         $request = new ValidateAccountRequest();
         $request->email = $this->context->TestUsername;
         $request->password = $this->context->TestValidPassword;
-        $response = $this->client->Account->IsValid($request);
-        dd($response->getBody()->getContents());
+        $response = $this->client->Account->IsValid($request)->getBodyAsObject();
+
         $this->assertTrue($response->consumerId > 0);
-        $this->assertEquals($response->isValid, 1);
+        $this->assertTrue($response->isValid);
     }
 
     /** @test */
-    public function is_account_valid_when_supplied_known_email_and_password_returns_in_valid()
+    public function it_validates_account_credentials_and_returns_false_if_they_are_incorrect()
     {
         $request = new ValidateAccountRequest();
         $request->email = $this->context->TestUsername;
         $request->password = $this->context->TestInvalidPassword;
-        $response = $this->client->Account->IsValid($request);
+        $response = $this->client->Account->IsValid($request)->getBodyAsObject();
+
         $this->assertEquals($response->consumerId, 0);
-        $this->assertEquals($response->isValid, 0);
+        $this->assertFalse($response->isValid);
     }
 
     /** @test */
-    public function get_account_details_when_supplied_authentication_retrieve_account_details()
+    public function it_retrieves_account_details_when_logged_in_with_correct_credentials()
     {
-        $response = $this->client->Account->AccountDetails();
+        $response = $this->client->Account->AccountDetails()->getBodyAsObject();
 
-        dd($response);
         $this->assertNotNull($response->email);
         $this->assertEquals($this->context->TestUsername, $response->email);
     }
@@ -94,7 +98,7 @@ class AccountTest extends Base
     {
         $uniqueId = uniqid();
         $request = new CreateAccountRequest();
-        $request->email = "test+" . $uniqueId . "@test.com";
+        $request->email = "test" . $uniqueId . "@testing.com";
         $request->firstName = "first" . $uniqueId;
         $request->lastName = "last" . $uniqueId;
         $request->password = "testpassword";
@@ -107,16 +111,16 @@ class AccountTest extends Base
         $request->address->postcodeOrZipcode = "M130EJ";
         $request->acceptTermsAndConditions = true;
         $response = $this->client->Account->Create($request);
+
         $badPassword = 'password';
 
         $cpRequest = new ChangePasswordRequest();
         $cpRequest->emailaddress = $request->email;
         $cpRequest->newpassword = $badPassword;
         $cpRequest->currentpassword = $badPassword;
-        $response = $this->client->Account->ChangePassword($cpRequest);
+        $response = $this->client->Account->ChangePassword($cpRequest)->getBodyAsObject();
 
-        dd($response);
-        $this->assertEquals($response->success, 0);
+        $this->assertFalse($response->success);
     }
 
     /** @test */
@@ -142,10 +146,9 @@ class AccountTest extends Base
         $cpRequest->emailaddress = $request->email;
         $cpRequest->newpassword = $badPassword;
         $cpRequest->currentpassword = $request->password;
-        $response = $this->client->Account->ChangePassword($cpRequest);
+        $response = $this->client->Account->ChangePassword($cpRequest)->getBodyAsObject();
 
-        dd($response);
-        $this->assertEquals($response->success, 1);
+        $this->assertTrue($response->success);
     }
 
     /** @test */
@@ -153,13 +156,16 @@ class AccountTest extends Base
     {
         $response = $this->client->Account->AllDonations()->getBodyAsObject();
 
-        $this->assertNotNull($response);
+        $attributes = ['amount', 'currencyCode', 'donationDate', 'donationRef', 'donorDisplayName', 'donorLocalAmount', 'donorLocalCurrencyCode'];
+        $this->assertObjectHasAttributes($attributes, $response->donations[0]);
+        $this->assertTrue(is_array($response->donations));
     }
 
     /** @test */
     public function get_rating_history_when_supplied_authentication_return_list_of_ratings()
     {
-        $response = $this->client->Account->RatingHistory();
+        $response = $this->client->Account->RatingHistory()->getBodyAsObject();
+
         $this->assertNotNull($response);
     }
 }

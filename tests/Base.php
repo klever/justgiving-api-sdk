@@ -17,12 +17,6 @@ class Base extends \PHPUnit\Framework\TestCase
         $this->client->debug = $testContext->Debug;
     }
 
-    public function testTrueIsTrue()
-    {
-        $foo = true;
-        $this->assertTrue($foo);
-    }
-
     /**
      * Tests if two objects have the same attributes.
      *
@@ -37,7 +31,21 @@ class Base extends \PHPUnit\Framework\TestCase
         $intersect = array_intersect($expectedKeys, array_keys(get_object_vars($actualObject)));
         $this->assertEquals($expectedKeys, $intersect);
     }
+
+    /**
+     * Check if an object has all of an array of attributes.
+     *
+     * @param array  $attributes
+     * @param object $object
+     */
+    protected function assertObjectHasAttributes($attributes, $object)
+    {
+        foreach ($attributes as $attribute) {
+            $this->assertObjectHasAttribute($attribute, $object);
+        }
+    }
 }
+
 
 class TestContext
 {

@@ -1,12 +1,12 @@
 <?php
 
-function dd($input = null)
+function dd(...$input)
 {
-    var_dump($input);
+    var_dump(...$input);
     die();
 }
 
-function dump($input = null)
+function dump(...$input)
 {
-    var_dump($input);
+    var_dump(...$input);
 }

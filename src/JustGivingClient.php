@@ -3,7 +3,6 @@
 namespace Klever\JustGivingApiSdk;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use Klever\JustGivingApiSdk\Clients\Http\CurlWrapper;
@@ -49,22 +48,20 @@ class JustGivingClient
         $this->ApiVersion = (string) $apiVersion;
         $this->Username = (string) $username;
         $this->Password = (string) $password;
-//        $this->httpClient = new CurlWrapper($this->baseUrl(), $username, $password);
 
-        $stack = new HandlerStack;
-        $stack->setHandler(new CurlHandler);
+        $stack = HandlerStack::create();
         $stack->push(Middleware::mapResponse(function (ResponseInterface $response) {
             return new Response($response);
         }));
 
         $this->httpClient = new Client([
-            'handler'  => $stack,
-            'base_uri' => $this->baseUrl(),
-            'headers'  => [
+            'http_errors' => false,
+            'handler'     => $stack,
+            'base_uri'    => $this->baseUrl(),
+            'headers'     => [
                 'Accept'        => 'application/json',
-                'Authorize'     => 'Basic' . $this->BuildAuthenticationValue(),
-                'Authorization' => 'Basic' . $this->BuildAuthenticationValue(),
-                'Content-type'  => 'application/json',
+                'Authorize'     => 'Basic ' . $this->BuildAuthenticationValue(),
+                'Authorization' => 'Basic ' . $this->BuildAuthenticationValue(),
             ]
         ]);
         $this->debug = false;
