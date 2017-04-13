@@ -112,7 +112,7 @@ class PageApi extends ClientBase
 
         $url = "fundraising/pages/" . $pageShortName . "/images/default";
 
-        $httpInfo = $this->curlWrapper->Post($url, $imageBytes, $imageContentType);
+        $httpInfo = $this->httpClient->Post($url, $imageBytes, $imageContentType);
 
         if ($httpInfo['http_code'] == 200) {
             return true;

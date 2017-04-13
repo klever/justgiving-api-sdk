@@ -18,7 +18,7 @@ class ClientBase
      *
      * @var Client;
      */
-    public $curlWrapper;
+    public $httpClient;
 
     /**
      * ClientBase constructor.
@@ -29,7 +29,7 @@ class ClientBase
     public function __construct($httpClient, $justGivingApi)
     {
         $this->Parent = $justGivingApi;
-        $this->curlWrapper = $httpClient;
+        $this->httpClient = $httpClient;
         $this->debug = false;
     }
 
@@ -58,7 +58,7 @@ class ClientBase
      */
     protected function get($uri, $payload = null)
     {
-        return $this->curlWrapper->get($uri);
+        return $this->httpClient->get($uri);
     }
 
     /**
@@ -69,7 +69,7 @@ class ClientBase
      */
     protected function head($uri)
     {
-        return $this->curlWrapper->get($uri);
+        return $this->httpClient->get($uri);
     }
 
     /**
@@ -81,7 +81,7 @@ class ClientBase
      */
     protected function put($uri, Model $payload)
     {
-        return $this->curlWrapper->put($uri, ['json' => $payload->getAttributes()]);
+        return $this->httpClient->put($uri, ['json' => $payload->getAttributes()]);
     }
 
     /**
@@ -93,12 +93,12 @@ class ClientBase
      */
     protected function post($uri, $payload)
     {
-        return $this->curlWrapper->post($uri, ['json' => get_object_vars($payload)]);
+        return $this->httpClient->post($uri, ['json' => get_object_vars($payload)]);
     }
 
     protected function postFile($uri, $filename, $contentType = null)
     {
-        return $this->curlWrapper->post($uri, ['multipart' => [
+        return $this->httpClient->post($uri, ['multipart' => [
             [
                 'name'     => basename($filename),
                 'contents' => stream_for($filename)
@@ -115,6 +115,6 @@ class ClientBase
      */
     protected function delete($uri)
     {
-        return $this->curlWrapper->delete($uri);
+        return $this->httpClient->delete($uri);
     }
 }

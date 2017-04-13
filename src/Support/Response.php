@@ -16,6 +16,13 @@ class Response implements ResponseInterface
     protected $response;
 
     /**
+     * The attributes returned from the request.
+     *
+     * @var array
+     */
+    protected $attributes = [];
+
+    /**
      * Store the response object.
      *
      * @param ResponseInterface $response
@@ -23,6 +30,30 @@ class Response implements ResponseInterface
     public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
+    }
+
+    /**
+     * Allow attributes to be retrieved as if properties on the class.
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        return $this->getAttribute($name);
+    }
+
+    /**
+     * Get the specified attribute.
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function getAttribute($name)
+    {
+        $this->updateAttributesArray();
+
+        return $this->attributes[$name];
     }
 
     /**
@@ -237,5 +268,13 @@ class Response implements ResponseInterface
     public function getReasonPhrase()
     {
         return $this->response->getReasonPhrase();
+    }
+
+    /**
+     * Update the attributes array from the decoded JSON response.
+     */
+    protected function updateAttributesArray()
+    {
+        $this->attributes = get_object_vars($this->getBodyAsObject());
     }
 }

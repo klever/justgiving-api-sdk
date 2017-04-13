@@ -21,7 +21,7 @@ class SmsApi extends ClientBase
         $url = "fundraising/pages/" . $pageShortName . "/sms";
         $payload = json_encode($requestBody);
 
-        $httpInfo = $this->curlWrapper->Put($url, $payload, true);
+        $httpInfo = $this->httpClient->Put($url, $payload, true);
         if ($httpInfo['http_code'] == 201) {
             return true;
         } else if ($httpInfo['http_code'] == 404) {
@@ -33,7 +33,7 @@ class SmsApi extends ClientBase
     {
         $url = "sms/urn/" . $urn . "/check";
 
-        $httpInfo = $this->curlWrapper->Post($url);
+        $httpInfo = $this->httpClient->Post($url);
         if ($httpInfo['http_code'] == 200) {
             return true;
         } else if ($httpInfo['http_code'] == 400) {

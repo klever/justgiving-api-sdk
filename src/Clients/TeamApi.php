@@ -9,7 +9,7 @@ class TeamApi extends ClientBase
         $url = "team/" . $team->teamShortName;
 
         $payload = json_encode($team);
-        $json = $this->curlWrapper->Put($url, $payload);
+        $json = $this->httpClient->Put($url, $payload);
 
         return json_decode($json);
     }
@@ -27,7 +27,7 @@ class TeamApi extends ClientBase
     {
         $url = "team/" . $teamShortName;
 
-        $httpInfo = $this->curlWrapper->Head($url);
+        $httpInfo = $this->httpClient->Head($url);
         if ($httpInfo['http_code'] == 200) {
             return true;
         } else if ($httpInfo['http_code'] == 404) {
@@ -40,7 +40,7 @@ class TeamApi extends ClientBase
         $url = "team/join/" . $teamShortName;
         $payload = json_encode($joinTeamRequest);
 
-        $httpInfo = $this->curlWrapper->Put($url, $payload, true);
+        $httpInfo = $this->httpClient->Put($url, $payload, true);
         if ($httpInfo['http_code'] == 200) {
             return true;
         } else if ($httpInfo['http_code'] == 404) {

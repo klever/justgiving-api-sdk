@@ -5,18 +5,17 @@ namespace Klever\JustGivingApiSdk;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
-use Klever\JustGivingApiSdk\Clients\Http\CurlWrapper;
 use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 use Klever\JustGivingApiSdk\Support\Response;
 use Psr\Http\Message\ResponseInterface;
 
 class JustGivingClient
 {
-    protected $ApiKey;
-    protected $ApiVersion;
-    protected $Username;
-    protected $Password;
-    protected $RootDomain;
+    protected $apiKey;
+    protected $apiVersion;
+    protected $username;
+    protected $password;
+    protected $rootDomain;
 
     /**
      * The clients that have been instantiated.
@@ -28,7 +27,7 @@ class JustGivingClient
     /**
      * The client to execute the HTTP requests.
      *
-     * @var CurlWrapper
+     * @var Client
      */
     protected $httpClient;
 
@@ -43,11 +42,11 @@ class JustGivingClient
      */
     public function __construct($rootDomain, $apiKey, $apiVersion, $username = '', $password = '')
     {
-        $this->RootDomain = (string) $rootDomain;
-        $this->ApiKey = (string) $apiKey;
-        $this->ApiVersion = (string) $apiVersion;
-        $this->Username = (string) $username;
-        $this->Password = (string) $password;
+        $this->rootDomain = (string) $rootDomain;
+        $this->apiKey = (string) $apiKey;
+        $this->apiVersion = (string) $apiVersion;
+        $this->username = (string) $username;
+        $this->password = (string) $password;
 
         $stack = HandlerStack::create();
         $stack->push(Middleware::mapResponse(function (ResponseInterface $response) {
@@ -94,13 +93,13 @@ class JustGivingClient
      */
     public function baseUrl()
     {
-        return $this->RootDomain . $this->ApiKey . '/v' . $this->ApiVersion . '/';
+        return $this->rootDomain . $this->apiKey . '/v' . $this->apiVersion . '/';
     }
 
     protected function BuildAuthenticationValue()
     {
-        return empty($this->Username)
+        return empty($this->username)
             ? ''
-            : base64_encode($this->Username . ":" . $this->Password);
+            : base64_encode($this->username . ":" . $this->password);
     }
 }

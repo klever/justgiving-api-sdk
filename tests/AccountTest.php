@@ -152,7 +152,7 @@ class AccountTest extends Base
     }
 
     /** @test */
-    public function get_all_donations_when_supplied_authentication_return_list_of_donations()
+    public function it_retrieves_a_list_of_all_donations_when_supplied_with_the_correct_credentials()
     {
         $response = $this->client->Account->AllDonations()->getBodyAsObject();
 

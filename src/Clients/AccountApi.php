@@ -13,7 +13,7 @@ class AccountApi extends ClientBase
         $httpResponse = new HTTPResponse();
         $url = "account";
 
-        $result = $this->curlWrapper->GetV2($url);
+        $result = $this->httpClient->GetV2($url);
         $httpResponse->bodyResponse = json_decode($result->bodyResponse);
         $httpResponse->httpStatusCode = $result->httpStatusCode;
 
@@ -77,7 +77,7 @@ class AccountApi extends ClientBase
         $url = "account/rating";
 
         $payload = json_encode($rateContentRequest);
-        $json = $this->curlWrapper->Post($url, $payload);
+        $json = $this->httpClient->Post($url, $payload);
 
         return $json['http_code'] == 201;
     }
@@ -97,7 +97,7 @@ class AccountApi extends ClientBase
         $url = "account/interest";
 
         $payload = json_encode($addInterestRequest);
-        $json = $this->curlWrapper->Post($url, $payload);
+        $json = $this->httpClient->Post($url, $payload);
         if ($json['http_code'] == 201) {
             return true;
         } else if ($json['http_code'] == 401) {
