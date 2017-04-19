@@ -96,6 +96,14 @@ class ClientBase
         return $this->httpClient->post($uri, ['json' => get_object_vars($payload)]);
     }
 
+    /**
+     * Perform a POST request.
+     *
+     * @param string $uri
+     * @param string $filename
+     * @param string $contentType
+     * @return Response|ResponseInterface
+     */
     protected function postFile($uri, $filename, $contentType = null)
     {
         return $this->httpClient->post($uri, ['multipart' => [

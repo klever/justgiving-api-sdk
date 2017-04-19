@@ -80,7 +80,7 @@ class Response implements ResponseInterface
      */
     public function getBodyAsObject()
     {
-        return (object) json_decode($this->response->getBody()->__toString());
+        return json_decode($this->response->getBody()->__toString());
     }
 
     /**
@@ -292,6 +292,8 @@ class Response implements ResponseInterface
      */
     protected function updateAttributesArray()
     {
-        $this->attributes = get_object_vars($this->getBodyAsObject());
+        $this->attributes = is_object($this->getBodyAsObject())
+            ? get_object_vars($this->getBodyAsObject())
+            : $this->getBodyAsObject();
     }
 }

@@ -41,7 +41,7 @@ class PageApi extends ClientBase
         $storyUpdateRequest = new StoryUpdateRequest();
         $storyUpdateRequest->storySupplement = $storyUpdate;
 
-        return $this->post("fundraising/pages/" . $pageShortName, $storyUpdateRequest)->wasSuccessful();
+        return $this->post("fundraising/pages/" . $pageShortName, $storyUpdateRequest);
     }
 
     public function UploadImage($pageShortName, $caption, $filename, $imageContentType)

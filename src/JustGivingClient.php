@@ -38,6 +38,19 @@ use Psr\Http\Message\ResponseInterface;
  * @property SearchApi search
  * @property SmsApi sms
  * @property TeamApi team
+ * @property AccountApi Account
+ * @property CampaignApi Campaign
+ * @property CharityApi Charity
+ * @property CountriesApi Countries
+ * @property CurrencyApi Currency
+ * @property DonationApi Donation
+ * @property EventApi Event
+ * @property LeaderboardApi Leaderboard
+ * @property PageApi Page
+ * @property ProjectApi Project
+ * @property SearchApi Search
+ * @property SmsApi Sms
+ * @property TeamApi Team
  */
 class JustGivingClient
 {
@@ -126,6 +139,11 @@ class JustGivingClient
         return $this->rootDomain . $this->apiKey . '/v' . $this->apiVersion . '/';
     }
 
+    /**
+     * Build the base 64 encoded string that contains authentication credentials.
+     *
+     * @return string
+     */
     protected function BuildAuthenticationValue()
     {
         return empty($this->username)

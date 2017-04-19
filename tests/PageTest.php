@@ -77,7 +77,7 @@ class PageTest extends Base
         $booleanResponse = $this->client->Page->IsShortNameRegistered($pageShortName);
         $this->assertTrue($booleanResponse);
         $pageShortName = uniqid();
-        $booleanResponse = $client->Page->IsShortNameRegistered($pageShortName);
+        $booleanResponse = $this->client->Page->IsShortNameRegistered($pageShortName);
         $this->assertFalse($booleanResponse);
     }
 
@@ -97,8 +97,9 @@ class PageTest extends Base
         $dto->charityFunded = false;
         $page = $this->client->Page->Create($dto);
         $update = "Updated this story with update - " . uniqid();
-        $booleanResponse = $this->client->Page->UpdateStory($dto->pageShortName, $update);
-        $this->assertTrue($booleanResponse);
+        $response = $this->client->Page->UpdateStory($dto->pageShortName, $update);
+
+        $this->assertTrue($response->wasSuccessful());
     }
 
     /** @test */
@@ -122,8 +123,8 @@ class PageTest extends Base
         $filename = __DIR__ . "/img/jpg.jpg";
         $imageContentType = "image/jpeg";
         $response = $this->client->Page->UploadImage($dto->pageShortName, $caption, $filename, $imageContentType);
-dd($response);
-        $this->assertTrue($booleanResponse);
+
+        $this->assertTrue($response->wasSuccessful());
     }
 
     public function testAddPostToPageUpdate_WhenSuppliedValidRequest_ReturnResponse()

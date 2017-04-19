@@ -3,10 +3,16 @@
 namespace Klever\JustGivingApiSdk\Tests;
 
 use Klever\JustGivingApiSdk\JustGivingClient;
+use PHPUnit\Framework\TestCase;
 
-class Base extends \PHPUnit\Framework\TestCase
+class Base extends TestCase
 {
+    /**
+     * @var JustGivingClient
+     */
     protected $client;
+
+
     protected $context;
 
     protected function setUp()
@@ -14,7 +20,6 @@ class Base extends \PHPUnit\Framework\TestCase
         $testContext = new TestContext();
         $this->context = $testContext;
         $this->client = new JustGivingClient($testContext->ApiLocation, $testContext->ApiKey, $testContext->ApiVersion, $testContext->TestUsername, $testContext->TestValidPassword);
-        $this->client->debug = $testContext->Debug;
     }
 
     /**
@@ -55,7 +60,6 @@ class TestContext
     public $TestValidPassword;
     public $TestInvalidPassword;
     public $ApiVersion;
-    public $Debug;
 
     public function __construct()
     {
@@ -65,6 +69,5 @@ class TestContext
         $this->TestValidPassword = "password";
         $this->TestInvalidPassword = "badPassword";
         $this->ApiVersion = 1;
-        $this->Debug = true;
     }
 }

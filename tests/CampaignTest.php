@@ -4,50 +4,39 @@ namespace Klever\JustGivingApiSdk\Tests;
 
 class CampaignTest extends Base
 {
-    public function testRetrieveV2_WhenSuppliedCharityNameAndCampaignName_ReturnsCampaignDetails()
+    /** @test */
+    public function it_retrieves_campaign_details_given_the_charity_and_campaign_names()
     {
-        //arrange
         $charityName = "jgdemo";
-        $campaignName = "test_sandbox_campaign";
+        $campaignName = "testsandboxcampaign";
         $expectedCampaignPageName = "The name of my campaign";
 
-        //act
         $response = $this->client->Campaign->Retrieve($charityName, $campaignName);
 
-        dd($response);
-        //assert
-		$this->assertEquals("200", $response->getStatusCode());
+		$this->assertTrue($response->existenceCheck());
 		$this->assertEquals($expectedCampaignPageName, $response->campaignPageName);
     }
 
-    public function testCampaignsByCharityId_WhenSuppliedCharityId_ReturnsCampaigns()
+    /** @test */
+    public function it_retrieves_a_list_of_campaigns_given_a_charity_id()
     {
-        //arrange
-        $charityId = "2050";
         $expectedCampaignPageName = "The name of my campaign";
 
-        //act
-        $response = $this->client->Campaign->CampaignsByCharityId($charityId);
+        $response = $this->client->Campaign->CampaignsByCharityId("2050");
 
-        //assert
-		$this->assertEquals($response->getStatusCode(), "200");
-//		$this->assertEquals($response->bodyResponse->campaignsDetails[0]->campaignPageName, $expectedCampaignPageName);
-//		$this->assertNotEmpty($response->bodyResponse->campaignsDetails);
+        $this->assertEquals($response->body->campaignsDetails[0]->campaignPageName, $expectedCampaignPageName);
     }
 
-    public function testPagesForCampaign_WhenSuppliedCharityShortNameAndCampaignShortUrl_ReturnsPages()
+    /** @test */
+    public function it_retrieves_campaign_pages_when_given_a_charity_short_name_and_short_url()
     {
-        //arrange
         $charityShortName = "jgdemo";
         $campaignShortUrl = "testsandboxcampaign";
-        $expectedCampaignPageName = "The name of my campaign";
 
-        //act
         $response = $this->client->Campaign->PagesForCampaign($charityShortName, $campaignShortUrl);
-dd($response);
-        //assert
-//		$this->assertEquals($response->httpStatusCode, "200");
-//		$this->assertEquals($response->bodyResponse->campaignShortUrl, $campaignShortUrl);
-//		$this->assertEquals($response->bodyResponse->charityShortName, $charityShortName);
+
+        $this->assertTrue(is_array($response->fundraisingPages));
+		$this->assertEquals($response->campaignShortUrl, $campaignShortUrl);
+		$this->assertEquals($response->charityShortName, $charityShortName);
     }
 }

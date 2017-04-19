@@ -114,12 +114,12 @@ class AccountTest extends Base
         $badPassword = 'password';
 
         $cpRequest = new ChangePasswordRequest();
-        $cpRequest->emailaddress = $request->email;
-        $cpRequest->newpassword = $badPassword;
-        $cpRequest->currentpassword = $badPassword;
-        $response = $this->client->Account->ChangePassword($cpRequest)->getBodyAsObject();
+        $cpRequest->emailAddress = $request->email;
+        $cpRequest->newPassword = $badPassword;
+        $cpRequest->currentPassword = $badPassword;
+        $response = $this->client->Account->ChangePassword($cpRequest);
 
-        $this->assertFalse($response->success);
+        $this->assertFalse($response->wasSuccessful());
     }
 
     /** @test */
@@ -142,12 +142,12 @@ class AccountTest extends Base
         $response = $this->client->Account->Create($request);
 
         $cpRequest = new ChangePasswordRequest();
-        $cpRequest->emailaddress = $request->email;
-        $cpRequest->newpassword = 'password';
-        $cpRequest->currentpassword = $request->password;
-        $response = $this->client->Account->ChangePassword($cpRequest)->getBodyAsObject();
+        $cpRequest->emailAddress = $request->email;
+        $cpRequest->newPassword = 'password';
+        $cpRequest->currentPassword = $request->password;
+        $response = $this->client->Account->ChangePassword($cpRequest);
 
-        $this->assertTrue($response->success);
+        $this->assertTrue($response->wasSuccessful());
     }
 
     /** @test */
@@ -158,15 +158,13 @@ class AccountTest extends Base
         $attributes = ['amount', 'currencyCode', 'donationDate', 'donationRef', 'donorDisplayName', 'donorLocalAmount', 'donorLocalCurrencyCode'];
         $this->assertObjectHasAttributes($attributes, $response->donations[0]);
         $this->assertTrue(is_array($response->donations));
-
-        $response->body[0];
     }
 
     /** @test */
     public function get_rating_history_when_supplied_authentication_return_list_of_ratings()
     {
-        $response = $this->client->Account->RatingHistory()->getBodyAsObject();
+        $response = $this->client->Account->RatingHistory();
 
-        $this->assertNotNull($response);
+        $this->assertNotNull($response->body);
     }
 }
