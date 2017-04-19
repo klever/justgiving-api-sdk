@@ -3,6 +3,7 @@
 namespace Klever\JustGivingApiSdk\Tests;
 
 use Klever\JustGivingApiSdk\JustGivingClient;
+use Klever\JustGivingApiSdk\Support\GuzzleClientFactory;
 use PHPUnit\Framework\TestCase;
 
 class Base extends TestCase
@@ -22,7 +23,16 @@ class Base extends TestCase
     protected function setUp()
     {
         $this->context = new TestContext();
-        $this->client = new JustGivingClient($this->context->apiUrl, $this->context->apiKey, $this->context->apiVersion, $this->context->testUsername, $this->context->testValidPassword);
+
+        $guzzleClient = GuzzleClientFactory::build(
+            $this->context->apiUrl,
+            $this->context->apiKey,
+            $this->context->apiVersion,
+            $this->context->testUsername,
+            $this->context->testValidPassword
+        );
+
+        $this->client = new JustGivingClient($guzzleClient);
     }
 
     /**

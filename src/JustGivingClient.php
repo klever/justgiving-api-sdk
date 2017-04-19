@@ -2,9 +2,7 @@
 
 namespace Klever\JustGivingApiSdk;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
+use GuzzleHttp\ClientInterface;
 use Klever\JustGivingApiSdk\Clients\AccountApi;
 use Klever\JustGivingApiSdk\Clients\CampaignApi;
 use Klever\JustGivingApiSdk\Clients\CharityApi;
@@ -19,8 +17,6 @@ use Klever\JustGivingApiSdk\Clients\SearchApi;
 use Klever\JustGivingApiSdk\Clients\SmsApi;
 use Klever\JustGivingApiSdk\Clients\TeamApi;
 use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
-use Klever\JustGivingApiSdk\Support\Response;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class JustGivingClient
@@ -54,12 +50,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 class JustGivingClient
 {
-    protected $apiKey;
-    protected $apiVersion;
-    protected $username;
-    protected $password;
-    protected $rootDomain;
-
     /**
      * The clients that have been instantiated.
      *
@@ -70,45 +60,18 @@ class JustGivingClient
     /**
      * The client to execute the HTTP requests.
      *
-     * @var Client
+     * @var ClientInterface
      */
     protected $httpClient;
 
     /**
      * JustGivingClient constructor.
      *
-     * @param string $rootDomain
-     * @param string $apiKey
-     * @param string $apiVersion
-     * @param string $username
-     * @param string $password
-     * @param bool   $debug
+     * @param ClientInterface $client
      */
-    public function __construct($rootDomain, $apiKey, $apiVersion, $username = '', $password = '', $debug = false)
+    public function __construct($client)
     {
-        $this->rootDomain = $rootDomain;
-        $this->apiKey = $apiKey;
-        $this->apiVersion = $apiVersion;
-        $this->username = $username;
-        $this->password = $password;
-
-        $stack = HandlerStack::create();
-        $stack->push(Middleware::mapResponse(function (ResponseInterface $response) {
-            return new Response($response);
-        }));
-
-        $this->httpClient = new Client([
-            'debug'       => $debug,
-            'http_errors' => false,
-            'handler'     => $stack,
-            'base_uri'    => $this->baseUrl(),
-            'headers'     => [
-                'Accept'        => 'application/json',
-                'Authorize'     => 'Basic ' . $this->BuildAuthenticationValue(),
-                'Authorization' => 'Basic ' . $this->BuildAuthenticationValue(),
-            ]
-        ]);
-        $this->debug = false;
+        $this->httpClient = $client;
     }
 
     /**
@@ -129,27 +92,5 @@ class JustGivingClient
         $this->clients[$class] = $this->clients[$class] ?? new $class($this->httpClient, $this);
 
         return $this->clients[$class];
-    }
-
-    /**
-     * Return the base URL string for the API call.
-     *
-     * @return string
-     */
-    public function baseUrl()
-    {
-        return $this->rootDomain . $this->apiKey . '/v' . $this->apiVersion . '/';
-    }
-
-    /**
-     * Build the base 64 encoded string that contains authentication credentials.
-     *
-     * @return string
-     */
-    protected function BuildAuthenticationValue()
-    {
-        return empty($this->username)
-            ? ''
-            : base64_encode($this->username . ":" . $this->password);
     }
 }

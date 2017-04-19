@@ -29,7 +29,6 @@ class ClientBase
     {
         $this->Parent = $justGivingApi;
         $this->httpClient = $httpClient;
-        $this->debug = false;
     }
 
     public function BuildAuthenticationValue()
@@ -52,10 +51,9 @@ class ClientBase
      * Perform a GET request.
      *
      * @param string $uri
-     * @param        $payload
-     * @return ResponseInterface|Response
+     * @return Response|ResponseInterface
      */
-    protected function get($uri, $payload = null)
+    protected function get($uri)
     {
         return $this->httpClient->get($uri);
     }
