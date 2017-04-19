@@ -9,6 +9,6 @@ class ProjectTest extends Base
     {
         $response = $this->client->project->GetProject(2050);
 
-        dd($response->getAttributes());
+        $this->assertObjectHasAttributes(['activities', 'charityId', 'country', 'description'], $response->body);
     }
 }

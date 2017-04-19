@@ -44,17 +44,11 @@ class PageApi extends ClientBase
         return $this->post("fundraising/pages/" . $pageShortName, $storyUpdateRequest);
     }
 
-    public function UploadImage($pageShortName, $caption, $filename, $imageContentType)
+    public function UploadImage($pageShortName, $caption, $filename, $imageContentType = null)
     {
         $url = "fundraising/pages/" . $pageShortName . "/images?caption=" . urlencode($caption);
 
         return $this->postFile($url, $filename, $imageContentType);
-//        if ($httpInfo['http_code'] == 200) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-
     }
 
     public function RetrieveDonationsForPageByReference($pageShortName, $reference, $privateData = false)

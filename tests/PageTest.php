@@ -118,11 +118,10 @@ class PageTest extends Base
         $dto->charityOptIn = true;
         $dto->charityFunded = false;
         $page = $this->client->Page->Create($dto);
-        // Act
+
         $caption = "PHP Image Caption - " . uniqid();
         $filename = __DIR__ . "/img/jpg.jpg";
-        $imageContentType = "image/jpeg";
-        $response = $this->client->Page->UploadImage($dto->pageShortName, $caption, $filename, $imageContentType);
+        $response = $this->client->Page->UploadImage($dto->pageShortName, $caption, $filename);
 
         $this->assertTrue($response->wasSuccessful());
     }

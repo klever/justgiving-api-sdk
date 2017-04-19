@@ -25,32 +25,32 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Class JustGivingClient
  *
- * @property AccountApi account
- * @property CampaignApi campaign
- * @property CharityApi charity
- * @property CountriesApi countries
- * @property CurrencyApi currency
- * @property DonationApi donation
- * @property EventApi event
+ * @property AccountApi     account
+ * @property CampaignApi    campaign
+ * @property CharityApi     charity
+ * @property CountriesApi   countries
+ * @property CurrencyApi    currency
+ * @property DonationApi    donation
+ * @property EventApi       event
  * @property LeaderboardApi leaderboard
- * @property PageApi page
- * @property ProjectApi project
- * @property SearchApi search
- * @property SmsApi sms
- * @property TeamApi team
- * @property AccountApi Account
- * @property CampaignApi Campaign
- * @property CharityApi Charity
- * @property CountriesApi Countries
- * @property CurrencyApi Currency
- * @property DonationApi Donation
- * @property EventApi Event
+ * @property PageApi        page
+ * @property ProjectApi     project
+ * @property SearchApi      search
+ * @property SmsApi         sms
+ * @property TeamApi        team
+ * @property AccountApi     Account
+ * @property CampaignApi    Campaign
+ * @property CharityApi     Charity
+ * @property CountriesApi   Countries
+ * @property CurrencyApi    Currency
+ * @property DonationApi    Donation
+ * @property EventApi       Event
  * @property LeaderboardApi Leaderboard
- * @property PageApi Page
- * @property ProjectApi Project
- * @property SearchApi Search
- * @property SmsApi Sms
- * @property TeamApi Team
+ * @property PageApi        Page
+ * @property ProjectApi     Project
+ * @property SearchApi      Search
+ * @property SmsApi         Sms
+ * @property TeamApi        Team
  */
 class JustGivingClient
 {
@@ -97,6 +97,7 @@ class JustGivingClient
         }));
 
         $this->httpClient = new Client([
+            'debug'       => true,
             'http_errors' => false,
             'handler'     => $stack,
             'base_uri'    => $this->baseUrl(),

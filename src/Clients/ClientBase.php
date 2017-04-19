@@ -6,7 +6,6 @@ use GuzzleHttp\Client;
 use Klever\JustGivingApiSdk\Clients\Models\Model;
 use Klever\JustGivingApiSdk\Support\Response;
 use Psr\Http\Message\ResponseInterface;
-use function GuzzleHttp\Psr7\stream_for;
 
 class ClientBase
 {
@@ -97,7 +96,7 @@ class ClientBase
     }
 
     /**
-     * Perform a POST request.
+     * Perform a POST request with data from a file sent as the request body.
      *
      * @param string $uri
      * @param string $filename
@@ -106,13 +105,13 @@ class ClientBase
      */
     protected function postFile($uri, $filename, $contentType = null)
     {
-        return $this->httpClient->post($uri, ['multipart' => [
-            [
-                'name'     => basename($filename),
-                'contents' => stream_for($filename)
-            ]
-        ]
-        ]);
+        $options = ['body' => fopen($filename, 'r')];
+
+        if ($contentType !== null) {
+            $options['headers']['Content-Type'] = $contentType;
+        }
+
+        return $this->httpClient->post($uri, $options);
     }
 
     /**
