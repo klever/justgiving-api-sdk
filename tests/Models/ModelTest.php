@@ -43,30 +43,4 @@ class ModelTest extends Base
     {
         $this->assertEquals(array_keys($this->teamData), $this->team->getAttributeNames());
     }
-
-    /** @test */
-    public function it_flattens_nested_object_attributes()
-    {
-        $objectFields = ['reference', 'title', 'firstName', 'lastName', 'email', 'password', 'acceptTermsAndConditions'];
-        $addressData = [
-            'line1'             => 'test line1',
-            'line2'             => 'test line2',
-            'townOrCity'        => 'test townOrCity',
-            'countyOrState'     => 'test countyOrState',
-            'country'           => 'test country',
-            'postcodeOrZipcode' => 'test postcodeOrZipcode',
-        ];
-        $createAccount = new CreateAccountRequest;
-        $createAccount->address->fill($addressData);
-        $prependAddress = function ($key) {
-            return 'Address.' . $key;
-        };
-
-        $expected = array_merge(
-            $objectFields,
-            array_map($prependAddress, array_keys($addressData))
-        );
-
-        $this->assertEquals($expected, $createAccount->getAttributeNames());
-    }
 }

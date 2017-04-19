@@ -5,6 +5,18 @@ namespace Klever\JustGivingApiSdk\Clients\Models;
 class Model
 {
     /**
+     * Allow data to be filled via the constructor.
+     *
+     * @param iterable $data
+     */
+    public function __construct($data = null)
+    {
+        if (isset($data)) {
+            $this->fill($data);
+        }
+    }
+
+    /**
      * Get an associative array of the attributes.
      *
      * @return array
@@ -27,10 +39,10 @@ class Model
     /**
      * Populate the model with the supplied data.
      *
-     * @param array $data
+     * @param iterable $data
      * @return $this
      */
-    public function fill(array $data)
+    public function fill($data)
     {
         foreach ($data as $key => $value) {
             $this->$key = $value;

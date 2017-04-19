@@ -68,7 +68,7 @@ class ClientBase
      */
     protected function head($uri)
     {
-        return $this->httpClient->get($uri);
+        return $this->httpClient->head($uri);
     }
 
     /**

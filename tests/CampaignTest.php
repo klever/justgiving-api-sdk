@@ -13,7 +13,7 @@ class CampaignTest extends Base
 
         $response = $this->client->Campaign->Retrieve($charityName, $campaignName);
 
-		$this->assertTrue($response->existenceCheck());
+        $this->assertTrue($response->existenceCheck());
 		$this->assertEquals($expectedCampaignPageName, $response->campaignPageName);
     }
 

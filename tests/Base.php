@@ -12,14 +12,17 @@ class Base extends TestCase
      */
     protected $client;
 
-
+    /**
+     * The setup variables for performing tests.
+     *
+     * @var TestContext
+     */
     protected $context;
 
     protected function setUp()
     {
-        $testContext = new TestContext();
-        $this->context = $testContext;
-        $this->client = new JustGivingClient($testContext->ApiLocation, $testContext->ApiKey, $testContext->ApiVersion, $testContext->TestUsername, $testContext->TestValidPassword);
+        $this->context = new TestContext();
+        $this->client = new JustGivingClient($this->context->apiUrl, $this->context->apiKey, $this->context->apiVersion, $this->context->testUsername, $this->context->testValidPassword);
     }
 
     /**
@@ -48,26 +51,5 @@ class Base extends TestCase
         foreach ($attributes as $attribute) {
             $this->assertObjectHasAttribute($attribute, $object);
         }
-    }
-}
-
-
-class TestContext
-{
-    public $ApiLocation;
-    public $ApiKey;
-    public $TestUsername;
-    public $TestValidPassword;
-    public $TestInvalidPassword;
-    public $ApiVersion;
-
-    public function __construct()
-    {
-        $this->ApiLocation = "https://api.sandbox.justgiving.com/";
-        $this->ApiKey = "decbf1d2";
-        $this->TestUsername = "apiunittest@justgiving.com";
-        $this->TestValidPassword = "password";
-        $this->TestInvalidPassword = "badPassword";
-        $this->ApiVersion = 1;
     }
 }

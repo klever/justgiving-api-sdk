@@ -82,14 +82,15 @@ class JustGivingClient
      * @param string $apiVersion
      * @param string $username
      * @param string $password
+     * @param bool   $debug
      */
-    public function __construct($rootDomain, $apiKey, $apiVersion, $username = '', $password = '')
+    public function __construct($rootDomain, $apiKey, $apiVersion, $username = '', $password = '', $debug = false)
     {
-        $this->rootDomain = (string) $rootDomain;
-        $this->apiKey = (string) $apiKey;
-        $this->apiVersion = (string) $apiVersion;
-        $this->username = (string) $username;
-        $this->password = (string) $password;
+        $this->rootDomain = $rootDomain;
+        $this->apiKey = $apiKey;
+        $this->apiVersion = $apiVersion;
+        $this->username = $username;
+        $this->password = $password;
 
         $stack = HandlerStack::create();
         $stack->push(Middleware::mapResponse(function (ResponseInterface $response) {
@@ -97,7 +98,7 @@ class JustGivingClient
         }));
 
         $this->httpClient = new Client([
-            'debug'       => true,
+            'debug'       => $debug,
             'http_errors' => false,
             'handler'     => $stack,
             'base_uri'    => $this->baseUrl(),

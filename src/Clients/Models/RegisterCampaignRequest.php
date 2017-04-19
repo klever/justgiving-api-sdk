@@ -16,28 +16,13 @@ class RegisterCampaignRequest extends Model
     public $campaignDeadline;
     public $campaignThankYouMessage;
     public $fundraisingEnabled;
-}
 
-class CampaignCoverPhotos extends Model
-{
-    public $url;
-    public $caption;
-    public $title;
-    public $alt;
-}
+    public function __construct($data = null)
+    {
+        $this->campaignCoverPhotos = new Image;
+        $this->campaignLogos = new Image;
+        $this->campaignPhotos = new Image;
 
-class CampaignLogos extends Model
-{
-    public $url;
-    public $caption;
-    public $title;
-    public $alt;
-}
-
-class CampaignPhotos extends Model
-{
-    public $url;
-    public $caption;
-    public $title;
-    public $alt;
+        parent::__construct($data);
+    }
 }

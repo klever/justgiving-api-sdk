@@ -7,7 +7,7 @@ use Klever\JustGivingApiSdk\Clients\Models\RegisterPageRequest;
 
 class PageTest extends Base
 {
-    public function testRetrieve_WhenSuppliedWithValidPage_ReturnsPageData()
+    public function it_retrieves_page_data_when_given_a_page_short_name()
     {
         $json = $this->client->Page->Retrieve("rasha25");
         $this->assertEquals($json->pageId, 640916);

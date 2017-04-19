@@ -3,6 +3,7 @@
 namespace Klever\JustGivingApiSdk\Tests;
 
 
+use Klever\JustGivingApiSdk\Clients\Models\Address;
 use Klever\JustGivingApiSdk\Clients\Models\ChangePasswordRequest;
 use Klever\JustGivingApiSdk\Clients\Models\CreateAccountRequest;
 use Klever\JustGivingApiSdk\Clients\Models\ValidateAccountRequest;
@@ -10,26 +11,29 @@ use Klever\JustGivingApiSdk\Clients\Models\ValidateAccountRequest;
 class AccountTest extends Base
 {
     /** @test */
-    public function create_when_supplied_with_valid_new_account_details_creates_account()
+    public function it_can_create_a_new_account()
     {
         $uniqueId = uniqid();
-        $request = new CreateAccountRequest();
-        $request->email = "test" . $uniqueId . "@justgiving.com";
-        $request->firstName = "first" . $uniqueId;
-        $request->lastName = "last" . $uniqueId;
-        $request->password = "testpassword";
-        $request->title = "Mr";
-        $request->address->line1 = "testLine1" . $uniqueId;
-        $request->address->line2 = "testLine2" . $uniqueId;
-        $request->address->country = "United Kingdom";
-        $request->address->countyOrState = "testCountyOrState" . $uniqueId;
-        $request->address->townOrCity = "testTownOrCity" . $uniqueId;
-        $request->address->postcodeOrZipcode = "M130EJ";
-        $request->acceptTermsAndConditions = true;
+        $request = new CreateAccountRequest([
+            'email'                    => "test+" . $uniqueId . "@testing.com",
+            'firstName'                => "first" . $uniqueId,
+            'lastName'                 => "last" . $uniqueId,
+            'password'                 => $this->context->testValidPassword,
+            'title'                    => "Mr",
+            'acceptTermsAndConditions' => true,
+            'address'                  => new Address([
+                'line1'             => "testLine1" . $uniqueId,
+                'line2'             => "testLine2" . $uniqueId,
+                'country'           => "United Kingdom",
+                'countyOrState'     => "testCountyOrState" . $uniqueId,
+                'townOrCity'        => "testTownOrCity" . $uniqueId,
+                'postcodeOrZipcode' => "M130EJ",
+            ])
+        ]);
+
         $response = $this->client->Account->Create($request);
 
-//        dump($response);
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertTrue($response->wasSuccessful());
     }
 
     /** @test */
@@ -52,7 +56,7 @@ class AccountTest extends Base
     /** @test */
     public function it_checks_for_a_registered_email_and_returns_true_if_already_registered()
     {
-        $booleanResponse = $this->client->Account->IsEmailRegistered($this->context->TestUsername);
+        $booleanResponse = $this->client->Account->IsEmailRegistered($this->context->testUsername);
 
         $this->assertTrue($booleanResponse);
     }
@@ -60,9 +64,10 @@ class AccountTest extends Base
     /** @test */
     public function it_validates_that_supplied_account_credentials_are_correct()
     {
-        $request = new ValidateAccountRequest();
-        $request->email = $this->context->TestUsername;
-        $request->password = $this->context->TestValidPassword;
+        $request = new ValidateAccountRequest([
+            'email'    => $this->context->testUsername,
+            'password' => $this->context->testValidPassword,
+        ]);
         $response = $this->client->Account->IsValid($request)->getBodyAsObject();
 
         $this->assertTrue($response->consumerId > 0);
@@ -72,12 +77,13 @@ class AccountTest extends Base
     /** @test */
     public function it_validates_account_credentials_and_returns_false_if_they_are_incorrect()
     {
-        $request = new ValidateAccountRequest();
-        $request->email = $this->context->TestUsername;
-        $request->password = $this->context->TestInvalidPassword;
-        $response = $this->client->Account->IsValid($request)->getBodyAsObject();
+        $request = new ValidateAccountRequest([
+            'email'    => $this->context->testUsername,
+            'password' => $this->context->testInvalidPassword,
+        ]);
+        $response = $this->client->Account->IsValid($request);
 
-        $this->assertEquals($response->consumerId, 0);
+        $this->assertEquals(0, $response->consumerId);
         $this->assertFalse($response->isValid);
     }
 
@@ -87,7 +93,7 @@ class AccountTest extends Base
         $response = $this->client->Account->AccountDetails()->getBodyAsObject();
 
         $this->assertNotNull($response->email);
-        $this->assertEquals($this->context->TestUsername, $response->email);
+        $this->assertEquals($this->context->testUsername, $response->email);
     }
 
     //test change password
@@ -95,29 +101,14 @@ class AccountTest extends Base
     /** @test */
     public function it_fails_to_change_the_account_password_when_supplied_with_an_incorrect_current_password()
     {
-        $uniqueId = uniqid();
-        $request = new CreateAccountRequest();
-        $request->email = "test" . $uniqueId . "@testing.com";
-        $request->firstName = "first" . $uniqueId;
-        $request->lastName = "last" . $uniqueId;
-        $request->password = "testpassword";
-        $request->title = "Mr";
-        $request->address->line1 = "testLine1" . $uniqueId;
-        $request->address->line2 = "testLine2" . $uniqueId;
-        $request->address->country = "United Kingdom";
-        $request->address->countyOrState = "testCountyOrState" . $uniqueId;
-        $request->address->townOrCity = "testTownOrCity" . $uniqueId;
-        $request->address->postcodeOrZipcode = "M130EJ";
-        $request->acceptTermsAndConditions = true;
-        $response = $this->client->Account->Create($request);
+        $email = $this->createAccount();
 
-        $badPassword = 'password';
-
-        $cpRequest = new ChangePasswordRequest();
-        $cpRequest->emailAddress = $request->email;
-        $cpRequest->newPassword = $badPassword;
-        $cpRequest->currentPassword = $badPassword;
-        $response = $this->client->Account->ChangePassword($cpRequest);
+        $request = new ChangePasswordRequest([
+            'emailAddress'    => $email,
+            'newPassword'     => 'newPassword',
+            'currentPassword' => 'INVALID PASSWORD',
+        ]);
+        $response = $this->client->Account->ChangePassword($request);
 
         $this->assertFalse($response->wasSuccessful());
     }
@@ -125,27 +116,14 @@ class AccountTest extends Base
     /** @test */
     public function it_changes_the_account_password_when_supplied_with_the_current_password()
     {
-        $uniqueId = uniqid();
-        $request = new CreateAccountRequest();
-        $request->email = "test+" . $uniqueId . "@test.com";
-        $request->firstName = "first" . $uniqueId;
-        $request->lastName = "last" . $uniqueId;
-        $request->password = "testPassword";
-        $request->title = "Mr";
-        $request->address->line1 = "testLine1" . $uniqueId;
-        $request->address->line2 = "testLine2" . $uniqueId;
-        $request->address->country = "United Kingdom";
-        $request->address->countyOrState = "testCountyOrState" . $uniqueId;
-        $request->address->townOrCity = "testTownOrCity" . $uniqueId;
-        $request->address->postcodeOrZipcode = "M130EJ";
-        $request->acceptTermsAndConditions = true;
-        $response = $this->client->Account->Create($request);
+        $email = $this->createAccount();
 
-        $cpRequest = new ChangePasswordRequest();
-        $cpRequest->emailAddress = $request->email;
-        $cpRequest->newPassword = 'password';
-        $cpRequest->currentPassword = $request->password;
-        $response = $this->client->Account->ChangePassword($cpRequest);
+        $request = new ChangePasswordRequest([
+            'emailAddress'    => $email,
+            'newPassword'     => 'newPassword',
+            'currentPassword' => $this->context->testValidPassword,
+        ]);
+        $response = $this->client->Account->ChangePassword($request);
 
         $this->assertTrue($response->wasSuccessful());
     }
@@ -166,5 +144,38 @@ class AccountTest extends Base
         $response = $this->client->Account->RatingHistory();
 
         $this->assertNotNull($response->body);
+    }
+
+    /**
+     * Creates an account and returns the email address.
+     *
+     * @param string $email
+     * @return string
+     */
+    protected function createAccount($email = null)
+    {
+        $uniqueId = uniqid();
+        $request = new CreateAccountRequest([
+            'email'     => $email ?: "test+" . $uniqueId . "@testing.com",
+            'firstName' => "first" . $uniqueId,
+            'lastName'  => "last" . $uniqueId,
+            'password'  => $this->context->testValidPassword,
+            'title'     => "Mr",
+
+            'address' => new Address([
+                'line1'             => "testLine1" . $uniqueId,
+                'line2'             => "testLine2" . $uniqueId,
+                'country'           => "United Kingdom",
+                'countyOrState'     => "testCountyOrState" . $uniqueId,
+                'townOrCity'        => "testTownOrCity" . $uniqueId,
+                'postcodeOrZipcode' => "M130EJ",
+            ]),
+
+            'acceptTermsAndConditions' => true
+        ]);
+
+        return $this->client->Account->Create($request)->wasSuccessful()
+            ? $request->email
+            : null;
     }
 }

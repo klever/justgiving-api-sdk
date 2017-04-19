@@ -13,8 +13,9 @@ class CreateAccountRequest extends Model
     public $password;
     public $acceptTermsAndConditions;
 
-    public function __construct()
+    public function __construct($data = null)
     {
         $this->address = new Address();
+        parent::__construct($data);
     }
 }
