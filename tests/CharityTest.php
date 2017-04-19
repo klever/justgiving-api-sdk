@@ -29,9 +29,9 @@ class CharityTest extends Base
 
     public function testGetCategories_ReturnCategories()
     {
-        $response = $this->client->Charity->Categories()->getBodyAsObject();
+        $response = $this->client->Charity->Categories();
 
-        $this->assertObjectHasAttribute('category', $response[0]);
-        $this->assertObjectHasAttribute('id', $response[0]);
+        $this->assertObjectHasAttribute('category', $response->getAttributes()[0]);
+        $this->assertObjectHasAttribute('id', $response->getAttributes()[0]);
     }
 }

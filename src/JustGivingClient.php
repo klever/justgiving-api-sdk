@@ -5,10 +5,40 @@ namespace Klever\JustGivingApiSdk;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use Klever\JustGivingApiSdk\Clients\AccountApi;
+use Klever\JustGivingApiSdk\Clients\CampaignApi;
+use Klever\JustGivingApiSdk\Clients\CharityApi;
+use Klever\JustGivingApiSdk\Clients\CountriesApi;
+use Klever\JustGivingApiSdk\Clients\CurrencyApi;
+use Klever\JustGivingApiSdk\Clients\DonationApi;
+use Klever\JustGivingApiSdk\Clients\EventApi;
+use Klever\JustGivingApiSdk\Clients\LeaderboardApi;
+use Klever\JustGivingApiSdk\Clients\PageApi;
+use Klever\JustGivingApiSdk\Clients\ProjectApi;
+use Klever\JustGivingApiSdk\Clients\SearchApi;
+use Klever\JustGivingApiSdk\Clients\SmsApi;
+use Klever\JustGivingApiSdk\Clients\TeamApi;
 use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 use Klever\JustGivingApiSdk\Support\Response;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Class JustGivingClient
+ *
+ * @property AccountApi account
+ * @property CampaignApi campaign
+ * @property CharityApi charity
+ * @property CountriesApi countries
+ * @property CurrencyApi currency
+ * @property DonationApi donation
+ * @property EventApi event
+ * @property LeaderboardApi leaderboard
+ * @property PageApi page
+ * @property ProjectApi project
+ * @property SearchApi search
+ * @property SmsApi sms
+ * @property TeamApi team
+ */
 class JustGivingClient
 {
     protected $apiKey;

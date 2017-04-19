@@ -17,11 +17,10 @@ class LeaderboardTest extends Base
     /** @test */
     public function it_retrieves_the_event_leaderboard_listing_for_an_event_id()
     {
-        $response = $this->client->Leaderboard->GetEventLeaderboard(479546)->getBodyAsObject();
+        $response = $this->client->Leaderboard->GetEventLeaderboard(479546);
 
-        $this->assertObjectHasAttribute('currency', $response);
-        $this->assertObjectHasAttribute('eventName', $response);
-        $this->assertObjectHasAttribute('pages', $response);
-        $this->assertObjectHasAttribute('raisedAmount', $response);
+        $this->assertEquals('GBP', $response->currency);
+        $this->assertEquals([], $response->pages);
+        $this->assertEquals(0, $response->raisedAmount);
     }
 }

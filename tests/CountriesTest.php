@@ -6,11 +6,9 @@ class CountriesTest extends Base
 {
     public function testGetCountries_ReturnCountries()
     {
-        $response = $this->client->Countries->Countries()->getBodyAsObject();
+        $response = $this->client->countries->Countries();
 
-        dd($response);
-        $this->assertNotNull($response);
-        $this->assertObjectHasAttribute('countryCode', $response[0]);
-        $this->assertObjectHasAttribute('name', $response[0]);
+        $this->assertObjectHasAttribute('countryCode', $response->getAttributes()[0]);
+        $this->assertObjectHasAttribute('name', $response->getAttributes()[0]);
     }
 }

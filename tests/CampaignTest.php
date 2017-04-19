@@ -12,11 +12,12 @@ class CampaignTest extends Base
         $expectedCampaignPageName = "The name of my campaign";
 
         //act
-        $response = $this->client->Campaign->RetrieveV2($charityName, $campaignName);
+        $response = $this->client->Campaign->Retrieve($charityName, $campaignName);
 
+        dd($response);
         //assert
-//		$this->assertEquals("200", $response->httpStatusCode);
-//		$this->assertEquals($expectedCampaignPageName, $response->bodyResponse->campaignPageName);
+		$this->assertEquals("200", $response->getStatusCode());
+		$this->assertEquals($expectedCampaignPageName, $response->campaignPageName);
     }
 
     public function testCampaignsByCharityId_WhenSuppliedCharityId_ReturnsCampaigns()
@@ -29,7 +30,7 @@ class CampaignTest extends Base
         $response = $this->client->Campaign->CampaignsByCharityId($charityId);
 
         //assert
-//		$this->assertEquals($response->httpStatusCode, "200");
+		$this->assertEquals($response->getStatusCode(), "200");
 //		$this->assertEquals($response->bodyResponse->campaignsDetails[0]->campaignPageName, $expectedCampaignPageName);
 //		$this->assertNotEmpty($response->bodyResponse->campaignsDetails);
     }
@@ -43,7 +44,7 @@ class CampaignTest extends Base
 
         //act
         $response = $this->client->Campaign->PagesForCampaign($charityShortName, $campaignShortUrl);
-
+dd($response);
         //assert
 //		$this->assertEquals($response->httpStatusCode, "200");
 //		$this->assertEquals($response->bodyResponse->campaignShortUrl, $campaignShortUrl);

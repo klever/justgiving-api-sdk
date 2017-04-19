@@ -122,7 +122,7 @@ class PageTest extends Base
         $filename = __DIR__ . "/img/jpg.jpg";
         $imageContentType = "image/jpeg";
         $response = $this->client->Page->UploadImage($dto->pageShortName, $caption, $filename, $imageContentType);
-
+dd($response);
         $this->assertTrue($booleanResponse);
     }
 

@@ -6,6 +6,9 @@ use Klever\JustGivingApiSdk\Exceptions\UnexpectedStatusException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
+/**
+ * @property mixed body
+ */
 class Response implements ResponseInterface
 {
     /**
@@ -30,6 +33,8 @@ class Response implements ResponseInterface
     public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
+
+        $this->updateAttributesArray();
     }
 
     /**
@@ -40,6 +45,10 @@ class Response implements ResponseInterface
      */
     public function __get($name)
     {
+        if ($name == 'body') {
+            return $this->getBodyAsObject();
+        }
+
         return $this->getAttribute($name);
     }
 
@@ -51,9 +60,17 @@ class Response implements ResponseInterface
      */
     public function getAttribute($name)
     {
-        $this->updateAttributesArray();
-
         return $this->attributes[$name];
+    }
+
+    /**
+     * Get all attributes.
+     *
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
     }
 
     /**
@@ -63,17 +80,19 @@ class Response implements ResponseInterface
      */
     public function getBodyAsObject()
     {
-        return json_decode($this->response->getBody()->__toString());
+        return (object) json_decode($this->response->getBody()->__toString());
     }
 
     /**
-     * Return true if the response has a 2xx status code.
+     * If there a 'success' variable contained in the response body, return that. If not, return true if the response
+     * has a 2xx status code.
      *
      * @return bool
      */
     public function wasSuccessful()
     {
-        return $this->getStatusCode() >= 200 && $this->getStatusCode() < 300;
+        return $this->body->success
+            ?? $this->getStatusCode() >= 200 && $this->getStatusCode() < 300;
     }
 
     /**
@@ -105,8 +124,6 @@ class Response implements ResponseInterface
 
     /**
      * Retrieves the HTTP protocol version as a string.
-     *
-     * The string MUST contain only the HTTP version number (e.g., "1.1", "1.0").
      *
      * @return string HTTP protocol version.
      */

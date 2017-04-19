@@ -7,46 +7,26 @@ class SearchApi extends ClientBase
 {
     public function CharitySearch($searchTerms, $pageSize = 50, $pageNumber = 1)
     {
-        $url = "charity/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber;
-
-        $json = $this->getContent($url);
-
-        return json_decode($json);
+        return $this->get("charity/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber);
     }
 
     public function EventSearch($searchTerms, $pageSize = 50, $pageNumber = 1)
     {
-        $url = "event/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber;
-
-        $json = $this->getContent($url);
-
-        return json_decode($json);
+        return $this->get("event/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber);
     }
 
     public function FundraiserSearch($searchTerms, $charityId, $pageSize = 50, $pageNumber = 1)
     {
-        $url = "fundraising/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber . "&charityId=" . $charityId;
-
-        $json = $this->getContent($url);
-
-        return json_decode($json);
+        return $this->get("fundraising/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber . "&charityId=" . $charityId);
     }
 
     public function InMemorySearch($searchTerms, $pageSize = 50, $pageNumber = 1)
     {
-        $url = "remember/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber;
-
-        $json = $this->getContent($url);
-
-        return json_decode($json);
+        return $this->get("remember/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber);
     }
 
     public function TeamSearch($teamShortName)
     {
-        $url = "team/search?teamname=" . $teamShortName;
-
-        $json = $this->getContent($url);
-
-        return json_decode($json);
+        return $this->get("team/search?teamname=" . $teamShortName);
     }
 }

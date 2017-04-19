@@ -38,8 +38,7 @@ class AccountTest extends Base
         $response = $this->client->Account->ListAllPages("apiunittest@justgiving.com");
 
         $attributes = ['pageId', 'pageTitle', 'pageStatus', 'pageShortName', 'raisedAmount', 'designId', 'companyAppealId', 'targetAmount', 'offlineDonations', 'totalRaisedOnline', 'giftAidPlusSupplement', 'pageImages'];
-        $this->assertObjectHasAttributes($attributes, $response->getBodyAsObject()[0]);
-        $this->assertTrue(is_array($response->getBodyAsObject()));
+        $this->assertObjectHasAttributes($attributes, $response->getAttributes()[0]);
     }
 
     /** @test */
@@ -94,7 +93,7 @@ class AccountTest extends Base
     //test change password
 
     /** @test */
-    public function change_account_password_when_supplied_correct_current_password_and_new_password_return_success_false()
+    public function it_fails_to_change_the_account_password_when_supplied_with_an_incorrect_current_password()
     {
         $uniqueId = uniqid();
         $request = new CreateAccountRequest();
@@ -124,7 +123,7 @@ class AccountTest extends Base
     }
 
     /** @test */
-    public function change_account_password_when_supplied_in_correct_current_password_and_new_password_return_success_true()
+    public function it_changes_the_account_password_when_supplied_with_the_current_password()
     {
         $uniqueId = uniqid();
         $request = new CreateAccountRequest();
@@ -141,10 +140,10 @@ class AccountTest extends Base
         $request->address->postcodeOrZipcode = "M130EJ";
         $request->acceptTermsAndConditions = true;
         $response = $this->client->Account->Create($request);
-        $badPassword = 'password';
+
         $cpRequest = new ChangePasswordRequest();
         $cpRequest->emailaddress = $request->email;
-        $cpRequest->newpassword = $badPassword;
+        $cpRequest->newpassword = 'password';
         $cpRequest->currentpassword = $request->password;
         $response = $this->client->Account->ChangePassword($cpRequest)->getBodyAsObject();
 
@@ -159,6 +158,8 @@ class AccountTest extends Base
         $attributes = ['amount', 'currencyCode', 'donationDate', 'donationRef', 'donorDisplayName', 'donorLocalAmount', 'donorLocalCurrencyCode'];
         $this->assertObjectHasAttributes($attributes, $response->donations[0]);
         $this->assertTrue(is_array($response->donations));
+
+        $response->body[0];
     }
 
     /** @test */

@@ -52,7 +52,7 @@ class AccountApi extends ClientBase
 
     public function ChangePassword($changePasswordRequest)
     {
-        return ($this->post("account/changePassword", $changePasswordRequest));
+        return $this->post("account/changePassword", $changePasswordRequest);
     }
 
     public function AllDonations()
