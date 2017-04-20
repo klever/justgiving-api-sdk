@@ -3,6 +3,7 @@
 namespace Klever\JustGivingApiSdk\Clients;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Str;
 use Klever\JustGivingApiSdk\Clients\Models\Model;
 use Klever\JustGivingApiSdk\Support\Response;
 use Psr\Http\Message\ResponseInterface;
@@ -34,7 +35,7 @@ class BaseClient
     }
 
     /**
-     * Allow aliases to be defined for API methods.
+     * Check if the called method is valid if it's converted to camel case; if not, look for a defined method alias.
      *
      * @param $calledMethod
      * @param $args
@@ -42,6 +43,11 @@ class BaseClient
      */
     public function __call($calledMethod, $args)
     {
+        $camelMethod = Str::camel($calledMethod);
+        if (method_exists($this, $camelMethod)) {
+            return $this->$camelMethod(...$args);
+        }
+
         foreach ($this->aliases as $realMethod => $aliases) {
             if (in_array($calledMethod, (array) $aliases)) {
                 return $this->$realMethod(...$args);
@@ -87,9 +93,10 @@ class BaseClient
      * @param $payload
      * @return ResponseInterface|Response
      */
-    protected function put($uri, Model $payload)
+    protected function put($uri, Model $payload = null)
     {
-        return $this->httpClient->put($uri, ['json' => $payload->getAttributes()]);
+        return $this->httpClient->put($uri,
+            ['json' => isset($payload) ? $payload->getAttributes() : '']);
     }
 
     /**
@@ -99,9 +106,10 @@ class BaseClient
      * @param $payload
      * @return ResponseInterface|Response
      */
-    protected function post($uri, $payload)
+    protected function post($uri, Model $payload = null)
     {
-        return $this->httpClient->post($uri, ['json' => get_object_vars($payload)]);
+        return $this->httpClient->post($uri,
+            ['json' => isset($payload) ? $payload->getAttributes() : '']);
     }
 
     /**

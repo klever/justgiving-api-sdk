@@ -4,40 +4,24 @@ namespace Klever\JustGivingApiSdk\Clients;
 
 class SmsApi extends BaseClient
 {
+    protected $aliases = [
+        'getPageCode'           => 'RetrievePageSmsCode',
+        'updatePageCode'        => 'UpdatePageSmsCode',
+        'checkCodeAvailability' => 'CheckSmsCodeAvailability',
+    ];
 
-
-    public function RetrievePageSmsCode($pageShortName)
+    public function getPageCode($pageShortName)
     {
-        $url = "fundraising/pages/" . $pageShortName . "/sms";
-
-        $json = $this->getContent($url);
-
-        return json_decode($json);
+        return $this->get("fundraising/pages/" . $pageShortName . "/sms");
     }
 
-    public function UpdatePageSmsCode($pageShortName, $updatePageSmsCodeRequest)
+    public function updatePageCode($pageShortName, $updatePageSmsCodeRequest)
     {
-        $requestBody = $updatePageSmsCodeRequest;
-        $url = "fundraising/pages/" . $pageShortName . "/sms";
-        $payload = json_encode($requestBody);
-
-        $httpInfo = $this->httpClient->Put($url, $payload, true);
-        if ($httpInfo['http_code'] == 201) {
-            return true;
-        } else if ($httpInfo['http_code'] == 404) {
-            return false;
-        }
+        return $this->put("fundraising/pages/" . $pageShortName . "/sms", $updatePageSmsCodeRequest);
     }
 
-    public function CheckSmsCodeAvailability($urn)
+    public function checkCodeAvailability($urn)
     {
-        $url = "sms/urn/" . $urn . "/check";
-
-        $httpInfo = $this->httpClient->Post($url);
-        if ($httpInfo['http_code'] == 200) {
-            return true;
-        } else if ($httpInfo['http_code'] == 400) {
-            return false;
-        }
+        return $this->post("sms/urn/" . $urn . "/check");
     }
 }

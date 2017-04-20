@@ -2,22 +2,32 @@
 
 namespace Klever\JustGivingApiSdk\Clients;
 
-use Klever\JustGivingApiSdk\Clients\Http\HTTPResponse;
-
 class EventApi extends BaseClient
 {
-    public function Create($event)
-    {
-        return $this->post("event", $event);
-    }
+    protected $aliases = [
+        'getById'  => 'GetEventById',
+        'getTypes' => 'GetEventTypes',
+        'getPages' => 'GetPagesForEvent',
+        'create'   => 'RegisterEvent',
+    ];
 
-    public function Retrieve($eventId)
+    public function getById($eventId)
     {
         return $this->get("event/" . $eventId);
     }
 
-    public function RetrievePages($eventId, $pageSize = 50, $pageNumber = 1)
+    public function getTypes()
+    {
+        return $this->get('event/types');
+    }
+
+    public function getPages($eventId, $pageSize = 50, $pageNumber = 1)
     {
         return $this->get("event/" . $eventId . "/pages?PageSize=" . $pageSize . "&PageNum=" . $pageNumber);
+    }
+
+    public function create($event)
+    {
+        return $this->post("event", $event);
     }
 }

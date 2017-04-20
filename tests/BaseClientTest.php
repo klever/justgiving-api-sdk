@@ -30,6 +30,18 @@ class BaseClientTest extends Base
         $this->assertEquals('Method Two', $result);
         $this->assertEquals('Method Two', $resultTwo);
     }
+
+    /** @test */
+    public function a_client_method_can_be_called_in_any_case()
+    {
+        $resultOne = $this->childApi->METHOD_ONE();
+        $resultTwo = $this->childApi->MethodOne();
+        $resultThree = $this->childApi->method_two();
+
+        $this->assertEquals('Method One', $resultOne);
+        $this->assertEquals('Method One', $resultTwo);
+        $this->assertEquals('Method Two', $resultThree);
+    }
 }
 
 class BaseClientChild extends BaseClient

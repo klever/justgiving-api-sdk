@@ -10,8 +10,9 @@ use Klever\JustGivingApiSdk\Clients\CountriesApi;
 use Klever\JustGivingApiSdk\Clients\CurrencyApi;
 use Klever\JustGivingApiSdk\Clients\DonationApi;
 use Klever\JustGivingApiSdk\Clients\EventApi;
+use Klever\JustGivingApiSdk\Clients\FundraisingApi;
 use Klever\JustGivingApiSdk\Clients\LeaderboardApi;
-use Klever\JustGivingApiSdk\Clients\PageApi;
+use Klever\JustGivingApiSdk\Clients\OneSearchApi;
 use Klever\JustGivingApiSdk\Clients\ProjectApi;
 use Klever\JustGivingApiSdk\Clients\SearchApi;
 use Klever\JustGivingApiSdk\Clients\SmsApi;
@@ -29,7 +30,8 @@ use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
  * @property DonationApi    donation
  * @property EventApi       event
  * @property LeaderboardApi leaderboard
- * @property PageApi        page
+ * @property OneSearchApi   oneSearch
+ * @property FundraisingApi fundraising
  * @property ProjectApi     project
  * @property SearchApi      search
  * @property SmsApi         sms
@@ -42,7 +44,6 @@ use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
  * @property DonationApi    Donation
  * @property EventApi       Event
  * @property LeaderboardApi Leaderboard
- * @property PageApi        Page
  * @property ProjectApi     Project
  * @property SearchApi      Search
  * @property SmsApi         Sms

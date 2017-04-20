@@ -4,7 +4,11 @@ namespace Klever\JustGivingApiSdk\Clients;
 
 class ProjectApi extends BaseClient
 {
-    public function GetProject($projectId)
+    protected $aliases = [
+        'retrieve' => 'GetGlobalProjectById',
+    ];
+
+    public function retrieve($projectId)
     {
         return $this->get("project/global/" . $projectId);
     }

@@ -9,7 +9,7 @@ class PageTest extends Base
 {
     public function it_retrieves_page_data_when_given_a_page_short_name()
     {
-        $json = $this->client->Page->Retrieve("rasha25");
+        $json = $this->client->fundraising->getByShortName("rasha25");
         $this->assertEquals($json->pageId, 640916);
         $this->assertEquals($json->activityId, 73347);
         $this->assertEquals($json->eventName, "rasha25");
@@ -20,7 +20,7 @@ class PageTest extends Base
 
     public function testListAll_WithValidCredentials_ReturnsListOfUserPages()
     {
-        $pages = $this->client->Page->GetFundraisingPages();
+        $pages = $this->client->fundraising->getAllPages();
         $this->assertTrue(count($pages) > 0);
     }
 
@@ -42,12 +42,12 @@ class PageTest extends Base
         $dto->justGivingOptIn = true;
         $dto->charityOptIn = true;
         $dto->charityFunded = false;
-        $page = $this->client->Page->RegisterFundraisingPage($dto);
+        $page = $this->client->fundraising->register($dto);
 
         $this->assertNotNull($page);
         $this->assertNotNull($page->next->uri);
         $this->assertNotNull($page->pageId);
-        $json = $this->client->Page->Retrieve($dto->pageShortName);
+        $json = $this->client->fundraising->getByShortName($dto->pageShortName);
         $this->assertEquals($json->story, '<p>This is my custom page story, which will override the default.</p>');
     }
 
@@ -65,7 +65,7 @@ class PageTest extends Base
         $dto->justGivingOptIn = true;
         $dto->charityOptIn = true;
         $dto->charityFunded = false;
-        $page = $this->client->Page->RegisterFundraisingPage($dto);
+        $page = $this->client->fundraising->register($dto);
         $this->assertNotNull($page);
         $this->assertNotNull($page->next->uri);
         $this->assertNotNull($page->pageId);
@@ -74,10 +74,10 @@ class PageTest extends Base
     public function IsShortNameRegistered_KnownPage_Returns()
     {
         $pageShortName = "rasha25";
-        $booleanResponse = $this->client->Page->FundraisingPageUrlCheck($pageShortName);
+        $booleanResponse = $this->client->fundraising->urlCheck($pageShortName);
         $this->assertTrue($booleanResponse);
         $pageShortName = uniqid();
-        $booleanResponse = $this->client->Page->FundraisingPageUrlCheck($pageShortName);
+        $booleanResponse = $this->client->fundraising->urlCheck($pageShortName);
         $this->assertFalse($booleanResponse);
     }
 
@@ -95,9 +95,9 @@ class PageTest extends Base
         $dto->justGivingOptIn = true;
         $dto->charityOptIn = true;
         $dto->charityFunded = false;
-        $page = $this->client->Page->RegisterFundraisingPage($dto);
+        $page = $this->client->fundraising->register($dto);
         $update = "Updated this story with update - " . uniqid();
-        $response = $this->client->Page->UpdateStory($dto->pageShortName, $update);
+        $response = $this->client->fundraising->UpdateStory($dto->pageShortName, $update);
 
         $this->assertTrue($response->wasSuccessful());
     }
@@ -117,11 +117,11 @@ class PageTest extends Base
         $dto->justGivingOptIn = true;
         $dto->charityOptIn = true;
         $dto->charityFunded = false;
-        $page = $this->client->Page->RegisterFundraisingPage($dto);
+        $page = $this->client->fundraising->register($dto);
 
         $caption = "PHP Image Caption - " . uniqid();
         $filename = __DIR__ . "/img/jpg.jpg";
-        $response = $this->client->Page->UploadImage($dto->pageShortName, $caption, $filename);
+        $response = $this->client->fundraising->UploadImage($dto->pageShortName, $caption, $filename);
 
         $this->assertTrue($response->wasSuccessful());
     }
@@ -130,14 +130,14 @@ class PageTest extends Base
     {
         $request = new AddPostToPageUpdateRequest();
         $request->Message = "update story";
-        $response = $this->client->Page->AddPostToPageUpdate("api-test-54787f3435f75", $request);
+        $response = $this->client->fundraising->AddPostToPageUpdate("api-test-54787f3435f75", $request);
         $this->assertNotNull($response->Created);
     }
 
     /** @test */
     public function it_checks_if_a_page_short_name_is_registered()
     {
-        $response = $this->client->page->FundraisingPageUrlCheck('rasha25');
+        $response = $this->client->fundraising->urlCheck('rasha25');
 
         $this->assertTrue($response->existenceCheck());
     }

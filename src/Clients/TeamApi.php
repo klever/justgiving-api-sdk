@@ -4,26 +4,20 @@ namespace Klever\JustGivingApiSdk\Clients;
 
 class TeamApi extends BaseClient
 {
-    public function Create($team)
+    protected $aliases = [
+        'retrieve'      => ['GetTeam', 'getTeam'],
+        'checkIfExists' => 'CheckIfTeamExists',
+        'create'        => 'CreateTeam',
+        'UpdateTeam',
+        'JoinTeam',
+    ];
+
+    public function retrieve($teamShortName)
     {
-        $url = "team/" . $team->teamShortName;
-
-        $payload = json_encode($team);
-        $json = $this->httpClient->Put($url, $payload);
-
-        return json_decode($json);
+        return $this->get("team/" . $teamShortName);
     }
 
-    public function Team($teamShortName)
-    {
-        $url = "team/" . $teamShortName;
-
-        $json = $this->getContent($url);
-
-        return json_decode($json);
-    }
-
-    public function CheckIfExist($teamShortName)
+    public function checkIfExists($teamShortName)
     {
         $url = "team/" . $teamShortName;
 
@@ -33,6 +27,16 @@ class TeamApi extends BaseClient
         } else if ($httpInfo['http_code'] == 404) {
             return false;
         }
+    }
+
+    public function create($team)
+    {
+        $url = "team/" . $team->teamShortName;
+
+        $payload = json_encode($team);
+        $json = $this->httpClient->Put($url, $payload);
+
+        return $json;
     }
 
     public function JoinTeam($teamShortName, $joinTeamRequest)

@@ -4,36 +4,71 @@ namespace Klever\JustGivingApiSdk\Clients;
 
 use Klever\JustGivingApiSdk\Clients\Models\StoryUpdateRequest;
 
-class PageApi extends BaseClient
+class FundraisingApi extends BaseClient
 {
-    public function RegisterFundraisingPage($pageCreationRequest)
-    {
-        return $this->put("fundraising/pages", $pageCreationRequest);
-    }
+    protected $aliases = [
+        'urlCheck'           => 'FundraisingPageUrlCheck',
+        'suggestShortNames'  => 'SuggestPageShortNames',
+        'register'           => 'RegisterFundraisingPage',
+        'getByShortName'     => 'GetFundraisingPageDetails',
+        'GetFundraisingPageDetailsById',
+        'getAllPages'        => 'GetFundraisingPages',
+        'getDonations'       => 'GetFundraisingPageDonations',
+        'GetFundraisingPageDonationsByReference',
+        'UpdateFundraisingPage',
+        'getUpdates'         => 'PageUpdates',
+        'getUpdatesById'     => 'PageUpdateById',
+        'PageUpdatesAddPost',
+        'DeleteFundraisingPageUpdates',
+        'DeleteFundraisingPageAttribution',
+        'UpdateFundraisingPageAttribution',
+        'AppendToFundraisingPageAttribution',
+        'GetFundraisingPageAttribution',
+        'uploadImage'        => 'UploadImage',
+        'uploadDefaultImage' => 'UploadDefaultImage',
+        'addImage'           => 'AddImageToFundraisingPage',
+        'DeleteFundraisingPageImage',
+        'getImages'          => 'GetImagesForFundraisingPage',
+        'addVideo'           => 'AddVideoToFundraisingPage',
+        'getVideos'          => 'GetVideosForFundraisingPage',
+        'cancel'             => 'CancelFundraisingPage',
+        'UpdateNotificationsPreferences',
+        'UpdateFundraisingPageSummary',
+    ];
 
-    public function FundraisingPageUrlCheck($pageShortName)
+    public function urlCheck($pageShortName)
     {
         return $this->head("fundraising/pages/" . $pageShortName);
     }
 
-    public function GetFundraisingPages()
-    {
-        return $this->get("fundraising/pages");
-    }
-
-    public function Retrieve($pageShortName)
-    {
-        return $this->get("fundraising/pages/" . $pageShortName);
-    }
-
-    public function SuggestPageShortNames($preferredName)
+    public function suggestShortNames($preferredName)
     {
         return $this->get("fundraising/pages/suggest?preferredName=" . urlencode($preferredName));
     }
 
-    public function RetrieveDonationsForPage($pageShortName, $pageSize = 50, $pageNumber = 1)
+    public function register($pageCreationRequest)
+    {
+        return $this->put("fundraising/pages", $pageCreationRequest);
+    }
+
+    public function getByShortName($pageShortName)
+    {
+        return $this->get("fundraising/pages/" . $pageShortName);
+    }
+
+    public function getAllPages()
+    {
+        return $this->get("fundraising/pages");
+    }
+
+    public function getDonations($pageShortName, $pageSize = 50, $pageNumber = 1)
     {
         return $this->get("fundraising/pages/" . $pageShortName . "/donations" . "?PageSize=" . $pageSize . "&PageNum=" . $pageNumber);
+    }
+
+    public function getDonationsByReference($pageShortName, $reference)
+    {
+        return $this->get("fundraising/pages/" . $pageShortName . "/donations/ref/" . $reference);
     }
 
     public function UpdateStory($pageShortName, $storyUpdate)
@@ -44,17 +79,12 @@ class PageApi extends BaseClient
         return $this->post("fundraising/pages/" . $pageShortName, $storyUpdateRequest);
     }
 
-    public function RetrieveDonationsForPageByReference($pageShortName, $reference)
-    {
-        return $this->get("fundraising/pages/" . $pageShortName . "/donations/ref/" . $reference);
-    }
-
-    public function GetPageUpdates($pageShortName)
+    public function getUpdates($pageShortName)
     {
         return $this->get("fundraising/pages/" . $pageShortName . "/updates/");
     }
 
-    public function GetPageUpdateById($pageShortName, $updateId)
+    public function getUpdatesById($pageShortName, $updateId)
     {
         return $this->get("fundraising/pages/" . $pageShortName . "/updates/" . $updateId);
     }
@@ -73,16 +103,16 @@ class PageApi extends BaseClient
     {
         return $this->put(
             "fundraising/pages/" . $pageShortName . "/attribution",
-                $updateFundraisingPageAttributionRequest
+            $updateFundraisingPageAttributionRequest
         );
     }
 
     public function AppendToFundraisingPageAttribution($pageShortName, $appendToFundraisingPageAttributionRequest)
     {
-       return $this->post(
-           "fundraising/pages/" . $pageShortName . "/attribution",
-               $appendToFundraisingPageAttributionRequest
-       );
+        return $this->post(
+            "fundraising/pages/" . $pageShortName . "/attribution",
+            $appendToFundraisingPageAttributionRequest
+        );
     }
 
     public function GetFundraisingPageAttribution($pageShortName)
@@ -104,27 +134,27 @@ class PageApi extends BaseClient
         return $this->postFile($url, $filename, $imageContentType);
     }
 
-    public function AddImage($pageShortName, $addImageRequest)
+    public function addImage($pageShortName, $addImageRequest)
     {
         return $this->put("fundraising/pages/" . $pageShortName . "/images", $addImageRequest);
     }
 
-    public function GetImages($pageShortName)
+    public function getImages($pageShortName)
     {
         return $this->get("fundraising/pages/" . $pageShortName . "/images");
     }
 
-    public function AddVideo($pageShortName, $addVideoRequest)
+    public function addVideo($pageShortName, $addVideoRequest)
     {
         return $this->put("fundraising/pages/" . $pageShortName . "/videos", $addVideoRequest);
     }
 
-    public function GetVideos($pageShortName)
+    public function getVideos($pageShortName)
     {
         return $this->get("fundraising/pages/" . $pageShortName . "/videos");
     }
 
-    public function Cancel($pageShortName)
+    public function cancel($pageShortName)
     {
         return $this->delete("fundraising/pages/" . $pageShortName);
     }

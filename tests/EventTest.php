@@ -9,25 +9,33 @@ class EventTest extends Base
     /** @test */
     public function it_retrieves_an_event_given_an_event_id()
     {
-        $response = $this->client->Event->Retrieve(479546)->getBodyAsObject();
+        $response = $this->client->event->getById(479546)->getBodyAsObject();
+
         $this->assertEquals($response->name, 'Virgin London Marathon 2011 - Applying for a charity place');
     }
 
     /** @test */
     public function it_retrieves_an_event_listing()
     {
-        $response = $this->client->event->retrieve(479546)->getBodyAsObject();
+        $response = $this->client->event->getById(479546)->getBodyAsObject();
 
         $this->assertEqualAttributes(Event::class, $response);
     }
 
+    /** @test */
     public function it_retrieves_fundraising_pages_for_a_given_event()
     {
-        $response = $this->client->Event->RetrievePages(479546)->getBodyAsObject();
-        $pages = $response->fundraisingPages;
+        $response = $this->client->event->getPages(479546)->getBodyAsObject();
 
-        $this->assertObjectHasAttribute('companyAppealId', $pages[0]);
-        $this->assertObjectHasAttribute('createdDate', $pages[0]);
-        $this->assertObjectHasAttribute('currencyCode', $pages[0]);
+        $this->assertObjectHasAttributes(['companyAppealId', 'createdDate', 'currencyCode'], $response->fundraisingPages[0]);
+    }
+
+    /** @test */
+    public function it_retrieves_a_list_of_types_of_events()
+    {
+        $response = $this->client->event->getTypes();
+
+        $this->assertTrue(is_array($response->body->eventTypes));
+        $this->assertObjectHasAttributes(['description', 'eventType', 'id', 'name'], $response->body->eventTypes[0]);
     }
 }
