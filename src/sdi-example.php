@@ -29,7 +29,7 @@ if (isset($donationId)) { ?>
 
     $client = new JustGivingClient("https://api.sandbox.justgiving.com/", "c1072ac8", 1);
 
-    $response = $client->Donation->Retrieve($donationId);
+    $response = $client->Donation->getById($donationId);
 
     echo "Donation amount: " . $response->amount . "<br/>";
     echo "Donation date: " . $response->donationDate . "<br/>";

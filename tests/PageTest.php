@@ -139,6 +139,6 @@ class PageTest extends Base
     {
         $response = $this->client->page->FundraisingPageUrlCheck('rasha25');
 
-        $this->assertTrue($response);
+        $this->assertTrue($response->existenceCheck());
     }
 }

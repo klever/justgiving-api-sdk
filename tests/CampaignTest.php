@@ -11,7 +11,7 @@ class CampaignTest extends Base
         $campaignName = "testsandboxcampaign";
         $expectedCampaignPageName = "The name of my campaign";
 
-        $response = $this->client->Campaign->Retrieve($charityName, $campaignName);
+        $response = $this->client->Campaign->retrieve($charityName, $campaignName);
 
         $this->assertTrue($response->existenceCheck());
 		$this->assertEquals($expectedCampaignPageName, $response->campaignPageName);
@@ -22,7 +22,7 @@ class CampaignTest extends Base
     {
         $expectedCampaignPageName = "The name of my campaign";
 
-        $response = $this->client->Campaign->CampaignsByCharityId("2050");
+        $response = $this->client->Campaign->getAllByCharityId("2050");
 
         $this->assertEquals($response->body->campaignsDetails[0]->campaignPageName, $expectedCampaignPageName);
     }
@@ -33,7 +33,7 @@ class CampaignTest extends Base
         $charityShortName = "jgdemo";
         $campaignShortUrl = "testsandboxcampaign";
 
-        $response = $this->client->Campaign->PagesForCampaign($charityShortName, $campaignShortUrl);
+        $response = $this->client->Campaign->pages($charityShortName, $campaignShortUrl);
 
         $this->assertTrue(is_array($response->fundraisingPages));
 		$this->assertEquals($response->campaignShortUrl, $campaignShortUrl);

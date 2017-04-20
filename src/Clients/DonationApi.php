@@ -4,18 +4,30 @@ namespace Klever\JustGivingApiSdk\Clients;
 
 class DonationApi extends BaseClient
 {
-    public function Retrieve($donationId)
+    protected $aliases = [
+        'getById'               => 'RetrieveDonationDetails',
+        'getDetailsByReference' => 'RetrieveDonationDetailsByReference',
+        'getTotalByReference'   => 'RetrieveDonationTotalByReference',
+        'getStatus'             => 'RetrieveDonationStatus',
+    ];
+
+    public function getById($donationId)
     {
         return $this->get("donation/" . $donationId);
     }
 
-    public function RetrieveStatus($donationId)
+    public function getStatus($donationId)
     {
         return $this->get("donation/" . $donationId . "/status");
     }
 
-    public function RetrieveDetails($thirdPartReference)
+    public function getDetailsByReference($thirdPartyReference)
     {
-        return $this->get("donation/ref/" . $thirdPartReference);
+        return $this->get("donation/ref/" . $thirdPartyReference);
+    }
+
+    public function getTotalByReference($thirdPartyReference)
+    {
+        return $this->get('donationtotal/ref/' . $thirdPartyReference);
     }
 }

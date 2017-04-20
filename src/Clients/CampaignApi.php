@@ -2,31 +2,37 @@
 
 namespace Klever\JustGivingApiSdk\Clients;
 
-use Klever\JustGivingApiSdk\Clients\Http\HTTPResponse;
-
 class CampaignApi extends BaseClient
 {
-    public function Retrieve($charityName, $campaignName)
+    protected $aliases = [
+        'registerFundraisingPage' => 'RegisterCampaignFundraisingPage',
+        'retrieve'                => 'GetCampaignDetails',
+        'pages'                   => 'GetPagesForCampaign',
+        'create'                  => 'CreateCampaign',
+        'getAllByCharityId'       => 'GetCampaignsByCharityId',
+    ];
+
+    public function retrieve($charityName, $campaignName)
     {
         return $this->get("campaigns/" . $charityName . "/" . $campaignName);
     }
 
-    public function Create($campaignCreationRequest)
+    public function create($campaignCreationRequest)
     {
         return $this->put('campaigns', $campaignCreationRequest);
     }
 
-    public function PagesForCampaign($charityShortName, $campaignShortUrl)
+    public function pages($charityShortName, $campaignShortUrl)
     {
         return $this->get("campaigns/" . $charityShortName . "/" . $campaignShortUrl . "/pages");
     }
 
-    public function CampaignsByCharityId($charityId)
+    public function getAllByCharityId($charityId)
     {
         return $this->get('campaigns/' . $charityId);
     }
 
-    public function RegisterCampaignFundraisingPage($registerCampaignFundraisingPageRequest)
+    public function registerFundraisingPage($registerCampaignFundraisingPageRequest)
     {
         return $this->post('campaigns', $registerCampaignFundraisingPageRequest);
     }

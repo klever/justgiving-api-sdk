@@ -27,7 +27,6 @@ class BaseClient
      * ClientBase constructor.
      *
      * @param $httpClient
-     * @param $justGivingApi
      */
     public function __construct($httpClient)
     {
