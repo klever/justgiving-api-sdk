@@ -2,9 +2,13 @@
 
 namespace Klever\JustGivingApiSdk\Clients;
 
-class CountriesApi extends ClientBase
+class CountriesApi extends BaseClient
 {
-    public function Countries()
+    protected $aliases = [
+        'countries' => 'ListCountries',
+    ];
+
+    public function countries()
     {
         return $this->get("countries");
     }

@@ -2,25 +2,11 @@
 
 namespace Klever\JustGivingApiSdk\Clients;
 
-use Exception;
-use Klever\JustGivingApiSdk\Clients\Http\HTTPResponse;
 use Klever\JustGivingApiSdk\Clients\Models\CreateAccountRequest;
 
-class AccountApi extends ClientBase
+class AccountApi extends BaseClient
 {
-    public function AccountDetailsV2()
-    {
-        $httpResponse = new HTTPResponse();
-        $url = "account";
-
-        $result = $this->httpClient->GetV2($url);
-        $httpResponse->bodyResponse = json_decode($result->bodyResponse);
-        $httpResponse->httpStatusCode = $result->httpStatusCode;
-
-        return $httpResponse;
-    }
-
-    public function AccountDetails()
+    public function Retrieve()
     {
         return $this->get("account");
     }
@@ -45,7 +31,7 @@ class AccountApi extends ClientBase
         return $this->get("account/" . $email . "/requestpasswordreminder");
     }
 
-    public function IsValid($validateAccountRequest)
+    public function Validate($validateAccountRequest)
     {
         return $this->post("account/validate", $validateAccountRequest);
     }
@@ -74,12 +60,7 @@ class AccountApi extends ClientBase
 
     public function RateContent($rateContentRequest)
     {
-        $url = "account/rating";
-
-        $payload = json_encode($rateContentRequest);
-        $json = $this->httpClient->Post($url, $payload);
-
-        return $json['http_code'] == 201;
+        return $this->post("account/rating", $rateContentRequest);
     }
 
     public function ContentFeed()
@@ -94,22 +75,12 @@ class AccountApi extends ClientBase
 
     public function AddInterest($addInterestRequest)
     {
-        $url = "account/interest";
-
-        $payload = json_encode($addInterestRequest);
-        $json = $this->httpClient->Post($url, $payload);
-        if ($json['http_code'] == 201) {
-            return true;
-        } else if ($json['http_code'] == 401) {
-            return false;
-        }
+        return $this->post("account/interest", $addInterestRequest);
     }
 
     public function ReplaceInterest($replaceInterestRequest)
     {
-        $status = $this->putStatus("account/interest", $replaceInterestRequest);
-
-        return $status == 201;
+        return $this->put("account/interest", $replaceInterestRequest);
     }
 
 }

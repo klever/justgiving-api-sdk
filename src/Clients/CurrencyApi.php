@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients;
 
-class CurrencyApi extends ClientBase
+class CurrencyApi extends BaseClient
 {
     public function ValidCurrencies()
     {

@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients;
 
-class TeamApi extends ClientBase
+class TeamApi extends BaseClient
 {
     public function Create($team)
     {

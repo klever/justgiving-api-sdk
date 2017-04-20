@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients;
 
-class ProjectApi extends ClientBase
+class ProjectApi extends BaseClient
 {
     public function GetProject($projectId)
     {

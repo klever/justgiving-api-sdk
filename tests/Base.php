@@ -13,6 +13,8 @@ class Base extends TestCase
      */
     protected $client;
 
+    protected $guzzleClient;
+
     /**
      * The setup variables for performing tests.
      *
@@ -24,7 +26,7 @@ class Base extends TestCase
     {
         $this->context = new TestContext();
 
-        $guzzleClient = GuzzleClientFactory::build(
+        $this->guzzleClient = GuzzleClientFactory::build(
             $this->context->apiUrl,
             $this->context->apiKey,
             $this->context->apiVersion,
@@ -32,7 +34,7 @@ class Base extends TestCase
             $this->context->testValidPassword
         );
 
-        $this->client = new JustGivingClient($guzzleClient);
+        $this->client = new JustGivingClient($this->guzzleClient);
     }
 
     /**

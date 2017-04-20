@@ -20,7 +20,7 @@ class PageTest extends Base
 
     public function testListAll_WithValidCredentials_ReturnsListOfUserPages()
     {
-        $pages = $this->client->Page->ListAll();
+        $pages = $this->client->Page->GetFundraisingPages();
         $this->assertTrue(count($pages) > 0);
     }
 
@@ -42,7 +42,7 @@ class PageTest extends Base
         $dto->justGivingOptIn = true;
         $dto->charityOptIn = true;
         $dto->charityFunded = false;
-        $page = $this->client->Page->Create($dto);
+        $page = $this->client->Page->RegisterFundraisingPage($dto);
 
         $this->assertNotNull($page);
         $this->assertNotNull($page->next->uri);
@@ -65,7 +65,7 @@ class PageTest extends Base
         $dto->justGivingOptIn = true;
         $dto->charityOptIn = true;
         $dto->charityFunded = false;
-        $page = $this->client->Page->Create($dto);
+        $page = $this->client->Page->RegisterFundraisingPage($dto);
         $this->assertNotNull($page);
         $this->assertNotNull($page->next->uri);
         $this->assertNotNull($page->pageId);
@@ -74,10 +74,10 @@ class PageTest extends Base
     public function IsShortNameRegistered_KnownPage_Returns()
     {
         $pageShortName = "rasha25";
-        $booleanResponse = $this->client->Page->IsShortNameRegistered($pageShortName);
+        $booleanResponse = $this->client->Page->FundraisingPageUrlCheck($pageShortName);
         $this->assertTrue($booleanResponse);
         $pageShortName = uniqid();
-        $booleanResponse = $this->client->Page->IsShortNameRegistered($pageShortName);
+        $booleanResponse = $this->client->Page->FundraisingPageUrlCheck($pageShortName);
         $this->assertFalse($booleanResponse);
     }
 
@@ -95,7 +95,7 @@ class PageTest extends Base
         $dto->justGivingOptIn = true;
         $dto->charityOptIn = true;
         $dto->charityFunded = false;
-        $page = $this->client->Page->Create($dto);
+        $page = $this->client->Page->RegisterFundraisingPage($dto);
         $update = "Updated this story with update - " . uniqid();
         $response = $this->client->Page->UpdateStory($dto->pageShortName, $update);
 
@@ -117,7 +117,7 @@ class PageTest extends Base
         $dto->justGivingOptIn = true;
         $dto->charityOptIn = true;
         $dto->charityFunded = false;
-        $page = $this->client->Page->Create($dto);
+        $page = $this->client->Page->RegisterFundraisingPage($dto);
 
         $caption = "PHP Image Caption - " . uniqid();
         $filename = __DIR__ . "/img/jpg.jpg";
@@ -137,7 +137,7 @@ class PageTest extends Base
     /** @test */
     public function it_checks_if_a_page_short_name_is_registered()
     {
-        $response = $this->client->page->IsShortNameRegistered('rasha25');
+        $response = $this->client->page->FundraisingPageUrlCheck('rasha25');
 
         $this->assertTrue($response);
     }

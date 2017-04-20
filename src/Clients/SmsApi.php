@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients;
 
-class SmsApi extends ClientBase
+class SmsApi extends BaseClient
 {
 
 

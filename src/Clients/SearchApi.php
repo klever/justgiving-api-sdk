@@ -3,7 +3,7 @@
 namespace Klever\JustGivingApiSdk\Clients;
 
 
-class SearchApi extends ClientBase
+class SearchApi extends BaseClient
 {
     public function CharitySearch($searchTerms, $pageSize = 50, $pageNumber = 1)
     {

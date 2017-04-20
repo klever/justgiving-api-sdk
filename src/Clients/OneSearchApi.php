@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients;
 
-class OneSearchApi extends ClientBase
+class OneSearchApi extends BaseClient
 {
     public function Index($searchTerm, $resultByIndex, $limit = 10)
     {

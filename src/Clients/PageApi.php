@@ -4,19 +4,19 @@ namespace Klever\JustGivingApiSdk\Clients;
 
 use Klever\JustGivingApiSdk\Clients\Models\StoryUpdateRequest;
 
-class PageApi extends ClientBase
+class PageApi extends BaseClient
 {
-    public function Create($pageCreationRequest)
+    public function RegisterFundraisingPage($pageCreationRequest)
     {
         return $this->put("fundraising/pages", $pageCreationRequest);
     }
 
-    public function IsShortNameRegistered($pageShortName)
+    public function FundraisingPageUrlCheck($pageShortName)
     {
-        return $this->head("fundraising/pages/" . $pageShortName)->existenceCheck();
+        return $this->head("fundraising/pages/" . $pageShortName);
     }
 
-    public function ListAll()
+    public function GetFundraisingPages()
     {
         return $this->get("fundraising/pages");
     }
@@ -44,16 +44,8 @@ class PageApi extends ClientBase
         return $this->post("fundraising/pages/" . $pageShortName, $storyUpdateRequest);
     }
 
-    public function UploadImage($pageShortName, $caption, $filename, $imageContentType = null)
+    public function RetrieveDonationsForPageByReference($pageShortName, $reference)
     {
-        $url = "fundraising/pages/" . $pageShortName . "/images?caption=" . urlencode($caption);
-
-        return $this->postFile($url, $filename, $imageContentType);
-    }
-
-    public function RetrieveDonationsForPageByReference($pageShortName, $reference, $privateData = false)
-    {
-        // TODO: check what privateData is used for
         return $this->get("fundraising/pages/" . $pageShortName . "/donations/ref/" . $reference);
     }
 
@@ -82,7 +74,7 @@ class PageApi extends ClientBase
         return $this->put(
             "fundraising/pages/" . $pageShortName . "/attribution",
                 $updateFundraisingPageAttributionRequest
-        )->existenceCheck();
+        );
     }
 
     public function AppendToFundraisingPageAttribution($pageShortName, $appendToFundraisingPageAttributionRequest)
@@ -90,7 +82,7 @@ class PageApi extends ClientBase
        return $this->post(
            "fundraising/pages/" . $pageShortName . "/attribution",
                $appendToFundraisingPageAttributionRequest
-       )->existenceCheck();
+       );
     }
 
     public function GetFundraisingPageAttribution($pageShortName)
@@ -98,21 +90,18 @@ class PageApi extends ClientBase
         return $this->get("fundraising/pages/" . $pageShortName . "/attribution");
     }
 
-    public function UploadDefaultImage($pageShortName, $filename, $imageContentType)
+    public function UploadImage($pageShortName, $caption, $filename, $imageContentType = null)
     {
-        $fh = fopen($filename, 'r');
-        $imageBytes = fread($fh, filesize($filename));
-        fclose($fh);
+        $url = "fundraising/pages/" . $pageShortName . "/images?caption=" . urlencode($caption);
 
+        return $this->postFile($url, $filename, $imageContentType);
+    }
+
+    public function UploadDefaultImage($pageShortName, $filename, $imageContentType = null)
+    {
         $url = "fundraising/pages/" . $pageShortName . "/images/default";
 
-        $httpInfo = $this->httpClient->Post($url, $imageBytes, $imageContentType);
-
-        if ($httpInfo['http_code'] == 200) {
-            return true;
-        } else {
-            return $httpInfo;
-        }
+        return $this->postFile($url, $filename, $imageContentType);
     }
 
     public function AddImage($pageShortName, $addImageRequest)

@@ -7,10 +7,14 @@ use Klever\JustGivingApiSdk\Clients\Models\Model;
 use Klever\JustGivingApiSdk\Support\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class ClientBase
+class BaseClient
 {
-    public $debug;
-    public $Parent;
+    /**
+     * Method name aliases.
+     *
+     * @var array
+     */
+    protected $aliases = [];
 
     /**
      * The HTTP client used to perform requests.
@@ -25,17 +29,25 @@ class ClientBase
      * @param $httpClient
      * @param $justGivingApi
      */
-    public function __construct($httpClient, $justGivingApi)
+    public function __construct($httpClient)
     {
-        $this->Parent = $justGivingApi;
         $this->httpClient = $httpClient;
     }
 
-    public function BuildAuthenticationValue()
+    /**
+     * Allow aliases to be defined for API methods.
+     *
+     * @param $calledMethod
+     * @param $args
+     * @return mixed
+     */
+    public function __call($calledMethod, $args)
     {
-        return empty($this->Parent->Username)
-            ? ''
-            : base64_encode($this->Parent->Username . ":" . $this->Parent->Password);
+        foreach ($this->aliases as $realMethod => $aliases) {
+            if (in_array($calledMethod, (array) $aliases)) {
+                return $this->$realMethod(...$args);
+            }
+        }
     }
 
     /**

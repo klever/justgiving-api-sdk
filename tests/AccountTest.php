@@ -68,7 +68,7 @@ class AccountTest extends Base
             'email'    => $this->context->testUsername,
             'password' => $this->context->testValidPassword,
         ]);
-        $response = $this->client->Account->IsValid($request)->getBodyAsObject();
+        $response = $this->client->Account->Validate($request)->getBodyAsObject();
 
         $this->assertTrue($response->consumerId > 0);
         $this->assertTrue($response->isValid);
@@ -81,7 +81,7 @@ class AccountTest extends Base
             'email'    => $this->context->testUsername,
             'password' => $this->context->testInvalidPassword,
         ]);
-        $response = $this->client->Account->IsValid($request);
+        $response = $this->client->Account->Validate($request);
 
         $this->assertEquals(0, $response->consumerId);
         $this->assertFalse($response->isValid);
@@ -90,7 +90,7 @@ class AccountTest extends Base
     /** @test */
     public function it_retrieves_account_details_when_logged_in_with_correct_credentials()
     {
-        $response = $this->client->Account->AccountDetails()->getBodyAsObject();
+        $response = $this->client->Account->Retrieve()->getBodyAsObject();
 
         $this->assertNotNull($response->email);
         $this->assertEquals($this->context->testUsername, $response->email);

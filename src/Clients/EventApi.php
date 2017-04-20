@@ -4,7 +4,7 @@ namespace Klever\JustGivingApiSdk\Clients;
 
 use Klever\JustGivingApiSdk\Clients\Http\HTTPResponse;
 
-class EventApi extends ClientBase
+class EventApi extends BaseClient
 {
     public function Create($event)
     {

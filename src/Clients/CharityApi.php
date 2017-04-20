@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients;
 
-class CharityApi extends ClientBase
+class CharityApi extends BaseClient
 {
     public function Retrieve($charityId)
     {

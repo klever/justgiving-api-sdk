@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Clients;
 
-class LeaderboardApi extends ClientBase
+class LeaderboardApi extends BaseClient
 {
     public function GetCharityLeaderboard($charityId)
     {
