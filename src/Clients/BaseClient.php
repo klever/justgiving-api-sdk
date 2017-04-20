@@ -35,7 +35,8 @@ class BaseClient
     }
 
     /**
-     * Check if the called method is valid if it's converted to camel case; if not, look for a defined method alias.
+     * Check if the called method is valid if it's converted to camel case. If not, look for a defined method alias
+     * that's either an exact match, or the Pascal-cased version of the called method.
      *
      * @param $calledMethod
      * @param $args
@@ -44,12 +45,14 @@ class BaseClient
     public function __call($calledMethod, $args)
     {
         $camelMethod = Str::camel($calledMethod);
+        $pascalMethod = Str::studly($calledMethod);
+
         if (method_exists($this, $camelMethod)) {
             return $this->$camelMethod(...$args);
         }
 
         foreach ($this->aliases as $realMethod => $aliases) {
-            if (in_array($calledMethod, (array) $aliases)) {
+            if (in_array($calledMethod, (array) $aliases) || in_array($pascalMethod, (array) $aliases)) {
                 return $this->$realMethod(...$args);
             }
         }

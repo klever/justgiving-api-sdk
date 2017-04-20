@@ -16,7 +16,7 @@ class BaseClientTest extends Base
     /** @test */
     public function a_client_method_can_have_one_alias()
     {
-        $result = $this->childApi->methodOneAlias();
+        $result = $this->childApi->MethodOneAlias();
 
         $this->assertEquals('Method One', $result);
     }
@@ -24,8 +24,8 @@ class BaseClientTest extends Base
     /** @test */
     public function a_client_method_can_have_multiple_aliases()
     {
-        $result = $this->childApi->methodTwoAliasOne();
-        $resultTwo = $this->childApi->methodTwoAliasTwo();
+        $result = $this->childApi->MethodTwoAliasOne();
+        $resultTwo = $this->childApi->MethodTwoAliasTwo();
 
         $this->assertEquals('Method Two', $result);
         $this->assertEquals('Method Two', $resultTwo);
@@ -42,13 +42,23 @@ class BaseClientTest extends Base
         $this->assertEquals('Method One', $resultTwo);
         $this->assertEquals('Method Two', $resultThree);
     }
+
+    /** @test */
+    public function a_method_alias_can_be_called_in_any_case()
+    {
+        $resultOne = $this->childApi->method_one_Alias();
+        $resultTwo = $this->childApi->methodTwoAliasOne();
+
+        $this->assertEquals('Method One', $resultOne);
+        $this->assertEquals('Method Two', $resultTwo);
+    }
 }
 
 class BaseClientChild extends BaseClient
 {
     protected $aliases = [
-        'methodOne' => 'methodOneAlias',
-        'methodTwo' => ['methodTwoAliasOne', 'methodTwoAliasTwo'],
+        'methodOne' => 'MethodOneAlias',
+        'methodTwo' => ['MethodTwoAliasOne', 'MethodTwoAliasTwo'],
     ];
 
     public function methodOne()

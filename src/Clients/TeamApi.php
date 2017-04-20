@@ -2,53 +2,41 @@
 
 namespace Klever\JustGivingApiSdk\Clients;
 
+use Klever\JustGivingApiSdk\Clients\Models\JoinTeamRequest;
+use Klever\JustGivingApiSdk\Clients\Models\Team;
+
 class TeamApi extends BaseClient
 {
     protected $aliases = [
-        'retrieve'      => ['GetTeam', 'getTeam'],
-        'checkIfExists' => 'CheckIfTeamExists',
-        'create'        => 'CreateTeam',
-        'UpdateTeam',
-        'JoinTeam',
+        'getByShortName' => 'GetTeam',
+        'checkIfExists'  => 'CheckIfTeamExists',
+        'create'         => 'CreateTeam',
+        'update'         => 'UpdateTeam',
+        'join'           => 'JoinTeam',
     ];
 
-    public function retrieve($teamShortName)
+    public function getByShortName($teamShortName)
     {
         return $this->get("team/" . $teamShortName);
     }
 
     public function checkIfExists($teamShortName)
     {
-        $url = "team/" . $teamShortName;
-
-        $httpInfo = $this->httpClient->Head($url);
-        if ($httpInfo['http_code'] == 200) {
-            return true;
-        } else if ($httpInfo['http_code'] == 404) {
-            return false;
-        }
+        return $this->head("team/" . $teamShortName);
     }
 
-    public function create($team)
+    public function create(Team $team)
     {
-        $url = "team/" . $team->teamShortName;
-
-        $payload = json_encode($team);
-        $json = $this->httpClient->Put($url, $payload);
-
-        return $json;
+        return $this->put("team/" . $team->teamShortName, $team);
     }
 
-    public function JoinTeam($teamShortName, $joinTeamRequest)
+    public function update($teamShortName, Team $updatedTeam)
     {
-        $url = "team/join/" . $teamShortName;
-        $payload = json_encode($joinTeamRequest);
+        return $this->post('team/' . $teamShortName, $updatedTeam);
+    }
 
-        $httpInfo = $this->httpClient->Put($url, $payload, true);
-        if ($httpInfo['http_code'] == 200) {
-            return true;
-        } else if ($httpInfo['http_code'] == 404) {
-            return false;
-        }
+    public function join($teamShortName, JoinTeamRequest $joinTeamRequest)
+    {
+        return $this->put("team/join/" . $teamShortName, $joinTeamRequest);
     }
 }
