@@ -17,7 +17,7 @@ $result->pageShortName; // 'jgdemo'
 See the [JustGiving API documentation](https://api.justgiving.com/docs) for more usage.
 
 ## Usage
-###Setup
+### Setup
 The `JustGivingClient` should be instantiated with a suitable HTTP client passed in as a parameter. This client must adhere to the [PSR-7 interfaces](http://www.php-fig.org/psr/psr-7/), as well as the methods defined in the `JustGivingApiSdk\Support\Response` class.
 This class implements the PSR-7 `ResponseInterface` and adds support for dealing with JSON responses, as well as making it easy to access response data. 
 
