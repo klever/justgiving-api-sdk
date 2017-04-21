@@ -49,6 +49,36 @@ $client->donation->getStatus($donationId);                  // The actual method
 $client->donation->RetrieveDonationStatus($donationId);     // The alias method that's the same as the API action name
 ```
 
+#### Models
+Some API actions (e.g. creating or updating resources) require a set of data grouped together in an object.
+To achieve this, a model class has been defined for each separate occasion when this is necessary, for example `Team` or `JoinTeamRequest`.
+These model classes all extend the parent `Model` class, which adds some useful functionality.
+
+Data can be added to a model in several ways: it can be passed to the constructor as an array, passed to the `fill()` method as an array, or each property can be set individually.
+The `fill()` method may be used multiple times to set different properties, and will only override existing properties if they are explicitly passed in as an array item.
+```php
+// Data set via constructor
+$team = new Team([
+    'name'      => 'My Team',
+    'story'     => 'This is my story',
+    'target'    => 1000,
+]);
+
+// Data set via fill() method
+$team = new Team;
+$team->fill([
+    'name'      => 'My Team',
+    'story'     => 'This is my story',
+    'target'    => 1000,
+]);
+
+// Data set by setting public properties individually
+$team = new Team;
+$team->name = 'My Team';
+$team->story = 'This is my story';
+$team->target = 1000;
+```
+
 ### Working with responses
 The SDK returns an instance of `JustGivingApiSdk\Support\Response` from each request.
 This implements the PSR-7 `ResponseInterface` and so allows access to the full HTTP response received by the client.
@@ -70,7 +100,7 @@ $result->body->name;            // 'The Demo Charity1'
 $result->body->websiteUrl;      // 'http://www.democharity.co.uk'
 $result->body->pageShortName;   // 'jgdemo'
 ```
-The response class also allows body properties to be called directly on itself, i.e. the follow is also valid:
+The response class also allows body properties to be called directly on itself, i.e. the following is also valid:
 ```php
 $result = $client->charity->GetCharityById(2050);
 $result->name;                  // 'The Demo Charity1'
@@ -81,5 +111,5 @@ $result->pageShortName;         // 'jgdemo'
 #### Response helper methods
 There are a couple of helper methods on the response to make some API calls and validation easier:
 * `$response->wasSuccessful()` – returns true if the response has a status code of 2xx
-* `$response->existenceCheck()` – returns true if the response had a status code of 200, false if status code 404, and throws an exception otherwise.
+* `$response->existenceCheck()` – returns true if the response had a status code of 200, false if the status code is 404, and throws an exception otherwise.
 Useful for API calls that check for the existence of a resource.

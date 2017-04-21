@@ -9,7 +9,7 @@ class Team extends Model
     public $story;
     public $targetType;
     public $teamType;
-    public $arget;
+    public $target;
     public $teamMembers = [];
 }
 
