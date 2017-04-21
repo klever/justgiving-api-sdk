@@ -2,8 +2,11 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
+use Klever\JustGivingApiSdk\Clients\Models\Address;
+use Klever\JustGivingApiSdk\Clients\Models\CreateAccountRequest;
 use Klever\JustGivingApiSdk\JustGivingClient;
 use Klever\JustGivingApiSdk\Support\GuzzleClientFactory;
+use Klever\JustGivingApiSdk\Support\Response;
 use PHPUnit\Framework\TestCase;
 
 class Base extends TestCase
@@ -63,5 +66,37 @@ class Base extends TestCase
         foreach ($attributes as $attribute) {
             $this->assertObjectHasAttribute($attribute, $object);
         }
+    }
+
+    /**
+     * Creates an account and returns the email address.
+     *
+     * @param string $email
+     * @param array  $options
+     * @return Response
+     */
+    protected function createAccount($email = null, $options = [])
+    {
+        $uniqueId = uniqid();
+        $request = new CreateAccountRequest(array_merge_recursive([
+            'email'     => $email ?? "test+" . $uniqueId . "@testing.com",
+            'firstName' => "first" . $uniqueId,
+            'lastName'  => "last" . $uniqueId,
+            'password'  => $this->context->testValidPassword,
+            'title'     => "Mr",
+
+            'address' => new Address([
+                'line1'             => "testLine1" . $uniqueId,
+                'line2'             => "testLine2" . $uniqueId,
+                'country'           => "United Kingdom",
+                'countyOrState'     => "testCountyOrState" . $uniqueId,
+                'townOrCity'        => "testTownOrCity" . $uniqueId,
+                'postcodeOrZipcode' => "M130EJ",
+            ]),
+
+            'acceptTermsAndConditions' => true
+        ]), $options);
+
+        return $this->client->Account->create($request);
     }
 }

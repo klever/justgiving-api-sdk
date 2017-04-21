@@ -8,6 +8,7 @@ use Psr\Http\Message\StreamInterface;
 
 /**
  * @property mixed body
+ * @property array errors
  */
 class Response implements ResponseInterface
 {
@@ -45,11 +46,49 @@ class Response implements ResponseInterface
      */
     public function __get($name)
     {
-        if ($name == 'body') {
-            return $this->getBodyAsObject();
+        switch ($name) {
+            case 'body':
+                return $this->getBodyAsObject();
+                break;
+            case 'errors':
+                return $this->formatErrors($this->body);
         }
 
         return $this->getAttribute($name);
+    }
+
+    /**
+     * Format errors in a unified object format, regardless of whether the supplied errors are a list of objects or a
+     * single error message string.
+     *
+     * @param object $errorBody
+     * @return array
+     */
+    protected function formatErrors($errorBody)
+    {
+        if (isset($errorBody->errorMessage)) {
+            return ['General' => $this->body->errorMessage];
+        }
+
+        if ( ! is_array($errorBody) || ! isset($errorBody[0]->id) || ! isset($errorBody[0]->desc)) {
+            return [];
+        }
+
+        foreach ($errorBody as $error) {
+            $errors[$error->id ?? null] = $error->desc ?? null;
+        }
+
+        return ($errors ?? []);
+    }
+
+    /**
+     * Check if the response contains any error messages.
+     *
+     * @return bool
+     */
+    public function hasErrorMessages()
+    {
+        return ! empty((array) $this->errors);
     }
 
     /**

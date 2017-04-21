@@ -6,81 +6,58 @@ use Klever\JustGivingApiSdk\Clients\Models\CreateAccountRequest;
 
 class AccountApi extends BaseClient
 {
-    public function Retrieve()
+    protected $aliases = [
+        'retrieve'          => 'RetrieveAccount',
+        'create'            => 'AccountRegistration',
+        'listAllPages'      => 'GetFundraisingPagesForUser',
+        'getDonations'   => 'GetDonationsForUser',
+        'isEmailRegistered' => 'AccountAvailabilityCheck',
+    ];
+
+    public function retrieve()
     {
         return $this->get("account");
     }
 
-    public function Create(CreateAccountRequest $createAccountRequest)
+    public function create(CreateAccountRequest $createAccountRequest)
     {
         return $this->put("account", $createAccountRequest);
     }
 
-    public function ListAllPages($email)
-    {
-        return $this->get("account/" . $email . "/pages");
-    }
-
-    public function IsEmailRegistered($email)
-    {
-        return $this->head("account/" . $email)->existenceCheck();
-    }
-
-    public function RequestPasswordReminder($email)
-    {
-        return $this->get("account/" . $email . "/requestpasswordreminder");
-    }
-
-    public function Validate($validateAccountRequest)
+    public function validate($validateAccountRequest)
     {
         return $this->post("account/validate", $validateAccountRequest);
     }
 
-    public function ChangePassword($changePasswordRequest)
+    public function listAllPages($email)
     {
-        return $this->post("account/changePassword", $changePasswordRequest);
+        return $this->get("account/" . $email . "/pages");
     }
 
-    public function AllDonations()
+    public function getDonations()
     {
         return $this->get("account/donations");
     }
 
-    public function AllDonationsByCharity($charityId)
+    public function getDonationsByCharity($charityId)
     {
         return $charityId > 0
             ? $this->get("account/donations?charityId=" . $charityId)
-            : $this->AllDonations();
+            : $this->getDonations();
     }
 
-    public function RatingHistory()
+    public function isEmailRegistered($email)
     {
-        return $this->get("account/rating");
+        return $this->head("account/" . $email)->existenceCheck();
     }
 
-    public function RateContent($rateContentRequest)
+    public function changePassword($changePasswordRequest)
     {
-        return $this->post("account/rating", $rateContentRequest);
+        return $this->post("account/changePassword", $changePasswordRequest);
     }
 
-    public function ContentFeed()
+    public function requestPasswordReminder($email)
     {
-        return $this->get("account/feed");
+        return $this->get("account/" . $email . "/requestpasswordreminder");
     }
-
-    public function GetInterests()
-    {
-        return $this->get("account/interest");
-    }
-
-    public function AddInterest($addInterestRequest)
-    {
-        return $this->post("account/interest", $addInterestRequest);
-    }
-
-    public function ReplaceInterest($replaceInterestRequest)
-    {
-        return $this->put("account/interest", $replaceInterestRequest);
-    }
-
 }

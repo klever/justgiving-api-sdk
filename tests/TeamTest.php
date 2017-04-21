@@ -2,6 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
+use Klever\JustGivingApiSdk\Clients\Models\JoinTeamRequest;
 use Klever\JustGivingApiSdk\Clients\Models\RegisterPageRequest;
 use Klever\JustGivingApiSdk\Clients\Models\Team;
 use Klever\JustGivingApiSdk\Clients\Models\TeamMember;
@@ -19,6 +20,7 @@ class TeamTest extends Base
         $this->assertTrue($response->body->id > 0);
     }
 
+    /** @test */
     public function it_checks_if_a_team_exists()
     {
         $teamShortName = 'team' . uniqid();
@@ -28,9 +30,45 @@ class TeamTest extends Base
         $this->assertTrue($response->existenceCheck());
     }
 
-    protected function createTeam($teamShortName = null)
+    /** @test */
+    public function it_updates_a_team()
     {
-        $pageShortName = "api-test-" . uniqid();
+        $teamShortName = 'team' . uniqid();
+        $this->createTeam($teamShortName);
+        $updatedTeam = new Team([
+            'teamShortName' => $teamShortName,
+            'name'          => 'New Team Name',
+            'story'         => 'New story',
+            'targetType'    => 'Fixed',
+            'teamType'      => 'Open',
+            'teamTarget'    => 10000,
+        ]);
+
+        $response = $this->client->team->update($teamShortName, $updatedTeam);
+
+        $this->assertTrue($response->wasSuccessful());
+        $this->assertEquals('New Team Name', $this->client->team->getByShortName($teamShortName)->body);
+    }
+
+    /** @test */
+    public function it_allows_a_user_to_join_a_team()
+    {
+        $teamShortName = 'team' . uniqid();
+        $pageShortName = 'page' . uniqid();
+        $this->createTeam($teamShortName, $pageShortName);
+
+        $response = $this->client->team->join(
+            $teamShortName,
+            new JoinTeamRequest(compact('pageShortName'))
+        );
+
+        $this->assertTrue($response->wasSuccessful());
+        $this->assertContains('has been sent to the team owner', $response->getReasonPhrase());
+    }
+
+    protected function createTeam($teamShortName = null, $pageShortName = null)
+    {
+        $pageShortName = $pageShortName ?? "api-test-" . uniqid();
         $this->client->fundraising->register(new RegisterPageRequest([
             'reference'       => "12345",
             'pageShortName'   => $pageShortName,
