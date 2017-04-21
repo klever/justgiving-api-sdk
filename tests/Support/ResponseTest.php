@@ -2,7 +2,6 @@
 
 namespace Klever\JustGivingApiSdk\Tests\Support;
 
-use Klever\JustGivingApiSdk\Clients\Models\Address;
 use Klever\JustGivingApiSdk\Clients\Models\CreateAccountRequest;
 use Klever\JustGivingApiSdk\Support\Response;
 use Klever\JustGivingApiSdk\Tests\Base;
@@ -46,11 +45,11 @@ class ResponseTest extends Base
     }
 
     /** @test */
-    public function the_errors_attribute_returns_an_empty_object_if_no_valid_errors_are_sent()
+    public function the_errors_attribute_returns_an_empty_array_if_no_valid_errors_are_sent()
     {
         $response = $this->donationResponse;
 
-        $this->assertEmpty($response->errors);
+        $this->assertEquals([], $response->errors);
     }
 
     /** @test */
@@ -58,27 +57,15 @@ class ResponseTest extends Base
     {
         $uniqueId = uniqid();
         $email = 'user' . $uniqueId . '@testing.com';
-        $response = $this->createAccount($email, ['acceptTermsAndConditions' => false]);
-//        $response = $this->client->account->create(new CreateAccountRequest([
-//            'email'     => $email,
-//            'firstName' => "first" . $uniqueId,
-//            'lastName'  => "last" . $uniqueId,
-//            'password'  => $this->context->testValidPassword,
-//            'title'     => "Mr",
-//
-//            'address' => new Address([
-//                'line1'             => "testLine1" . $uniqueId,
-//                'line2'             => "testLine2" . $uniqueId,
-//                'country'           => "United Kingdom",
-//                'countyOrState'     => "testCountyOrState" . $uniqueId,
-//                'townOrCity'        => "testTownOrCity" . $uniqueId,
-//                'postcodeOrZipcode' => "M130EJ",
-//            ]),
-//
-//            'acceptTermsAndConditions' => false
-//        ]));
+        $response = $this->createAccount($email, [
+            'firstName'                => '',
+            'acceptTermsAndConditions' => false
+        ]);
 
-        dd($response->errors);
+        $this->assertEquals([
+            'FirstNameNotSpecified'              => 'The FirstName field is required.',
+            'AcceptTermsAndConditionsMustBeTrue' => 'You must agree to the terms and conditions'
+        ], $response->errors);
     }
 
     /** @test */

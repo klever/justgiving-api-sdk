@@ -3,16 +3,56 @@
 namespace Klever\JustGivingApiSdk\Tests;
 
 use Klever\JustGivingApiSdk\Clients\BaseClient;
+use ReflectionClass;
 
 class BaseClientTest extends Base
 {
     protected $childApi;
 
+    protected $childClients = ['Account', 'Campaign', 'Charity', 'Countries', 'Currency', 'Donation', 'Event', 'Fundraising', 'Leaderboard', 'OneSearch', 'Project', 'Search', 'Sms', 'Team'];
+
     public function setUp()
     {
         $this->childApi = new BaseClientChild($this->guzzleClient);
     }
-    
+
+    /** @test */
+    public function all_method_aliases_refer_to_actual_methods()
+    {
+        // Cycle through all API client classes
+        foreach ($this->childClients as $childClient) {
+            $className = '\\Klever\\JustGivingApiSdk\\Clients\\' . $childClient . 'Api';
+            $object = new $className($this->client);
+
+            // Get the protected alias properties via reflection
+            $aliases = $this->exposeProperty($object, 'aliases');
+
+            foreach ($aliases as $method => $alias) {
+                // Check that the aliased methods actually exist, dump out if not.
+                if ( ! method_exists($object, $method)) {
+                    var_dump(get_class($object), $method);
+                }
+
+                $this->assertTrue(method_exists($object, $method));
+            }
+        }
+    }
+
+    /**
+     * Use Reflection to obtain the value of a property on an object.
+     *
+     * @param object $object
+     * @param string $propertyName
+     * @return mixed
+     */
+    protected function exposeProperty($object, $propertyName)
+    {
+        $property = (new ReflectionClass($object))->getProperty($propertyName);
+        $property->setAccessible(true);
+
+        return $property->getValue($object);
+    }
+
     /** @test */
     public function a_client_method_can_have_one_alias()
     {

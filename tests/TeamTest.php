@@ -47,7 +47,7 @@ class TeamTest extends Base
         $response = $this->client->team->update($teamShortName, $updatedTeam);
 
         $this->assertTrue($response->wasSuccessful());
-        $this->assertEquals('New Team Name', $this->client->team->getByShortName($teamShortName)->body);
+        $this->assertEquals('New Team Name', $this->client->team->getByShortName($teamShortName)->body->name);
     }
 
     /** @test */

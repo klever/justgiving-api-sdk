@@ -78,7 +78,7 @@ class Base extends TestCase
     protected function createAccount($email = null, $options = [])
     {
         $uniqueId = uniqid();
-        $request = new CreateAccountRequest(array_merge_recursive([
+        $request = new CreateAccountRequest(array_merge([
             'email'     => $email ?? "test+" . $uniqueId . "@testing.com",
             'firstName' => "first" . $uniqueId,
             'lastName'  => "last" . $uniqueId,
@@ -95,7 +95,7 @@ class Base extends TestCase
             ]),
 
             'acceptTermsAndConditions' => true
-        ]), $options);
+        ], $options));
 
         return $this->client->Account->create($request);
     }

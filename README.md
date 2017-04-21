@@ -16,7 +16,7 @@ if ($response->existenceCheck()) {
 ```
 
 ```php
-$response = $client->charity->GetCharityById(2050);
+$response = $client->charity->getCharityById(2050);
 
 if ( ! $response->wasSuccessful()) {
     throw new Exception(implode(', ', $response->errors));
@@ -185,7 +185,7 @@ $errors = $response->errors;
 
 #### Response helper methods
 There are a couple of helper methods on the response to make some API calls and validation easier:
-* `$response->wasSuccessful()` – returns true if the response has a status code of 2xx
+* `$response->wasSuccessful()` – returns true if the response has a status code of 2xx.
 * `$response->hasErrorMessages()` – returns true if the response has any error messages.
     **Note**: Some API actions do not return any error messages upon failure.
     This flag should be used to determine whether there is any useful error information to display, not to check if the action succeeded (use `wasSuccessful()` instead).

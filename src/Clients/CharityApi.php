@@ -11,7 +11,7 @@ class CharityApi extends BaseClient
         'getDonations'                       => 'GetCharityDonations',
         'deleteFundraisingPageAttribution'   => 'CharityDeleteFundraisingPageAttribution',
         'updateFundraisingPageAttribution'   => 'CharityUpdateFundraisingPageAttribution',
-        'appendToFundraisingPageAttribution' => 'CharityAppendToFundraisingPageAttribution',
+        'appendFundraisingPageAttribution' => 'CharityAppendToFundraisingPageAttribution',
         'getFundraisingPageAttribution'      => 'CharityGetFundraisingPageAttribution',
         'categories'                         => 'GetCharityCategories',
     ];
