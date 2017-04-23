@@ -10,7 +10,7 @@ class AccountApi extends BaseClient
         'retrieve'          => 'RetrieveAccount',
         'create'            => 'AccountRegistration',
         'listAllPages'      => 'GetFundraisingPagesForUser',
-        'getDonations'   => 'GetDonationsForUser',
+        'getDonations'      => 'GetDonationsForUser',
         'isEmailRegistered' => 'AccountAvailabilityCheck',
     ];
 
@@ -48,7 +48,7 @@ class AccountApi extends BaseClient
 
     public function isEmailRegistered($email)
     {
-        return $this->head("account/" . $email)->existenceCheck();
+        return $this->head("account/" . $email);
     }
 
     public function changePassword($changePasswordRequest)

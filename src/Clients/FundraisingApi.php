@@ -11,29 +11,29 @@ class FundraisingApi extends BaseClient
         'suggestShortNames'  => 'SuggestPageShortNames',
         'register'           => 'RegisterFundraisingPage',
         'getByShortName'     => 'GetFundraisingPageDetails',
-//        'GetFundraisingPageDetailsById',
+        // 'GetFundraisingPageDetailsById',
         'getAllPages'        => 'GetFundraisingPages',
         'getDonations'       => 'GetFundraisingPageDonations',
-//        'GetFundraisingPageDonationsByReference',
-//        'UpdateFundraisingPage',
+        // 'GetFundraisingPageDonationsByReference',
+        // 'UpdateFundraisingPage',
         'getUpdates'         => 'PageUpdates',
         'getUpdatesById'     => 'PageUpdateById',
-//        'PageUpdatesAddPost',
-//        'DeleteFundraisingPageUpdates',
-//        'DeleteFundraisingPageAttribution',
-//        'UpdateFundraisingPageAttribution',
-//        'AppendToFundraisingPageAttribution',
-//        'GetFundraisingPageAttribution',
+        // 'PageUpdatesAddPost',
+        // 'DeleteFundraisingPageUpdates',
+        // 'DeleteFundraisingPageAttribution',
+        // 'UpdateFundraisingPageAttribution',
+        // 'AppendToFundraisingPageAttribution',
+        // 'GetFundraisingPageAttribution',
         'uploadImage'        => 'UploadImage',
         'uploadDefaultImage' => 'UploadDefaultImage',
         'addImage'           => 'AddImageToFundraisingPage',
-//        'DeleteFundraisingPageImage',
+        // 'DeleteFundraisingPageImage',
         'getImages'          => 'GetImagesForFundraisingPage',
         'addVideo'           => 'AddVideoToFundraisingPage',
         'getVideos'          => 'GetVideosForFundraisingPage',
         'cancel'             => 'CancelFundraisingPage',
-//        'UpdateNotificationsPreferences',
-//        'UpdateFundraisingPageSummary',
+        // 'UpdateNotificationsPreferences',
+        // 'UpdateFundraisingPageSummary',
     ];
 
     public function urlCheck($pageShortName)
@@ -96,7 +96,7 @@ class FundraisingApi extends BaseClient
 
     public function DeleteFundraisingPageAttribution($pageShortName)
     {
-        return $this->delete("fundraising/pages/" . $pageShortName . "/attribution")->existenceCheck();
+        return $this->delete("fundraising/pages/" . $pageShortName . "/attribution");
     }
 
     public function UpdateFundraisingPageAttribution($pageShortName, $updateFundraisingPageAttributionRequest)

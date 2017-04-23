@@ -46,19 +46,13 @@ class AccountTest extends Base
     }
 
     /** @test */
-    public function it_checks_for_a_registered_email_and_returns_false_if_not_already_registered()
+    public function it_checks_for_a_registered_email()
     {
-        $booleanResponse = $this->client->account->isEmailRegistered(uniqid() . "@" . uniqid() . "-justgiving.com");
+        $nonRegisteredEmailResponse = $this->client->account->isEmailRegistered(uniqid() . "@" . uniqid() . "-justgiving.com");
+        $alreadyRegisteredEmailResponse = $this->client->account->isEmailRegistered($this->context->testUsername);
 
-        $this->assertFalse($booleanResponse);
-    }
-
-    /** @test */
-    public function it_checks_for_a_registered_email_and_returns_true_if_already_registered()
-    {
-        $booleanResponse = $this->client->account->isEmailRegistered($this->context->testUsername);
-
-        $this->assertTrue($booleanResponse);
+        $this->assertFalse($nonRegisteredEmailResponse->existenceCheck());
+        $this->assertTrue($alreadyRegisteredEmailResponse->existenceCheck());
     }
 
     /** @test */
@@ -68,10 +62,10 @@ class AccountTest extends Base
             'email'    => $this->context->testUsername,
             'password' => $this->context->testValidPassword,
         ]);
-        $response = $this->client->account->validate($request)->getBodyAsObject();
+        $response = $this->client->account->validate($request);
 
         $this->assertTrue($response->consumerId > 0);
-        $this->assertTrue($response->isValid);
+        $this->assertTrue($response->body->isValid);
     }
 
     /** @test */
@@ -83,17 +77,17 @@ class AccountTest extends Base
         ]);
         $response = $this->client->account->validate($request);
 
-        $this->assertEquals(0, $response->consumerId);
-        $this->assertFalse($response->isValid);
+        $this->assertEquals(0, $response->body->consumerId);
+        $this->assertFalse($response->body->isValid);
     }
 
     /** @test */
     public function it_retrieves_account_details_when_logged_in_with_correct_credentials()
     {
-        $response = $this->client->account->retrieve()->getBodyAsObject();
+        $response = $this->client->account->retrieve();
 
         $this->assertNotNull($response->email);
-        $this->assertEquals($this->context->testUsername, $response->email);
+        $this->assertEquals($this->context->testUsername, $response->body->email);
     }
 
     //test change password
@@ -133,11 +127,10 @@ class AccountTest extends Base
     /** @test */
     public function it_retrieves_a_list_of_all_donations_when_supplied_with_the_correct_credentials()
     {
-        $response = $this->client->account->getDonations()->getBodyAsObject();
+        $response = $this->client->account->getDonations();
 
         $attributes = ['amount', 'currencyCode', 'donationDate', 'donationRef', 'donorDisplayName', 'donorLocalAmount', 'donorLocalCurrencyCode'];
-        $this->assertObjectHasAttributes($attributes, $response->donations[0]);
-        $this->assertTrue(is_array($response->donations));
+        $this->assertObjectHasAttributes($attributes, $response->body->donations[0]);
+        $this->assertTrue(is_array($response->body->donations));
     }
-
 }

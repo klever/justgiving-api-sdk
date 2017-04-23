@@ -76,18 +76,16 @@ class GuzzleClientFactory
             return new Response($response);
         }));
 
-        $options = [
+        return new Client(array_merge([
             'http_errors' => false,
             'handler'     => $stack,
             'base_uri'    => $this->baseUrl(),
             'headers'     => [
                 'Accept'        => 'application/json',
-                'Authorize'     => 'Basic ' . $this->BuildAuthenticationValue(),
-                'Authorization' => 'Basic ' . $this->BuildAuthenticationValue(),
+                'Authorize'     => 'Basic ' . $this->buildAuthenticationValue(),
+                'Authorization' => 'Basic ' . $this->buildAuthenticationValue(),
             ]
-        ];
-
-        return new Client(array_merge($this->userOptions, $options));
+        ], $this->userOptions));
     }
 
     /**
@@ -105,7 +103,7 @@ class GuzzleClientFactory
      *
      * @return string
      */
-    protected function BuildAuthenticationValue()
+    protected function buildAuthenticationValue()
     {
         return empty($this->username)
             ? ''

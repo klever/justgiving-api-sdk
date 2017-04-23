@@ -5,15 +5,15 @@ namespace Klever\JustGivingApiSdk\Clients;
 class CharityApi extends BaseClient
 {
     protected $aliases = [
-        'getById'                            => 'GetCharityById',
-        'authenticate'                       => 'AuthenticateCharityAccount',
-        'getEventsByCharityId'               => 'GetEventsByCharityId',
-        'getDonations'                       => 'GetCharityDonations',
-        'deleteFundraisingPageAttribution'   => 'CharityDeleteFundraisingPageAttribution',
-        'updateFundraisingPageAttribution'   => 'CharityUpdateFundraisingPageAttribution',
+        'getById'                          => 'GetCharityById',
+        'authenticate'                     => 'AuthenticateCharityAccount',
+        'getEventsByCharityId'             => 'GetEventsByCharityId',
+        'getDonations'                     => 'GetCharityDonations',
+        'deleteFundraisingPageAttribution' => 'CharityDeleteFundraisingPageAttribution',
+        'updateFundraisingPageAttribution' => 'CharityUpdateFundraisingPageAttribution',
         'appendFundraisingPageAttribution' => 'CharityAppendToFundraisingPageAttribution',
-        'getFundraisingPageAttribution'      => 'CharityGetFundraisingPageAttribution',
-        'categories'                         => 'GetCharityCategories',
+        'getFundraisingPageAttribution'    => 'CharityGetFundraisingPageAttribution',
+        'categories'                       => 'GetCharityCategories',
     ];
 
     public function getById($charityId)
@@ -41,7 +41,7 @@ class CharityApi extends BaseClient
         $request = $deleteFundraisingPageAttributionRequest;
         $url = "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
 
-        return $this->delete($url)->wasSuccessful();
+        return $this->delete($url);
     }
 
     public function updateFundraisingPageAttribution($fundraisingPageAttributionRequest, $updateFundraisingPageAttributionRequest)
@@ -49,7 +49,7 @@ class CharityApi extends BaseClient
         $request = $fundraisingPageAttributionRequest;
         $url = "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
 
-        return $this->put($url, $updateFundraisingPageAttributionRequest)->wasSuccessful();
+        return $this->put($url, $updateFundraisingPageAttributionRequest);
     }
 
     public function appendFundraisingPageAttribution($fundraisingPageAttributionRequest, $updateFundraisingPageAttributionRequest)
@@ -57,7 +57,7 @@ class CharityApi extends BaseClient
         $request = $fundraisingPageAttributionRequest;
         $url = "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
 
-        $json = $this->Post($url, $updateFundraisingPageAttributionRequest)->wasSuccessful();
+        $json = $this->Post($url, $updateFundraisingPageAttributionRequest);
     }
 
     public function getFundraisingPageAttribution($fundraisingPageAttributionRequest, $updateFundraisingPageAttributionRequest)
