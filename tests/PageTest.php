@@ -128,7 +128,7 @@ class PageTest extends Base
 
         $caption = "PHP Image Caption - " . uniqid();
         $filename = __DIR__ . "/img/jpg.jpg";
-        $response = $this->client->fundraising->UploadImage($newPage->pageShortName, $caption, $filename);
+        $response = $this->client->fundraising->uploadImage($newPage->pageShortName, $caption, $filename);
 
         $this->assertTrue($response->wasSuccessful());
     }
@@ -137,7 +137,7 @@ class PageTest extends Base
     {
         $request = new AddPostToPageUpdateRequest();
         $request->Message = "update story";
-        $response = $this->client->fundraising->AddPostToPageUpdate("api-test-54787f3435f75", $request);
+        $response = $this->client->fundraising->addPostToPageUpdate("api-test-54787f3435f75", $request);
         $this->assertNotNull($response->Created);
     }
 

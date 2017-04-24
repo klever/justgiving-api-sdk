@@ -11,29 +11,29 @@ class FundraisingClient extends BaseClient
         'suggestShortNames'  => 'SuggestPageShortNames',
         'register'           => 'RegisterFundraisingPage',
         'getByShortName'     => 'GetFundraisingPageDetails',
-        // 'GetFundraisingPageDetailsById',
+        // 'getFundraisingPageDetailsById',
         'getAllPages'        => 'GetFundraisingPages',
         'getDonations'       => 'GetFundraisingPageDonations',
-        // 'GetFundraisingPageDonationsByReference',
+        // 'getFundraisingPageDonationsByReference',
         // 'UpdateFundraisingPage',
         'getUpdates'         => 'PageUpdates',
         'getUpdatesById'     => 'PageUpdateById',
-        // 'PageUpdatesAddPost',
-        // 'DeleteFundraisingPageUpdates',
-        // 'DeleteFundraisingPageAttribution',
-        // 'UpdateFundraisingPageAttribution',
-        // 'AppendToFundraisingPageAttribution',
-        // 'GetFundraisingPageAttribution',
+        // 'pageUpdatesAddPost',
+        // 'deleteFundraisingPageUpdates',
+        // 'deleteFundraisingPageAttribution',
+        // 'updateFundraisingPageAttribution',
+        // 'appendToFundraisingPageAttribution',
+        // 'getFundraisingPageAttribution',
         'uploadImage'        => 'UploadImage',
         'uploadDefaultImage' => 'UploadDefaultImage',
         'addImage'           => 'AddImageToFundraisingPage',
-        // 'DeleteFundraisingPageImage',
+        // 'deleteFundraisingPageImage',
         'getImages'          => 'GetImagesForFundraisingPage',
         'addVideo'           => 'AddVideoToFundraisingPage',
         'getVideos'          => 'GetVideosForFundraisingPage',
         'cancel'             => 'CancelFundraisingPage',
-        // 'UpdateNotificationsPreferences',
-        // 'UpdateFundraisingPageSummary',
+        // 'updateNotificationsPreferences',
+        // 'updateFundraisingPageSummary',
     ];
 
     public function urlCheck($pageShortName)
@@ -89,17 +89,17 @@ class FundraisingClient extends BaseClient
         return $this->get("fundraising/pages/" . $pageShortName . "/updates/" . $updateId);
     }
 
-    public function AddPostToPageUpdate($pageShortName, $addPostToPageUpdateRequest)
+    public function addPostToPageUpdate($pageShortName, $addPostToPageUpdateRequest)
     {
         return $this->post("fundraising/pages/" . $pageShortName . "/updates/", $addPostToPageUpdateRequest);
     }
 
-    public function DeleteFundraisingPageAttribution($pageShortName)
+    public function deleteFundraisingPageAttribution($pageShortName)
     {
         return $this->delete("fundraising/pages/" . $pageShortName . "/attribution");
     }
 
-    public function UpdateFundraisingPageAttribution($pageShortName, $updateFundraisingPageAttributionRequest)
+    public function updateFundraisingPageAttribution($pageShortName, $updateFundraisingPageAttributionRequest)
     {
         return $this->put(
             "fundraising/pages/" . $pageShortName . "/attribution",
@@ -107,7 +107,7 @@ class FundraisingClient extends BaseClient
         );
     }
 
-    public function AppendToFundraisingPageAttribution($pageShortName, $appendToFundraisingPageAttributionRequest)
+    public function appendToFundraisingPageAttribution($pageShortName, $appendToFundraisingPageAttributionRequest)
     {
         return $this->post(
             "fundraising/pages/" . $pageShortName . "/attribution",
@@ -115,19 +115,19 @@ class FundraisingClient extends BaseClient
         );
     }
 
-    public function GetFundraisingPageAttribution($pageShortName)
+    public function getFundraisingPageAttribution($pageShortName)
     {
         return $this->get("fundraising/pages/" . $pageShortName . "/attribution");
     }
 
-    public function UploadImage($pageShortName, $caption, $filename, $imageContentType = null)
+    public function uploadImage($pageShortName, $caption, $filename, $imageContentType = null)
     {
         $url = "fundraising/pages/" . $pageShortName . "/images?caption=" . urlencode($caption);
 
         return $this->postFile($url, $filename, $imageContentType);
     }
 
-    public function UploadDefaultImage($pageShortName, $filename, $imageContentType = null)
+    public function uploadDefaultImage($pageShortName, $filename, $imageContentType = null)
     {
         $url = "fundraising/pages/" . $pageShortName . "/images/default";
 
