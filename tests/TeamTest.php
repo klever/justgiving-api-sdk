@@ -2,8 +2,8 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
+use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 use Klever\JustGivingApiSdk\ResourceClients\Models\JoinTeamRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\RegisterPageRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\Team;
 use Klever\JustGivingApiSdk\ResourceClients\Models\TeamMember;
 
@@ -69,7 +69,7 @@ class TeamTest extends Base
     protected function createTeam($teamShortName = null, $pageShortName = null)
     {
         $pageShortName = $pageShortName ?? "api-test-" . uniqid();
-        $this->client->fundraising->register(new RegisterPageRequest([
+        $this->client->fundraising->register(new FundraisingPage([
             'reference'       => "12345",
             'pageShortName'   => $pageShortName,
             'activityType'    => "OtherCelebration",

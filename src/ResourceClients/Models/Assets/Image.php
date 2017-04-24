@@ -15,4 +15,7 @@ class Image extends Model
 
     /** @var string */
     public $alt;
+
+    /** @var bool */
+    public $isDefault;
 }

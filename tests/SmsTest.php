@@ -2,6 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
+use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 use Klever\JustGivingApiSdk\ResourceClients\Models\RegisterPageRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\UpdatePageSmsCodeRequest;
 
@@ -19,7 +20,7 @@ class SmsTest extends Base
     public function it_updates_the_sms_code_for_a_page()
     {
         $pageShortName = "api-test-" . uniqid();
-        $this->client->fundraising->register(new RegisterPageRequest([
+        $this->client->fundraising->register(new FundraisingPage([
             'reference'       => "12345",
             'pageShortName'   => $pageShortName,
             'activityType'    => "OtherCelebration",

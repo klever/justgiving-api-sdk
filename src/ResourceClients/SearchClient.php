@@ -15,22 +15,22 @@ class SearchClient extends BaseClient
 
     public function charity($searchTerms, $pageSize = 50, $pageNumber = 1)
     {
-        return $this->get("charity/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber);
+        return $this->get("charity/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&page=" . $pageNumber);
     }
 
     public function event($searchTerms, $pageSize = 50, $pageNumber = 1)
     {
-        return $this->get("event/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber);
+        return $this->get("event/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&page=" . $pageNumber);
     }
 
     public function fundraiser($searchTerms, $charityId, $pageSize = 50, $pageNumber = 1)
     {
-        return $this->get("fundraising/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber . "&charityId=" . $charityId);
+        return $this->get("fundraising/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&page=" . $pageNumber . "&charityId=" . $charityId);
     }
 
     public function inMemory($searchTerms, $pageSize = 50, $pageNumber = 1)
     {
-        return $this->get("remember/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&PageNum=" . $pageNumber);
+        return $this->get("remember/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&page=" . $pageNumber);
     }
 
     public function team($teamShortName)

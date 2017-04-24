@@ -2,7 +2,9 @@
 
 namespace Klever\JustGivingApiSdk\ResourceClients;
 
+use Klever\JustGivingApiSdk\ResourceClients\Models\ChangePasswordRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\ValidateAccountRequest;
 
 class AccountClient extends BaseClient
 {
@@ -24,7 +26,7 @@ class AccountClient extends BaseClient
         return $this->put("account", $createAccountRequest);
     }
 
-    public function validate($validateAccountRequest)
+    public function validate(ValidateAccountRequest $validateAccountRequest)
     {
         return $this->post("account/validate", $validateAccountRequest);
     }
@@ -51,7 +53,7 @@ class AccountClient extends BaseClient
         return $this->head("account/" . $email);
     }
 
-    public function changePassword($changePasswordRequest)
+    public function changePassword(ChangePasswordRequest $changePasswordRequest)
     {
         return $this->post("account/changePassword", $changePasswordRequest);
     }

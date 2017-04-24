@@ -3,9 +3,9 @@
 namespace Klever\JustGivingApiSdk\Tests;
 
 use Klever\JustGivingApiSdk\ResourceClients\Models\AddPostToPageUpdateRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\RegisterPageRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 
-class PageTest extends Base
+class FundraisingTest extends Base
 {
     public function it_retrieves_page_data_when_given_a_page_short_name()
     {
@@ -31,7 +31,7 @@ class PageTest extends Base
      */
     public function testCreatePageWithStory()
     {
-        $newPage = new RegisterPageRequest([
+        $newPage = new FundraisingPage([
             'reference'       => "12345",
             'pageShortName'   => "api-test-" . uniqid(),
             'activityType'    => "OtherCelebration",
@@ -56,7 +56,7 @@ class PageTest extends Base
 
     public function testCreate_ValidCredentials_CreatesNewPage()
     {
-        $newPage = new RegisterPageRequest([
+        $newPage = new FundraisingPage([
             'reference'       => "12345",
             'pageShortName'   => "api-test-" . uniqid(),
             'activityType'    => "OtherCelebration",
@@ -88,7 +88,7 @@ class PageTest extends Base
 
     public function testUpdatePageStory_ForKnownPageWithValidCredentials_UpdatesStory()
     {
-        $newPage = new RegisterPageRequest([
+        $newPage = new FundraisingPage([
             'reference'       => "12345",
             'pageShortName'   => "api-test-" . uniqid(),
             'activityType'    => "OtherCelebration",
@@ -111,7 +111,7 @@ class PageTest extends Base
     /** @test */
     public function it_uploads_an_image_and_caption_to_a_page()
     {
-        $newPage = new RegisterPageRequest([
+        $newPage = new FundraisingPage([
             'reference'       => "12345",
             'pageShortName'   => "api-test-" . uniqid(),
             'activityType'    => "OtherCelebration",
