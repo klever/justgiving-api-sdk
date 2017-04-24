@@ -2,14 +2,15 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
-use Klever\JustGivingApiSdk\Clients\Models\AddPostToPageUpdateRequest;
-use Klever\JustGivingApiSdk\Clients\Models\RegisterPageRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\AddPostToPageUpdateRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\RegisterPageRequest;
 
 class PageTest extends Base
 {
     public function it_retrieves_page_data_when_given_a_page_short_name()
     {
         $json = $this->client->fundraising->getByShortName("rasha25");
+
         $this->assertEquals($json->pageId, 640916);
         $this->assertEquals($json->activityId, 73347);
         $this->assertEquals($json->eventName, "rasha25");
@@ -21,6 +22,7 @@ class PageTest extends Base
     public function testListAll_WithValidCredentials_ReturnsListOfUserPages()
     {
         $pages = $this->client->fundraising->getAllPages();
+
         $this->assertTrue(count($pages) > 0);
     }
 
@@ -29,43 +31,46 @@ class PageTest extends Base
      */
     public function testCreatePageWithStory()
     {
-        $dto = new RegisterPageRequest();
-        $dto->reference = "12345";
-        $dto->pageShortName = "api-test-" . uniqid();
-        $dto->activityType = "OtherCelebration";
-        $dto->pageTitle = "api test";
-        $dto->pageStory = "This is my custom page story, which will override the default.";
-        $dto->eventName = "The Other Occasion of ApTest and APITest";
-        $dto->charityId = 2050;
-        $dto->targetAmount = 20;
-        $dto->eventDate = "/Date(1235764800000)/";
-        $dto->justGivingOptIn = true;
-        $dto->charityOptIn = true;
-        $dto->charityFunded = false;
-        $page = $this->client->fundraising->register($dto);
+        $newPage = new RegisterPageRequest([
+            'reference'       => "12345",
+            'pageShortName'   => "api-test-" . uniqid(),
+            'activityType'    => "OtherCelebration",
+            'pageTitle'       => "api test",
+            'pageStory'       => "This is my custom page story, which will override the default.",
+            'eventName'       => "The Other Occasion of ApTest and APITest",
+            'charityId'       => 2050,
+            'targetAmount'    => 20,
+            'eventDate'       => "/Date(1235764800000)/",
+            'justGivingOptIn' => true,
+            'charityOptIn'    => true,
+            'charityFunded'   => false,
+        ]);
+        $page = $this->client->fundraising->register($newPage);
 
         $this->assertNotNull($page);
         $this->assertNotNull($page->next->uri);
         $this->assertNotNull($page->pageId);
-        $json = $this->client->fundraising->getByShortName($dto->pageShortName);
+        $json = $this->client->fundraising->getByShortName($newPage->pageShortName);
         $this->assertEquals($json->story, '<p>This is my custom page story, which will override the default.</p>');
     }
 
     public function testCreate_ValidCredentials_CreatesNewPage()
     {
-        $dto = new RegisterPageRequest();
-        $dto->reference = "12345";
-        $dto->pageShortName = "api-test-" . uniqid();
-        $dto->activityType = "OtherCelebration";
-        $dto->pageTitle = "api test";
-        $dto->eventName = "The Other Occasion of ApTest and APITest";
-        $dto->charityId = 2050;
-        $dto->targetAmount = 20;
-        $dto->eventDate = "/Date(1235764800000)/";
-        $dto->justGivingOptIn = true;
-        $dto->charityOptIn = true;
-        $dto->charityFunded = false;
-        $page = $this->client->fundraising->register($dto);
+        $newPage = new RegisterPageRequest([
+            'reference'       => "12345",
+            'pageShortName'   => "api-test-" . uniqid(),
+            'activityType'    => "OtherCelebration",
+            'pageTitle'       => "api test",
+            'eventName'       => "The Other Occasion of ApTest and APITest",
+            'charityId'       => 2050,
+            'targetAmount'    => 20,
+            'eventDate'       => "/Date(1235764800000)/",
+            'justGivingOptIn' => true,
+            'charityOptIn'    => true,
+            'charityFunded'   => false,
+        ]);
+
+        $page = $this->client->fundraising->register($newPage);
         $this->assertNotNull($page);
         $this->assertNotNull($page->next->uri);
         $this->assertNotNull($page->pageId);
@@ -83,21 +88,22 @@ class PageTest extends Base
 
     public function testUpdatePageStory_ForKnownPageWithValidCredentials_UpdatesStory()
     {
-        $dto = new RegisterPageRequest();
-        $dto->reference = "12345";
-        $dto->pageShortName = "api-test-" . uniqid();
-        $dto->activityType = "OtherCelebration";
-        $dto->pageTitle = "api test";
-        $dto->eventName = "The Other Occasion of ApTest and APITest";
-        $dto->charityId = 2050;
-        $dto->targetAmount = 20;
-        $dto->eventDate = "/Date(1235764800000)/";
-        $dto->justGivingOptIn = true;
-        $dto->charityOptIn = true;
-        $dto->charityFunded = false;
-        $page = $this->client->fundraising->register($dto);
+        $newPage = new RegisterPageRequest([
+            'reference'       => "12345",
+            'pageShortName'   => "api-test-" . uniqid(),
+            'activityType'    => "OtherCelebration",
+            'pageTitle'       => "api test",
+            'eventName'       => "The Other Occasion of ApTest and APITest",
+            'charityId'       => 2050,
+            'targetAmount'    => 20,
+            'eventDate'       => "/Date(1235764800000)/",
+            'justGivingOptIn' => true,
+            'charityOptIn'    => true,
+            'charityFunded'   => false,
+        ]);
+        $page = $this->client->fundraising->register($newPage);
         $update = "Updated this story with update - " . uniqid();
-        $response = $this->client->fundraising->UpdateStory($dto->pageShortName, $update);
+        $response = $this->client->fundraising->UpdateStory($newPage->pageShortName, $update);
 
         $this->assertTrue($response->wasSuccessful());
     }
@@ -105,23 +111,24 @@ class PageTest extends Base
     /** @test */
     public function it_uploads_an_image_and_caption_to_a_page()
     {
-        $dto = new RegisterPageRequest();
-        $dto->reference = "12345";
-        $dto->pageShortName = "api-test-" . uniqid();
-        $dto->activityType = "OtherCelebration";
-        $dto->pageTitle = "api test";
-        $dto->eventName = "The Other Occasion of ApTest and APITest";
-        $dto->charityId = 2050;
-        $dto->targetAmount = 20;
-        $dto->eventDate = "/Date(1235764800000)/";
-        $dto->justGivingOptIn = true;
-        $dto->charityOptIn = true;
-        $dto->charityFunded = false;
-        $page = $this->client->fundraising->register($dto);
+        $newPage = new RegisterPageRequest([
+            'reference'       => "12345",
+            'pageShortName'   => "api-test-" . uniqid(),
+            'activityType'    => "OtherCelebration",
+            'pageTitle'       => "api test",
+            'eventName'       => "The Other Occasion of ApTest and APITest",
+            'charityId'       => 2050,
+            'targetAmount'    => 20,
+            'eventDate'       => "/Date(1235764800000)/",
+            'justGivingOptIn' => true,
+            'charityOptIn'    => true,
+            'charityFunded'   => false,
+        ]);
+        $this->client->fundraising->register($newPage);
 
         $caption = "PHP Image Caption - " . uniqid();
         $filename = __DIR__ . "/img/jpg.jpg";
-        $response = $this->client->fundraising->UploadImage($dto->pageShortName, $caption, $filename);
+        $response = $this->client->fundraising->UploadImage($newPage->pageShortName, $caption, $filename);
 
         $this->assertTrue($response->wasSuccessful());
     }

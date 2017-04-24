@@ -2,8 +2,8 @@
 
 namespace Klever\JustGivingApiSdk\Tests\Models;
 
-use Klever\JustGivingApiSdk\Clients\Models\CreateAccountRequest;
-use Klever\JustGivingApiSdk\Clients\Models\Team;
+use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\Team;
 use Klever\JustGivingApiSdk\Tests\Base;
 
 class ModelTest extends Base

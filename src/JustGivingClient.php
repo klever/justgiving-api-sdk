@@ -3,51 +3,51 @@
 namespace Klever\JustGivingApiSdk;
 
 use GuzzleHttp\ClientInterface;
-use Klever\JustGivingApiSdk\Clients\AccountApi;
-use Klever\JustGivingApiSdk\Clients\CampaignApi;
-use Klever\JustGivingApiSdk\Clients\CharityApi;
-use Klever\JustGivingApiSdk\Clients\CountriesApi;
-use Klever\JustGivingApiSdk\Clients\CurrencyApi;
-use Klever\JustGivingApiSdk\Clients\DonationApi;
-use Klever\JustGivingApiSdk\Clients\EventApi;
-use Klever\JustGivingApiSdk\Clients\FundraisingApi;
-use Klever\JustGivingApiSdk\Clients\LeaderboardApi;
-use Klever\JustGivingApiSdk\Clients\OneSearchApi;
-use Klever\JustGivingApiSdk\Clients\ProjectApi;
-use Klever\JustGivingApiSdk\Clients\SearchApi;
-use Klever\JustGivingApiSdk\Clients\SmsApi;
-use Klever\JustGivingApiSdk\Clients\TeamApi;
+use Klever\JustGivingApiSdk\ResourceClients\AccountClient;
+use Klever\JustGivingApiSdk\ResourceClients\CampaignClient;
+use Klever\JustGivingApiSdk\ResourceClients\CharityClient;
+use Klever\JustGivingApiSdk\ResourceClients\CountriesClient;
+use Klever\JustGivingApiSdk\ResourceClients\CurrencyClient;
+use Klever\JustGivingApiSdk\ResourceClients\DonationClient;
+use Klever\JustGivingApiSdk\ResourceClients\EventClient;
+use Klever\JustGivingApiSdk\ResourceClients\FundraisingClient;
+use Klever\JustGivingApiSdk\ResourceClients\LeaderboardClient;
+use Klever\JustGivingApiSdk\ResourceClients\OneSearchClient;
+use Klever\JustGivingApiSdk\ResourceClients\ProjectClient;
+use Klever\JustGivingApiSdk\ResourceClients\SearchClient;
+use Klever\JustGivingApiSdk\ResourceClients\SmsClient;
+use Klever\JustGivingApiSdk\ResourceClients\TeamClient;
 use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 
 /**
  * Class JustGivingClient
  *
- * @property AccountApi     account
- * @property CampaignApi    campaign
- * @property CharityApi     charity
- * @property CountriesApi   countries
- * @property CurrencyApi    currency
- * @property DonationApi    donation
- * @property EventApi       event
- * @property LeaderboardApi leaderboard
- * @property OneSearchApi   oneSearch
- * @property FundraisingApi fundraising
- * @property ProjectApi     project
- * @property SearchApi      search
- * @property SmsApi         sms
- * @property TeamApi        team
- * @property AccountApi     Account
- * @property CampaignApi    Campaign
- * @property CharityApi     Charity
- * @property CountriesApi   Countries
- * @property CurrencyApi    Currency
- * @property DonationApi    Donation
- * @property EventApi       Event
- * @property LeaderboardApi Leaderboard
- * @property ProjectApi     Project
- * @property SearchApi      Search
- * @property SmsApi         Sms
- * @property TeamApi        Team
+ * @property AccountClient     account
+ * @property CampaignClient    campaign
+ * @property CharityClient     charity
+ * @property CountriesClient   countries
+ * @property CurrencyClient    currency
+ * @property DonationClient    donation
+ * @property EventClient       event
+ * @property LeaderboardClient leaderboard
+ * @property OneSearchClient   oneSearch
+ * @property FundraisingClient fundraising
+ * @property ProjectClient     project
+ * @property SearchClient      search
+ * @property SmsClient         sms
+ * @property TeamClient        team
+ * @property AccountClient     Account
+ * @property CampaignClient    Campaign
+ * @property CharityClient     Charity
+ * @property CountriesClient   Countries
+ * @property CurrencyClient    Currency
+ * @property DonationClient    Donation
+ * @property EventClient       Event
+ * @property LeaderboardClient Leaderboard
+ * @property ProjectClient     Project
+ * @property SearchClient      Search
+ * @property SmsClient         Sms
+ * @property TeamClient        Team
  */
 class JustGivingClient
 {
@@ -76,7 +76,7 @@ class JustGivingClient
     }
 
     /**
-     * Allow API classes to be called as properties, and return a singleton client class.
+     * Allow API classes to be called as properties. Return a singleton client class.
      *
      * @param string $property
      * @return mixed
@@ -84,7 +84,7 @@ class JustGivingClient
      */
     public function __get($property)
     {
-        $class = __NAMESPACE__ . '\\Clients\\' . ucfirst($property) . 'Api';
+        $class = __NAMESPACE__ . '\\ResourceClients\\' . ucfirst($property) . 'Client';
 
         if ( ! class_exists($class)) {
             throw new ClassNotFoundException($class);

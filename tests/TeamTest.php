@@ -2,10 +2,10 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
-use Klever\JustGivingApiSdk\Clients\Models\JoinTeamRequest;
-use Klever\JustGivingApiSdk\Clients\Models\RegisterPageRequest;
-use Klever\JustGivingApiSdk\Clients\Models\Team;
-use Klever\JustGivingApiSdk\Clients\Models\TeamMember;
+use Klever\JustGivingApiSdk\ResourceClients\Models\JoinTeamRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\RegisterPageRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\Team;
+use Klever\JustGivingApiSdk\ResourceClients\Models\TeamMember;
 
 class TeamTest extends Base
 {

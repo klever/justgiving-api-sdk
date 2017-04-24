@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Tests\Support;
 
-use Klever\JustGivingApiSdk\Clients\Models\CreateAccountRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
 use Klever\JustGivingApiSdk\Support\Response;
 use Klever\JustGivingApiSdk\Tests\Base;
 

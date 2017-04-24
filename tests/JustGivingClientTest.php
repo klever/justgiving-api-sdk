@@ -2,16 +2,16 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
-use Klever\JustGivingApiSdk\Clients\AccountApi;
 use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
+use Klever\JustGivingApiSdk\ResourceClients\AccountClient;
 
 class JustGivingClientTest extends Base
 {
     /** @test */
     public function it_returns_an_api_client_class_from_a_property_call()
     {
-        $this->assertInstanceOf(AccountApi::class, $this->client->account);
-        $this->assertInstanceOf(AccountApi::class, $this->client->Account);
+        $this->assertInstanceOf(AccountClient::class, $this->client->account);
+        $this->assertInstanceOf(AccountClient::class, $this->client->Account);
     }
 
     /** @test */

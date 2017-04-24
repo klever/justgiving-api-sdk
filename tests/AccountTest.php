@@ -3,10 +3,10 @@
 namespace Klever\JustGivingApiSdk\Tests;
 
 
-use Klever\JustGivingApiSdk\Clients\Models\Address;
-use Klever\JustGivingApiSdk\Clients\Models\ChangePasswordRequest;
-use Klever\JustGivingApiSdk\Clients\Models\CreateAccountRequest;
-use Klever\JustGivingApiSdk\Clients\Models\ValidateAccountRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\Address;
+use Klever\JustGivingApiSdk\ResourceClients\Models\ChangePasswordRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\ValidateAccountRequest;
 
 class AccountTest extends Base
 {

@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
-use Klever\JustGivingApiSdk\Clients\Models\Event;
+use Klever\JustGivingApiSdk\ResourceClients\Models\Event;
 
 class CharityTest extends Base
 {

@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
-use Klever\JustGivingApiSdk\Clients\BaseClient;
+use Klever\JustGivingApiSdk\ResourceClients\BaseClient;
 use ReflectionClass;
 
 class BaseClientTest extends Base
@@ -21,7 +21,7 @@ class BaseClientTest extends Base
     {
         // Cycle through all API client classes
         foreach ($this->childClients as $childClient) {
-            $className = '\\Klever\\JustGivingApiSdk\\Clients\\' . $childClient . 'Api';
+            $className = '\\Klever\\JustGivingApiSdk\\ResourceClients\\' . $childClient . 'Client';
             $object = new $className($this->client);
 
             // Get the protected alias properties via reflection

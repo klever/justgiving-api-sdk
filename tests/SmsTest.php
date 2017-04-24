@@ -2,8 +2,8 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
-use Klever\JustGivingApiSdk\Clients\Models\RegisterPageRequest;
-use Klever\JustGivingApiSdk\Clients\Models\UpdatePageSmsCodeRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\RegisterPageRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\UpdatePageSmsCodeRequest;
 
 class SmsTest extends Base
 {
