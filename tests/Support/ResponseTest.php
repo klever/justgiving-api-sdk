@@ -64,7 +64,8 @@ class ResponseTest extends Base
 
         $this->assertEquals([
             'FirstNameNotSpecified'              => 'The FirstName field is required.',
-            'AcceptTermsAndConditionsMustBeTrue' => 'You must agree to the terms and conditions'
+            'AcceptTermsAndConditionsMustBeTrue' => 'You must agree to the terms and conditions',
+            'ReasonPhrase'                       => 'Validation errors occured.'
         ], $response->errors);
     }
 
@@ -75,7 +76,7 @@ class ResponseTest extends Base
         $this->createAccount($email);
         $response = $this->createAccount($email);
 
-        $this->assertEquals(['General' => 'That email address is already in use'], $response->errors);
+        $this->assertContains('That email address is already in use', $response->errors);
     }
 
     /** @test */

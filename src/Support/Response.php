@@ -66,19 +66,23 @@ class Response implements ResponseInterface
      */
     protected function formatErrors($errorBody)
     {
-        if (isset($errorBody->errorMessage)) {
-            return ['General' => $this->body->errorMessage];
-        }
-
-        if ( ! is_array($errorBody) || ! isset($errorBody[0]->id) || ! isset($errorBody[0]->desc)) {
+        if ($this->wasSuccessful()) {
             return [];
         }
 
-        foreach ($errorBody as $error) {
-            $errors[$error->id ?? null] = $error->desc ?? null;
+        $errors['ReasonPhrase'] = $this->getReasonPhrase();
+
+        if (isset($errorBody->errorMessage)) {
+            return ['General' => $errorBody->errorMessage];
         }
 
-        return ($errors ?? []);
+        if (is_array($errorBody) && isset($errorBody[0]->id) && isset($errorBody[0]->desc)) {
+            foreach ($errorBody as $error) {
+                $errors[$error->id ?? null] = $error->desc ?? null;
+            }
+        }
+
+        return $errors;
     }
 
     /**
