@@ -32,4 +32,3 @@ class RememberedPerson extends Model
     public $dateOfBirth;
     public $dateOfDeath;
 }
-}
