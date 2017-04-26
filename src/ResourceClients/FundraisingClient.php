@@ -2,38 +2,36 @@
 
 namespace Klever\JustGivingApiSdk\ResourceClients;
 
+use Klever\JustGivingApiSdk\ResourceClients\Models\AddImageRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\AddVideoRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 use Klever\JustGivingApiSdk\ResourceClients\Models\StoryUpdateRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttributionRequest;
 
 class FundraisingClient extends BaseClient
 {
     protected $aliases = [
-        'urlCheck'           => 'FundraisingPageUrlCheck',
-        'suggestShortNames'  => 'SuggestPageShortNames',
-        'register'           => 'RegisterFundraisingPage',
-        'getByShortName'     => 'GetFundraisingPageDetails',
-        // 'getFundraisingPageDetailsById',
-        'getAllPages'        => 'GetFundraisingPages',
-        'getDonations'       => 'GetFundraisingPageDonations',
-        // 'getFundraisingPageDonationsByReference',
-        // 'UpdateFundraisingPage',
-        'getUpdates'         => 'PageUpdates',
-        'getUpdatesById'     => 'PageUpdateById',
-        // 'pageUpdatesAddPost',
-        // 'deleteFundraisingPageUpdates',
-        // 'deleteFundraisingPageAttribution',
-        // 'updateFundraisingPageAttribution',
-        // 'appendToFundraisingPageAttribution',
-        // 'getFundraisingPageAttribution',
-        'uploadImage'        => 'UploadImage',
-        'uploadDefaultImage' => 'UploadDefaultImage',
-        'addImage'           => 'AddImageToFundraisingPage',
-        // 'deleteFundraisingPageImage',
-        'getImages'          => 'GetImagesForFundraisingPage',
-        'addVideo'           => 'AddVideoToFundraisingPage',
-        'getVideos'          => 'GetVideosForFundraisingPage',
-        'cancel'             => 'CancelFundraisingPage',
-        // 'updateNotificationsPreferences',
-        // 'updateFundraisingPageSummary',
+        'urlCheck'            => 'FundraisingPageUrlCheck',
+        'suggestShortNames'   => 'SuggestPageShortNames',
+        'register'            => 'RegisterFundraisingPage',
+        'getByShortName'      => 'GetFundraisingPageDetails',
+        'getAllPages'         => 'GetFundraisingPages',
+        'getDonations'        => 'GetFundraisingPageDonations',
+        'getUpdates'          => 'PageUpdates',
+        'getUpdatesById'      => 'PageUpdateById',
+        'addPostToPageUpdate' => 'PageUpdatesAddPost',
+        'deletePageUpdate'    => 'DeleteFundraisingPageUpdates',
+        'deleteAttribution'   => 'DeleteFundraisingPageAttribution',
+        'updateAttribution'   => 'UpdateFundraisingPageAttribution',
+        'appendToAttribution' => 'AppendToFundraisingPageAttribution',
+        'getAttribution'      => 'GetFundraisingPageAttribution',
+        'uploadImage'         => 'UploadImage',
+        'uploadDefaultImage'  => 'UploadDefaultImage',
+        'addImage'            => 'AddImageToFundraisingPage',
+        'getImages'           => 'GetImagesForFundraisingPage',
+        'addVideo'            => 'AddVideoToFundraisingPage',
+        'getVideos'           => 'GetVideosForFundraisingPage',
+        'cancel'              => 'CancelFundraisingPage',
     ];
 
     public function urlCheck($pageShortName)
@@ -46,7 +44,7 @@ class FundraisingClient extends BaseClient
         return $this->get("fundraising/pages/suggest?preferredName=" . urlencode($preferredName));
     }
 
-    public function register($pageCreationRequest)
+    public function register(FundraisingPage $pageCreationRequest)
     {
         return $this->put("fundraising/pages", $pageCreationRequest);
     }
@@ -66,6 +64,11 @@ class FundraisingClient extends BaseClient
         return $this->get("fundraising/pages/" . $pageShortName . "/donations" . "?PageSize=" . $pageSize . "&PageNum=" . $pageNumber);
     }
 
+    /**
+     * Cannot find any test donations with a third party reference.
+     *
+     * @codeCoverageIgnore
+     */
     public function getDonationsByReference($pageShortName, $reference)
     {
         return $this->get("fundraising/pages/" . $pageShortName . "/donations/ref/" . $reference);
@@ -94,28 +97,27 @@ class FundraisingClient extends BaseClient
         return $this->post("fundraising/pages/" . $pageShortName . "/updates/", $addPostToPageUpdateRequest);
     }
 
-    public function deleteFundraisingPageAttribution($pageShortName)
+    public function deletePageUpdate($pageShortName, $updateId)
+    {
+        return $this->delete("fundraising/pages/" . $pageShortName . "/updates/" . $updateId);
+    }
+
+    public function deleteAttribution($pageShortName)
     {
         return $this->delete("fundraising/pages/" . $pageShortName . "/attribution");
     }
 
-    public function updateFundraisingPageAttribution($pageShortName, $updateFundraisingPageAttributionRequest)
+    public function updateAttribution($pageShortName, UpdateFundraisingPageAttributionRequest $updateAttributionRequest)
     {
-        return $this->put(
-            "fundraising/pages/" . $pageShortName . "/attribution",
-            $updateFundraisingPageAttributionRequest
-        );
+        return $this->put("fundraising/pages/" . $pageShortName . "/attribution", $updateAttributionRequest);
     }
 
-    public function appendToFundraisingPageAttribution($pageShortName, $appendToFundraisingPageAttributionRequest)
+    public function appendToAttribution($pageShortName, $appendToAttributionRequest)
     {
-        return $this->post(
-            "fundraising/pages/" . $pageShortName . "/attribution",
-            $appendToFundraisingPageAttributionRequest
-        );
+        return $this->post("fundraising/pages/" . $pageShortName . "/attribution", $appendToAttributionRequest);
     }
 
-    public function getFundraisingPageAttribution($pageShortName)
+    public function getAttribution($pageShortName)
     {
         return $this->get("fundraising/pages/" . $pageShortName . "/attribution");
     }
@@ -134,7 +136,7 @@ class FundraisingClient extends BaseClient
         return $this->postFile($url, $filename, $imageContentType);
     }
 
-    public function addImage($pageShortName, $addImageRequest)
+    public function addImage($pageShortName, AddImageRequest $addImageRequest)
     {
         return $this->put("fundraising/pages/" . $pageShortName . "/images", $addImageRequest);
     }
@@ -144,7 +146,12 @@ class FundraisingClient extends BaseClient
         return $this->get("fundraising/pages/" . $pageShortName . "/images");
     }
 
-    public function addVideo($pageShortName, $addVideoRequest)
+    public function deleteImage($pageShortName, $imageName)
+    {
+        return $this->delete("fundraising/pages/" . $pageShortName . "/images/" . $imageName);
+    }
+
+    public function addVideo($pageShortName, AddVideoRequest $addVideoRequest)
     {
         return $this->put("fundraising/pages/" . $pageShortName . "/videos", $addVideoRequest);
     }

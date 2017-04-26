@@ -7,11 +7,9 @@ class LeaderboardTest extends Base
     /** @test */
     public function it_retrieves_the_charity_leaderboard_listing_for_a_charity_id()
     {
-        $response = $this->client->leaderboard->GetCharityLeaderboard(2050)->getBodyAsObject();
+        $response = $this->client->leaderboard->GetCharityLeaderboard(2050);
 
-        $this->assertObjectHasAttribute('charityId', $response);
-        $this->assertObjectHasAttribute('currency', $response);
-        $this->assertObjectHasAttribute('pages', $response);
+        $this->assertObjectHasAttribute(['charityId', 'currency', 'pages'], $response->body);
     }
 
     /** @test */
@@ -19,8 +17,8 @@ class LeaderboardTest extends Base
     {
         $response = $this->client->Leaderboard->GetEventLeaderboard(479546);
 
-        $this->assertEquals('GBP', $response->currency);
-        $this->assertEquals([], $response->pages);
-        $this->assertEquals(0, $response->raisedAmount);
+        $this->assertEquals('GBP', $response->body->currency);
+        $this->assertEquals([], $response->body->pages);
+        $this->assertEquals(0, $response->body->raisedAmount);
     }
 }

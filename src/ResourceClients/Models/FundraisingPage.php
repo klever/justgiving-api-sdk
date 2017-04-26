@@ -35,7 +35,7 @@ class FundraisingPage extends Model
      *
      * @var array
      */
-    public $images = []; // new FundraisingPageImage;
+    public $images = [];
 
     /**
      * Array of Video objects.

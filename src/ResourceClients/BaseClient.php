@@ -124,4 +124,15 @@ class BaseClient
 
         return $this->httpClient->post($uri, $options);
     }
+
+    /**
+     * Perform a DELETE request.
+     *
+     * @param string $uri
+     * @return ResponseInterface|Response
+     */
+    protected function delete($uri)
+    {
+        return $this->httpClient->delete($uri);
+    }
 }

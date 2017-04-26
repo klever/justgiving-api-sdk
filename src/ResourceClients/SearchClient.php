@@ -3,8 +3,13 @@
 namespace Klever\JustGivingApiSdk\ResourceClients;
 
 
+use Klever\JustGivingApiSdk\ResourceClients\Models\SearchInMemoryRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\SearchTeamRequest;
+
 class SearchClient extends BaseClient
 {
+    const DEFAULT_PAGE_SIZE = 50;
+
     protected $aliases = [
         'charity'    => 'CharitySearch',
         'event'      => 'EventSearch',
@@ -13,28 +18,28 @@ class SearchClient extends BaseClient
         'team'       => 'TeamSearch',
     ];
 
-    public function charity($searchTerms, $pageSize = 50, $pageNumber = 1)
+    public function charity($searchTerms, $pageSize = self::DEFAULT_PAGE_SIZE, $pageNumber = 1)
     {
         return $this->get("charity/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&page=" . $pageNumber);
     }
 
-    public function event($searchTerms, $pageSize = 50, $pageNumber = 1)
+    public function event($searchTerms, $pageSize = self::DEFAULT_PAGE_SIZE, $pageNumber = 1)
     {
         return $this->get("event/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&page=" . $pageNumber);
     }
 
-    public function fundraiser($searchTerms, $charityId, $pageSize = 50, $pageNumber = 1)
+    public function fundraiser($searchTerms, $charityId, $pageSize = self::DEFAULT_PAGE_SIZE, $pageNumber = 1)
     {
         return $this->get("fundraising/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&page=" . $pageNumber . "&charityId=" . $charityId);
     }
 
-    public function inMemory($searchTerms, $pageSize = 50, $pageNumber = 1)
+    public function inMemory(SearchInMemoryRequest $searchRequest, $pageSize = self::DEFAULT_PAGE_SIZE, $pageNumber = 1)
     {
-        return $this->get("remember/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&page=" . $pageNumber);
+        return $this->get("remember/search?" . http_build_query($searchRequest->getAttributes()) . "&PageSize=" . $pageSize . "&page=" . $pageNumber);
     }
 
-    public function team($teamShortName)
+    public function team(SearchTeamRequest $searchRequest, $pageSize = self::DEFAULT_PAGE_SIZE, $pageNumber = 1)
     {
-        return $this->get("team/search?teamname=" . $teamShortName);
+        return $this->get("team/search?" . http_build_query($searchRequest->getAttributes()) . "&PageSize=" . $pageSize . "&page=" . $pageNumber);
     }
 }

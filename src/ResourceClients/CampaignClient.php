@@ -19,7 +19,11 @@ class CampaignClient extends BaseClient
         return $this->get("campaigns/" . $charityName . "/" . $campaignName);
     }
 
-    /** @codeCoverageIgnore */
+    /**
+     * Test context account is not authorised to create a new campaign.
+     *
+     * @codeCoverageIgnore
+     */
     public function create(RegisterCampaignRequest $registerCampaignRequest)
     {
         return $this->post('campaigns', $registerCampaignRequest);
@@ -35,6 +39,11 @@ class CampaignClient extends BaseClient
         return $this->get('campaigns/' . $charityId);
     }
 
+    /**
+     * Test context account is not authorised to create a new campaign.
+     *
+     * @codeCoverageIgnore
+     */
     public function registerFundraisingPage($registerCampaignFundraisingPageRequest)
     {
         return $this->post('campaigns', $registerCampaignFundraisingPageRequest);
