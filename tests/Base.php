@@ -27,6 +27,8 @@ class Base extends TestCase
 
     protected function setUp()
     {
+        ini_set('xdebug.max_nesting_level', 2048);
+
         $this->context = new TestContext();
 
         $this->guzzleClient = GuzzleClientFactory::build(

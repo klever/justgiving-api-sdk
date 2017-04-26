@@ -2,7 +2,12 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 use Klever\JustGivingApiSdk\ResourceClients\BaseClient;
+use Mockery;
 use ReflectionClass;
 
 class BaseClientTest extends Base
@@ -14,6 +19,12 @@ class BaseClientTest extends Base
     public function setUp()
     {
         $this->childApi = new BaseClientChild($this->guzzleClient);
+        parent::setUp();
+    }
+
+    public function tearDown()
+    {
+        Mockery::close();
     }
 
     /** @test */
@@ -92,6 +103,20 @@ class BaseClientTest extends Base
         $this->assertEquals('Method One', $resultOne);
         $this->assertEquals('Method Two', $resultTwo);
     }
+
+    /** @test */
+    public function the_content_type_can_be_manually_set_when_posting_a_file()
+    {
+        $handler = HandlerStack::create(new MockHandler([
+            new Response(200)
+        ]));
+        $httpClient = new MockHttpClient(['handler' => $handler]);
+        $baseClient = new BaseClientChild($httpClient);
+
+        $baseClient->postFile('test', __DIR__ . '/img/jpg.jpg', 'some content type');
+
+        $this->assertEquals(['Content-Type' => 'some content type'], $httpClient->options['headers']);
+    }
 }
 
 class BaseClientChild extends BaseClient
@@ -109,5 +134,22 @@ class BaseClientChild extends BaseClient
     public function methodTwo()
     {
         return 'Method Two';
+    }
+
+    public function postFile($uri, $filename, $contentType = null)
+    {
+        return parent::postFile($uri, $filename, $contentType);
+    }
+}
+
+class MockHttpClient extends Client
+{
+    public $options;
+
+    public function post($uri, array $options = [])
+    {
+        $this->options = $options;
+
+        return parent::request('post', $uri, $options);
     }
 }

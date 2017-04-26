@@ -2,6 +2,9 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
+use Klever\JustGivingApiSdk\ResourceClients\Models\Assets\Image;
+use Klever\JustGivingApiSdk\ResourceClients\Models\RegisterCampaignRequest;
+
 class CampaignTest extends Base
 {
     /** @test */
@@ -14,7 +17,7 @@ class CampaignTest extends Base
         $response = $this->client->Campaign->retrieve($charityName, $campaignName);
 
         $this->assertTrue($response->existenceCheck());
-		$this->assertEquals($expectedCampaignPageName, $response->campaignPageName);
+        $this->assertEquals($expectedCampaignPageName, $response->campaignPageName);
     }
 
     /** @test */
@@ -36,7 +39,29 @@ class CampaignTest extends Base
         $response = $this->client->Campaign->pages($charityShortName, $campaignShortUrl);
 
         $this->assertTrue(is_array($response->fundraisingPages));
-		$this->assertEquals($response->campaignShortUrl, $campaignShortUrl);
-		$this->assertEquals($response->charityShortName, $charityShortName);
+        $this->assertEquals($response->campaignShortUrl, $campaignShortUrl);
+        $this->assertEquals($response->charityShortName, $charityShortName);
+    }
+
+    /** @test */
+    public function it_creates_a_campaign()
+    {
+        $newCampaign = new RegisterCampaignRequest([
+            'campaignUrl'             => 'a' . uniqid(),
+            'campaignName'            => uniqid(),
+            'campaignSummary'         => 'A summary of the campaign.',
+            'campaignStory'           => 'My story',
+            'campaignThankYouMessage' => 'Thank you.',
+            'campaignCoverPhotos'     => [new Image([
+                "Alt"     => "Test image",
+                "Caption" => "Image that shows off some info about my campaign",
+                "Title"   => "My test image",
+                "Url"     => "https://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png"
+            ])]
+        ]);
+
+        $response = $this->client->campaign->create($newCampaign);
+
+        dd($response->getReasonPhrase(), $response->getHeaders());
     }
 }

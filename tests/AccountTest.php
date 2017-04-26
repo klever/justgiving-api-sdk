@@ -125,6 +125,16 @@ class AccountTest extends Base
     }
 
     /** @test */
+    public function it_retrieves_donations_by_charity()
+    {
+        $response = $this->client->account->getDonationsByCharity('jgdemo');
+
+        $attributes = ['amount', 'currencyCode', 'donationDate', 'donationRef', 'donorDisplayName', 'donorLocalAmount', 'donorLocalCurrencyCode'];
+        $this->assertObjectHasAttributes($attributes, $response->body->donations[0]);
+        $this->assertTrue(is_array($response->body->donations));
+    }
+
+    /** @test */
     public function it_retrieves_a_list_of_all_donations_when_supplied_with_the_correct_credentials()
     {
         $response = $this->client->account->getDonations();
@@ -132,5 +142,13 @@ class AccountTest extends Base
         $attributes = ['amount', 'currencyCode', 'donationDate', 'donationRef', 'donorDisplayName', 'donorLocalAmount', 'donorLocalCurrencyCode'];
         $this->assertObjectHasAttributes($attributes, $response->body->donations[0]);
         $this->assertTrue(is_array($response->body->donations));
+    }
+
+    /** @test */
+    public function it_requests_a_password_reminder()
+    {
+        $response = $this->client->account->requestPasswordReminder($this->context->testUsername);
+
+        $this->assertTrue($response->wasSuccessful());
     }
 }

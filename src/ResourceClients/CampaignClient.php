@@ -2,6 +2,8 @@
 
 namespace Klever\JustGivingApiSdk\ResourceClients;
 
+use Klever\JustGivingApiSdk\ResourceClients\Models\RegisterCampaignRequest;
+
 class CampaignClient extends BaseClient
 {
     protected $aliases = [
@@ -17,9 +19,10 @@ class CampaignClient extends BaseClient
         return $this->get("campaigns/" . $charityName . "/" . $campaignName);
     }
 
-    public function create($campaignCreationRequest)
+    /** @codeCoverageIgnore */
+    public function create(RegisterCampaignRequest $registerCampaignRequest)
     {
-        return $this->put('campaigns', $campaignCreationRequest);
+        return $this->post('campaigns', $registerCampaignRequest);
     }
 
     public function pages($charityShortName, $campaignShortUrl)

@@ -59,15 +59,6 @@ class BaseClient
     }
 
     /**
-     * @param ResponseInterface $response
-     * @return mixed
-     */
-    protected function getJsonContents(ResponseInterface $response)
-    {
-        return json_decode($response->getBody()->getContents());
-    }
-
-    /**
      * Perform a GET request.
      *
      * @param string $uri
@@ -132,16 +123,5 @@ class BaseClient
         }
 
         return $this->httpClient->post($uri, $options);
-    }
-
-    /**
-     * Perform a DELETE request.
-     *
-     * @param $uri
-     * @return ResponseInterface|Response
-     */
-    protected function delete($uri)
-    {
-        return $this->httpClient->delete($uri);
     }
 }

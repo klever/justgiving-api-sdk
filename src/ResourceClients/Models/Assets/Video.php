@@ -1,6 +1,8 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\ResourceClients\Models;
+namespace Klever\JustGivingApiSdk\ResourceClients\Models\Assets;
+
+use Klever\JustGivingApiSdk\ResourceClients\Models\Model;
 
 class Video extends Model
 {
