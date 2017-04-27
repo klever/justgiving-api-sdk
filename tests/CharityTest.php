@@ -2,7 +2,9 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
+use Klever\JustGivingApiSdk\ResourceClients\Models\AuthenticateCharityAccountRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\Event;
+use Klever\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttributionRequest;
 
 class CharityTest extends Base
 {
@@ -12,6 +14,21 @@ class CharityTest extends Base
         $response = $this->client->Charity->getById(2050);
 
         $this->assertEquals('The Demo Charity1', $response->name);
+    }
+
+    /** @test */
+    public function it_fails_charity_authentication_when_false_credentials_supplied()
+    {
+        $authenticateRequest = new AuthenticateCharityAccountRequest([
+            'username' => 'myUsername',
+            'password' => 'badPassword',
+            'pin'      => 'badPin',
+        ]);
+
+        $response = $this->client->charity->authenticate($authenticateRequest);
+
+        $this->assertFalse($response->wasSuccessful());
+        $this->assertEquals('Invalid charity details', $response->getReasonPhrase());
     }
 
     /** @test */

@@ -273,13 +273,37 @@ class FundraisingTest extends Base
     }
 
     /** @test */
-    public function it_updates_a_page_attribution()
+    public function it_updates_and_gets_a_page_attribution()
     {
-        $update = new UpdateFundraisingPageAttributionRequest(['attribution'=>'An updated attribution'        ]);
+        $update = new UpdateFundraisingPageAttributionRequest(['attribution' => 'An updated attribution']);
         $response = $this->client->fundraising->updateAttribution($this->pageShortName, $update);
-//        $details = $this->client->fundraising->
-//        dd($response->getReasonPhrase(), $response->body);
+        $getAttribution = $this->client->fundraising->getAttribution($this->pageShortName);
 
         $this->assertTrue($response->wasSuccessful());
+        $this->assertEquals('An updated attribution', $getAttribution->body->attribution);
+    }
+
+    /** @test */
+    public function it_appends_to_and_gets_a_page_attribution()
+    {
+        $update = new UpdateFundraisingPageAttributionRequest(['attribution' => 'Attribution. ']);
+        $this->client->fundraising->updateAttribution($this->pageShortName, $update);
+        $response = $this->client->fundraising->appendToAttribution($this->pageShortName, $update);
+        $getAttribution = $this->client->fundraising->getAttribution($this->pageShortName);
+
+        $this->assertTrue($response->wasSuccessful());
+        $this->assertEquals('Attribution. Attribution. ', $getAttribution->body->attribution);
+    }
+
+    /** @test */
+    public function it_deletes_a_page_attribution()
+    {
+        $update = new UpdateFundraisingPageAttributionRequest(['attribution' => 'Attribution. ']);
+        $this->client->fundraising->updateAttribution($this->pageShortName, $update);
+        $response = $this->client->fundraising->deleteAttribution($this->pageShortName);
+        $getAttribution = $this->client->fundraising->getAttribution($this->pageShortName);
+
+        $this->assertTrue($response->wasSuccessful());
+        $this->assertEquals('', $getAttribution->body->attribution);
     }
 }

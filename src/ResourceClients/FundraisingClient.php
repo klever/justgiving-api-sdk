@@ -165,5 +165,4 @@ class FundraisingClient extends BaseClient
     {
         return $this->delete("fundraising/pages/" . $pageShortName);
     }
-
 }

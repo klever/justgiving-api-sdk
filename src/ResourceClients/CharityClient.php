@@ -2,6 +2,9 @@
 
 namespace Klever\JustGivingApiSdk\ResourceClients;
 
+use Klever\JustGivingApiSdk\ResourceClients\Models\AuthenticateCharityAccountRequest;
+use Klever\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttributionRequest;
+
 class CharityClient extends BaseClient
 {
     protected $aliases = [
@@ -21,9 +24,9 @@ class CharityClient extends BaseClient
         return $this->get("charity/" . $charityId);
     }
 
-    public function authenticate($authenticateCharityAccountRequest)
+    public function authenticate(AuthenticateCharityAccountRequest $authenticateRequest)
     {
-        return $this->post("charity/authenticate", $authenticateCharityAccountRequest);
+        return $this->post("charity/authenticate", $authenticateRequest);
     }
 
     public function getEventsByCharityId($charityId)
@@ -36,36 +39,30 @@ class CharityClient extends BaseClient
         return $this->get("charity/" . $charityId . "/donations");
     }
 
-    public function deleteFundraisingPageAttribution($deleteFundraisingPageAttributionRequest)
-    {
-        $request = $deleteFundraisingPageAttributionRequest;
-        $url = "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
+    // Test account does not have permission to edit charity fundraising pages.
+    // @codeCoverageIgnoreStart
 
-        return $this->delete($url);
+    public function deleteFundraisingPageAttribution($charityId, $pageShortName)
+    {
+        return $this->delete("charity/" . $charityId . "/pages/" . $pageShortName . "/attribution");
     }
 
-    public function updateFundraisingPageAttribution($fundraisingPageAttributionRequest, $updateFundraisingPageAttributionRequest)
+    public function updateFundraisingPageAttribution($charityId, $pageShortName, UpdateFundraisingPageAttributionRequest $updateRequest)
     {
-        $request = $fundraisingPageAttributionRequest;
-        $url = "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
-
-        return $this->put($url, $updateFundraisingPageAttributionRequest);
+        return $this->put("charity/" . $charityId . "/pages/" . $pageShortName . "/attribution", $updateRequest);
     }
 
-    public function appendFundraisingPageAttribution($fundraisingPageAttributionRequest, $updateFundraisingPageAttributionRequest)
+    public function appendFundraisingPageAttribution($charityId, $pageShortName, UpdateFundraisingPageAttributionRequest $updateRequest)
     {
-        $request = $fundraisingPageAttributionRequest;
-        $url = "charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution";
-
-        $json = $this->Post($url, $updateFundraisingPageAttributionRequest);
+        return $this->Post("charity/" . $charityId . "/pages/" . $pageShortName . "/attribution", $updateRequest);
     }
 
-    public function getFundraisingPageAttribution($fundraisingPageAttributionRequest, $updateFundraisingPageAttributionRequest)
+    public function getFundraisingPageAttribution($charityId, $pageShortName)
     {
-        $request = $fundraisingPageAttributionRequest;
-
-        return $this->get("charity/" . $request->charityId . "/pages/" . $request->pageShortName . "/attribution");
+        return $this->get("charity/" . $charityId . "/pages/" . $pageShortName . "/attribution");
     }
+
+    // @codeCoverageIgnoreEnd
 
     public function categories()
     {
