@@ -3,8 +3,6 @@
 namespace Klever\JustGivingApiSdk\Tests;
 
 use Klever\JustGivingApiSdk\ResourceClients\Models\AuthenticateCharityAccountRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\EventRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttributionRequest;
 
 class CharityTest extends Base
 {
@@ -37,7 +35,7 @@ class CharityTest extends Base
         $response = $this->client->Charity->getEventsByCharityId(2050);
 
         $this->assertObjectHasAttributes(['pageNumber', 'totalPages'], $response->pagination);
-        $this->assertEqualAttributes(EventRequest::class, $response->events[0]);
+        $this->assertObjectHasAttributes(['name', 'description', 'completionDate', 'expiryDate', 'startDate', 'eventType', 'location',], $response->events[0]);
     }
 
     /** @test */

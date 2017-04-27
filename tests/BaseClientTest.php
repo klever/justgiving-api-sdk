@@ -12,14 +12,14 @@ use ReflectionClass;
 
 class BaseClientTest extends Base
 {
-    protected $childApi;
+    protected static $childApi;
 
     protected $childClients = ['Account', 'Campaign', 'Charity', 'Countries', 'Currency', 'Donation', 'Event', 'Fundraising', 'Leaderboard', 'OneSearch', 'Project', 'Search', 'Sms', 'Team'];
 
     public function setUp()
     {
-        $this->childApi = new BaseClientChild($this->guzzleClient);
         parent::setUp();
+        static::$childApi = static::$childApi ?? new BaseClientChild($this->guzzleClient);
     }
 
     public function tearDown()
@@ -67,7 +67,7 @@ class BaseClientTest extends Base
     /** @test */
     public function a_client_method_can_have_one_alias()
     {
-        $result = $this->childApi->MethodOneAlias();
+        $result = static::$childApi->MethodOneAlias();
 
         $this->assertEquals('Method One', $result);
     }
@@ -75,9 +75,11 @@ class BaseClientTest extends Base
     /** @test */
     public function a_client_method_can_have_multiple_aliases()
     {
-        $result = $this->childApi->MethodTwoAliasOne();
-        $resultTwo = $this->childApi->MethodTwoAliasTwo();
+        $nullResult = static::$childApi->notAnAlias();
+        $result = static::$childApi->MethodTwoAliasOne();
+        $resultTwo = static::$childApi->MethodTwoAliasTwo();
 
+        $this->assertNull($nullResult);
         $this->assertEquals('Method Two', $result);
         $this->assertEquals('Method Two', $resultTwo);
     }
@@ -85,9 +87,9 @@ class BaseClientTest extends Base
     /** @test */
     public function a_client_method_can_be_called_in_any_case()
     {
-        $resultOne = $this->childApi->METHOD_ONE();
-        $resultTwo = $this->childApi->MethodOne();
-        $resultThree = $this->childApi->method_two();
+        $resultOne = static::$childApi->METHOD_ONE();
+        $resultTwo = static::$childApi->MethodOne();
+        $resultThree = static::$childApi->method_two();
 
         $this->assertEquals('Method One', $resultOne);
         $this->assertEquals('Method One', $resultTwo);
@@ -97,8 +99,8 @@ class BaseClientTest extends Base
     /** @test */
     public function a_method_alias_can_be_called_in_any_case()
     {
-        $resultOne = $this->childApi->method_one_Alias();
-        $resultTwo = $this->childApi->methodTwoAliasOne();
+        $resultOne = static::$childApi->method_one_Alias();
+        $resultTwo = static::$childApi->methodTwoAliasOne();
 
         $this->assertEquals('Method One', $resultOne);
         $this->assertEquals('Method Two', $resultTwo);

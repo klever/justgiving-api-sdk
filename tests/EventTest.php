@@ -27,25 +27,25 @@ class EventTest extends Base
     /** @test */
     public function it_retrieves_an_event_given_an_event_id()
     {
-        $response = $this->client->event->getById(479546)->getBodyAsObject();
+        $response = $this->client->event->getById(479546);
 
-        $this->assertEquals($response->name, 'Virgin London Marathon 2011 - Applying for a charity place');
+        $this->assertEquals('Virgin London Marathon 2011 - Applying for a charity place', $response->body->name);
     }
 
     /** @test */
     public function it_retrieves_an_event_listing()
     {
-        $response = $this->client->event->getById(479546)->getBodyAsObject();
+        $response = $this->client->event->getById(479546);
 
-        $this->assertEqualAttributes(EventRequest::class, $response);
+        $this->assertObjectHasAttributes(['name', 'description', 'completionDate', 'expiryDate', 'startDate', 'eventType', 'location',], $response->body);
     }
 
     /** @test */
     public function it_retrieves_fundraising_pages_for_a_given_event()
     {
-        $response = $this->client->event->getPages(479546)->getBodyAsObject();
+        $response = $this->client->event->getPages(479546);
 
-        $this->assertObjectHasAttributes(['companyAppealId', 'createdDate', 'currencyCode'], $response->fundraisingPages[0]);
+        $this->assertObjectHasAttributes(['companyAppealId', 'createdDate', 'currencyCode'], $response->body->fundraisingPages[0]);
     }
 
     /** @test */

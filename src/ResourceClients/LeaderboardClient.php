@@ -9,12 +9,12 @@ class LeaderboardClient extends BaseClient
         'getEventLeaderboard'   => 'GetEventLeaderboard',
     ];
 
-    public function GetCharityLeaderboard($charityId)
+    public function getCharityLeaderboard($charityId)
     {
         return $this->get("charity/" . $charityId . "/leaderboard");
     }
 
-    public function GetEventLeaderboard($eventId)
+    public function getEventLeaderboard($eventId)
     {
         return $this->get("event/" . $eventId . "/leaderboard");
     }

@@ -2,36 +2,38 @@
 
 namespace Klever\JustGivingApiSdk\Tests\Support;
 
+use Klever\JustGivingApiSdk\Exceptions\UnexpectedStatusException;
 use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
 use Klever\JustGivingApiSdk\Support\Response;
 use Klever\JustGivingApiSdk\Tests\Base;
+use GuzzleHttp\Psr7\Response as GuzzleResponse;
 
 class ResponseTest extends Base
 {
     /**
      * @var Response
      */
-    protected $donationResponse;
+    protected static $donationResponse;
 
     protected function setUp()
     {
         parent::setUp();
 
-        $this->donationResponse = $this->client->account->getDonations();
+        static::$donationResponse =  static:: $donationResponse ?? $this->client->account->getDonations();
     }
 
     /** @test */
     public function attributes_can_be_called_as_magic_properties()
     {
-        $response = $this->donationResponse;
+        $response = static::$donationResponse;
 
-        $this->assertTrue(is_numeric($response->donations[0]->amount));
+        $this->assertTrue(is_numeric($response->body->donations[0]->amount));
     }
 
     /** @test */
     public function attributes_can_be_retrieved_with_the_get_attribute_method()
     {
-        $response = $this->donationResponse;
+        $response = static::$donationResponse;
 
         $this->assertTrue(is_numeric($response->getAttribute('donations')[0]->amount));
     }
@@ -39,7 +41,7 @@ class ResponseTest extends Base
     /** @test */
     public function the_body_attribute_returns_the_decoded_json_response()
     {
-        $response = $this->donationResponse;
+        $response = static::$donationResponse;
 
         $this->assertTrue(is_numeric($response->body->donations[0]->amount));
     }
@@ -47,7 +49,7 @@ class ResponseTest extends Base
     /** @test */
     public function the_errors_attribute_returns_an_empty_array_if_no_valid_errors_are_sent()
     {
-        $response = $this->donationResponse;
+        $response = static::$donationResponse;
 
         $this->assertEquals([], $response->errors);
     }
@@ -82,10 +84,32 @@ class ResponseTest extends Base
     /** @test */
     public function it_checks_if_any_errors_are_present()
     {
-        $responseWithoutErrors = $this->donationResponse;
+        $responseWithoutErrors = static::$donationResponse;
         $responseWithErrors = $this->client->account->create(new CreateAccountRequest());
 
         $this->assertFalse($responseWithoutErrors->hasErrorMessages());
         $this->assertTrue($responseWithErrors->hasErrorMessages());
+    }
+
+    /** @test */
+    public function it_throws_an_exception_if_an_existence_check_does_not_receive_a_valid_response_code()
+    {
+        $response = new Response(
+            (new GuzzleResponse())->withStatus(100)
+        );
+
+        $this->expectException(UnexpectedStatusException::class);
+
+        $response->existenceCheck();
+    }
+
+    /** @test */
+    public function it_returns_an_empty_errors_array_if_the_request_was_successful()
+    {
+        $response = new Response(
+            (new GuzzleResponse())->withStatus(200)
+        );
+
+        $this->assertEquals([], $response->errors);
     }
 }

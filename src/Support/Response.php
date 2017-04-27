@@ -154,6 +154,19 @@ class Response implements ResponseInterface
     }
 
     /**
+     * Update the attributes array from the decoded JSON response.
+     */
+    protected function updateAttributesArray()
+    {
+        $this->attributes = is_object($this->getBodyAsObject())
+            ? get_object_vars($this->getBodyAsObject())
+            : $this->getBodyAsObject();
+    }
+
+    // Parent Response class should have its own tests for the remaining methods
+    // @codeCoverageIgnoreStart
+
+    /**
      * Defer all unknown methods to main response class.
      *
      * @param $method
@@ -330,13 +343,5 @@ class Response implements ResponseInterface
         return $this->response->getReasonPhrase();
     }
 
-    /**
-     * Update the attributes array from the decoded JSON response.
-     */
-    protected function updateAttributesArray()
-    {
-        $this->attributes = is_object($this->getBodyAsObject())
-            ? get_object_vars($this->getBodyAsObject())
-            : $this->getBodyAsObject();
-    }
+    // @codeCoverageIgnoreEnd
 }

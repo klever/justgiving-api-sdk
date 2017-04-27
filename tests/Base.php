@@ -2,9 +2,9 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
+use Klever\JustGivingApiSdk\JustGivingClient;
 use Klever\JustGivingApiSdk\ResourceClients\Models\Address;
 use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
-use Klever\JustGivingApiSdk\JustGivingClient;
 use Klever\JustGivingApiSdk\Support\GuzzleClientFactory;
 use Klever\JustGivingApiSdk\Support\Response;
 use PHPUnit\Framework\TestCase;
@@ -17,6 +17,8 @@ class Base extends TestCase
     protected $client;
 
     protected $guzzleClient;
+    protected static $staticGuzzleClient;
+    protected static $staticClient;
 
     /**
      * The setup variables for performing tests.
@@ -31,15 +33,19 @@ class Base extends TestCase
 
         $this->context = new TestContext();
 
-        $this->guzzleClient = GuzzleClientFactory::build(
-            $this->context->apiUrl,
-            $this->context->apiKey,
-            $this->context->apiVersion,
-            $this->context->testUsername,
-            $this->context->testValidPassword
-        );
+        static::$staticGuzzleClient = static::$staticGuzzleClient
+            ?? GuzzleClientFactory::build(
+                $this->context->apiUrl,
+                $this->context->apiKey,
+                $this->context->apiVersion,
+                $this->context->testUsername,
+                $this->context->testValidPassword
+            );
 
-        $this->client = new JustGivingClient($this->guzzleClient);
+        static::$staticClient = static::$staticClient ?? new JustGivingClient(static::$staticGuzzleClient);
+
+        $this->guzzleClient = static::$staticGuzzleClient;
+        $this->client = static::$staticClient;
     }
 
     /**

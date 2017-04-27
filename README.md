@@ -48,7 +48,7 @@ $client = new JustGivingClient($guzzleClient);
 The `options` array is optional, and is merged with the existing configuration to allow for customisation of the Guzzle client configuration (e.g. turning on debug mode as above).
 
 ### Querying the API
-The SDK defines a separate API class for each resource as define by the [API documentation](https://api.justgiving.com/docs), and each of those classes contain methods that correspond to API actions.
+The SDK defines a separate client class for each resource as define by the [API documentation](https://api.justgiving.com/docs), and each of those classes contain methods that correspond to API actions.
 To get a resource class, call the name of the resource as a property on the `$client` we built up earlier, for example `$client->account` or `$client->charity`. The relevant method is then called on top of that.
 
 #### Method aliases
@@ -189,7 +189,7 @@ $errors = $response->errors;
 
 #### Response helper methods
 There are a couple of helper methods on the response to make some API calls and validation easier:
-* `$response->wasSuccessful()` – returns true if the response has a status code of 2xx.
+* `$response->wasSuccessful()` – returns true if the response has a status code of `2xx`.
 * `$response->hasErrorMessages()` – returns true if the response has any error messages.
     **Note**: Some API actions do not return any error messages upon failure.
     This flag should be used to determine whether there is any useful error information to display, not to check if the action succeeded (use `wasSuccessful()` instead).

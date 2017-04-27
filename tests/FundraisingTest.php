@@ -10,16 +10,20 @@ use Klever\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttribut
 
 class FundraisingTest extends Base
 {
-    protected $pageShortName;
+    protected static $pageShortName;
 
     protected function setUp()
     {
         parent::setUp();
 
-        $this->pageShortName = "api-test-" . uniqid();
-        $this->client->fundraising->register(
-            $this->newPage(['pageShortName' => $this->pageShortName])
-        );
+        // Create one test page to use across tests to help with API timeouts/lockouts
+        // DO NOT MODIFY this response within tests
+        if ( ! isset(static::$pageShortName)) {
+            static::$pageShortName = "api-test-" . uniqid();
+            $this->client->fundraising->register(
+                $this->newPage(['pageShortName' => static::$pageShortName])
+            );
+        }
     }
 
     protected function newPage($options = [])
@@ -141,7 +145,7 @@ class FundraisingTest extends Base
     public function it_updates_the_story_on_a_page()
     {
         $update = "Updated this story with update - " . uniqid();
-        $response = $this->client->fundraising->UpdateStory($this->pageShortName, $update);
+        $response = $this->client->fundraising->UpdateStory(static::$pageShortName, $update);
 
         $this->assertTrue($response->wasSuccessful());
     }
@@ -151,7 +155,7 @@ class FundraisingTest extends Base
     {
         $caption = "PHP Image Caption - " . uniqid();
         $filename = __DIR__ . "/img/jpg.jpg";
-        $response = $this->client->fundraising->uploadImage($this->pageShortName, $caption, $filename);
+        $response = $this->client->fundraising->uploadImage(static::$pageShortName, $caption, $filename);
 
         $this->assertTrue($response->wasSuccessful());
     }
@@ -160,7 +164,7 @@ class FundraisingTest extends Base
     public function it_uploads_a_default_image_to_a_page()
     {
         $filename = __DIR__ . "/img/jpg.jpg";
-        $response = $this->client->fundraising->uploadDefaultImage($this->pageShortName, $filename);
+        $response = $this->client->fundraising->uploadDefaultImage(static::$pageShortName, $filename);
 
         $this->assertTrue($response->wasSuccessful());
     }
@@ -174,7 +178,7 @@ class FundraisingTest extends Base
             'url'       => 'https://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png'
         ]);
 
-        $response = $this->client->fundraising->addImage($this->pageShortName, $newImage);
+        $response = $this->client->fundraising->addImage(static::$pageShortName, $newImage);
 
         $this->assertTrue($response->wasSuccessful());
         $this->assertObjectHasAttributes(['rel', 'uri', 'type'], $response->body->next);
@@ -197,13 +201,13 @@ class FundraisingTest extends Base
             'isDefault' => false,
             'url'       => 'https://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png'
         ]);
-        $this->client->fundraising->addImage($this->pageShortName, $newImage);
+        $this->client->fundraising->addImage(static::$pageShortName, $newImage);
 
         // Get the image listing from the server, because images are renamed on upload
-        $getImageResponse = $this->client->fundraising->getImages($this->pageShortName);
+        $getImageResponse = $this->client->fundraising->getImages(static::$pageShortName);
         $fileNameOnServer = pathinfo(array_slice($getImageResponse->body, -1)[0]->url, PATHINFO_FILENAME);
 
-        $response = $this->client->fundraising->deleteImage($this->pageShortName, $fileNameOnServer . '.png');
+        $response = $this->client->fundraising->deleteImage(static::$pageShortName, $fileNameOnServer . '.png');
 
         $this->assertTrue($response->wasSuccessful());
     }
@@ -213,7 +217,7 @@ class FundraisingTest extends Base
     {
         $request = new AddPostToPageUpdateRequest(['Message' => 'update story']);
 
-        $response = $this->client->fundraising->addPostToPageUpdate($this->pageShortName, $request);
+        $response = $this->client->fundraising->addPostToPageUpdate(static::$pageShortName, $request);
         $this->assertNotNull($response->Created);
     }
 
@@ -221,10 +225,10 @@ class FundraisingTest extends Base
     public function it_deletes_a_page_update()
     {
         $newUpdate = new AddPostToPageUpdateRequest(['Message' => 'A message']);
-        $updateResponse = $this->client->fundraising->addPostToPageUpdate($this->pageShortName, $newUpdate);
+        $updateResponse = $this->client->fundraising->addPostToPageUpdate(static::$pageShortName, $newUpdate);
         $updateId = pathinfo($updateResponse->body->Created->uri, PATHINFO_FILENAME);
 
-        $response = $this->client->fundraising->deletePageUpdate($this->pageShortName, $updateId);
+        $response = $this->client->fundraising->deletePageUpdate(static::$pageShortName, $updateId);
 
         $this->assertTrue($response->wasSuccessful());
     }
@@ -246,7 +250,7 @@ class FundraisingTest extends Base
             'url'       => 'https://www.youtube.com/watch?v=XTrqHP17kBw'
         ]);
 
-        $response = $this->client->fundraising->addVideo($this->pageShortName, $newVideo);
+        $response = $this->client->fundraising->addVideo(static::$pageShortName, $newVideo);
 
         $this->assertTrue($response->wasSuccessful());
         $this->assertObjectHasAttributes(['rel', 'uri', 'type'], $response->body->next);
@@ -276,8 +280,8 @@ class FundraisingTest extends Base
     public function it_updates_and_gets_a_page_attribution()
     {
         $update = new UpdateFundraisingPageAttributionRequest(['attribution' => 'An updated attribution']);
-        $response = $this->client->fundraising->updateAttribution($this->pageShortName, $update);
-        $getAttribution = $this->client->fundraising->getAttribution($this->pageShortName);
+        $response = $this->client->fundraising->updateAttribution(static::$pageShortName, $update);
+        $getAttribution = $this->client->fundraising->getAttribution(static::$pageShortName);
 
         $this->assertTrue($response->wasSuccessful());
         $this->assertEquals('An updated attribution', $getAttribution->body->attribution);
@@ -287,9 +291,9 @@ class FundraisingTest extends Base
     public function it_appends_to_and_gets_a_page_attribution()
     {
         $update = new UpdateFundraisingPageAttributionRequest(['attribution' => 'Attribution. ']);
-        $this->client->fundraising->updateAttribution($this->pageShortName, $update);
-        $response = $this->client->fundraising->appendToAttribution($this->pageShortName, $update);
-        $getAttribution = $this->client->fundraising->getAttribution($this->pageShortName);
+        $this->client->fundraising->updateAttribution(static::$pageShortName, $update);
+        $response = $this->client->fundraising->appendToAttribution(static::$pageShortName, $update);
+        $getAttribution = $this->client->fundraising->getAttribution(static::$pageShortName);
 
         $this->assertTrue($response->wasSuccessful());
         $this->assertEquals('Attribution. Attribution. ', $getAttribution->body->attribution);
@@ -299,9 +303,9 @@ class FundraisingTest extends Base
     public function it_deletes_a_page_attribution()
     {
         $update = new UpdateFundraisingPageAttributionRequest(['attribution' => 'Attribution. ']);
-        $this->client->fundraising->updateAttribution($this->pageShortName, $update);
-        $response = $this->client->fundraising->deleteAttribution($this->pageShortName);
-        $getAttribution = $this->client->fundraising->getAttribution($this->pageShortName);
+        $this->client->fundraising->updateAttribution(static::$pageShortName, $update);
+        $response = $this->client->fundraising->deleteAttribution(static::$pageShortName);
+        $getAttribution = $this->client->fundraising->getAttribution(static::$pageShortName);
 
         $this->assertTrue($response->wasSuccessful());
         $this->assertEquals('', $getAttribution->body->attribution);
