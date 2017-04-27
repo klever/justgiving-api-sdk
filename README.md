@@ -16,7 +16,7 @@ if ($response->existenceCheck()) {
 ```
 
 ```php
-$response = $client->charity->getCharityById(2050);
+$response = $client->charity->getById(2050);
 
 if ( ! $response->wasSuccessful()) {
     throw new Exception(implode(', ', $response->errors));
@@ -108,26 +108,28 @@ $response->body;                         // Returns the decoded response
 ```
 From here, the response data is represented by arrays or objects of type `StdClass` which contain the data we want to use.
 ```php
-$result = $client->charity->GetCharityById(2050);
+$result = $client->charity->getById(2050);
 $result->body->name;            // 'The Demo Charity1'
 $result->body->websiteUrl;      // 'http://www.democharity.co.uk'
 $result->body->pageShortName;   // 'jgdemo'
 ```
 The response class also allows body properties to be called directly on itself, i.e. the following is also valid:
 ```php
-$result = $client->charity->GetCharityById(2050);
+$result = $client->charity->getById(2050);
 $result->name;                  // 'The Demo Charity1'
 $result->websiteUrl;            // 'http://www.democharity.co.uk'
 $result->pageShortName;         // 'jgdemo'
 ```
 
 #### Errors
-The API provides two formats of error message(s): the first is a general error message relating to the whole request (e.g. `That email address is already in use`), and the second is a list of error messages that relate to problems with specific parts of the request or data, with an identifier and description (e.g. ID: `FirstNameNotSpecified`, description `The FirstName field is required.`).
+The API provides two formats of error message(s): the first is a general error message relating to the whole request (e.g. `That email address is already in use`), 
+and the second is a list of error messages that relate to problems with specific parts of the request or data, with an identifier and description (e.g. ID: `FirstNameNotSpecified`, description `The FirstName field is required.`).
 
 In the API documentation, the former is referred to as being the `errorMessage` property, and the latter refers to errors contained in `Error` objects (with properties `Error.id` and `Error.desc`).
 
 Errors can be accessed via the `errors` property of the response object, which presents any errors present in a unified array format of `$identifier => $description`.
 If there is a general error, it is given the identifier `General` and added to the array like any other error.
+The reason phrase given with the response (accessible via the `getReasonPhrase()` method) is added to the errors array and given the identifier `ReasonPhrase`.
 
 For example:
 ```php
@@ -152,6 +154,7 @@ $response = $this->client->account->create(new CreateAccountRequest([
 $errors = $response->errors;
 // $errors is:
 // [
+//    'ReasonPhrase'                        => 'Validation errors occured.',
 //    'FirstNameNotSpecified'               => 'The FirstName field is required.',
 //    'AcceptTermsAndConditionsMustBeTrue'  => 'You must agree to the terms and conditions'
 // ]
@@ -179,7 +182,8 @@ $response = $this->client->account->create(new CreateAccountRequest([
 $errors = $response->errors;
 // $errors is:
 // [
-//    'General' => 'That email address is already in use'
+//    'ReasonPhrase'    => 'Bad request',
+//    'General'         => 'That email address is already in use'
 // ]
 ```
 

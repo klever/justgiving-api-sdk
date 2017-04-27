@@ -2,10 +2,28 @@
 
 namespace Klever\JustGivingApiSdk\Tests;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\Event;
+use Klever\JustGivingApiSdk\ResourceClients\Models\EventRequest;
 
 class EventTest extends Base
 {
+    /** @test */
+    public function it_registers_an_event()
+    {
+        $eventRequest = new EventRequest([
+            'name'           => 'My Event',
+            'description'    => 'A description',
+            "completionDate" => "/Date(1524814487875+0000)/",
+            "expiryDate"     => "/Date(1524814487875+0000)/",
+            "startDate"      => "/Date(1493451287875+0000)/",
+            "eventType"      => "OtherCelebration",
+            "location"       => "Some location",
+        ]);
+
+        $response = $this->client->event->create($eventRequest);
+
+        $this->assertTrue($response->wasSuccessful());
+    }
+
     /** @test */
     public function it_retrieves_an_event_given_an_event_id()
     {
@@ -19,7 +37,7 @@ class EventTest extends Base
     {
         $response = $this->client->event->getById(479546)->getBodyAsObject();
 
-        $this->assertEqualAttributes(Event::class, $response);
+        $this->assertEqualAttributes(EventRequest::class, $response);
     }
 
     /** @test */

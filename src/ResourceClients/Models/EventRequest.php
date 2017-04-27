@@ -2,7 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\ResourceClients\Models;
 
-class Event extends Model
+class EventRequest extends Model
 {
     public $name;
     public $description;
@@ -10,4 +10,6 @@ class Event extends Model
     public $expiryDate;
     public $startDate;
     public $eventType;
+    public $location;
+    public $charityId;
 }

@@ -2,6 +2,8 @@
 
 namespace Klever\JustGivingApiSdk\ResourceClients;
 
+use Klever\JustGivingApiSdk\ResourceClients\Models\EventRequest;
+
 class EventClient extends BaseClient
 {
     protected $aliases = [
@@ -26,7 +28,7 @@ class EventClient extends BaseClient
         return $this->get("event/" . $eventId . "/pages?PageSize=" . $pageSize . "&PageNum=" . $pageNumber);
     }
 
-    public function create($event)
+    public function create(EventRequest $event)
     {
         return $this->post("event", $event);
     }
