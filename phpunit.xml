@@ -10,8 +10,12 @@
          stopOnFailure="false">
 
     <testsuites>
-        <testsuite name="JustGiving API Test Suite">
-            <directory>tests</directory>
+        <testsuite name="resource-clients">
+            <directory>tests/ResourceClients</directory>
+        </testsuite>
+        <testsuite name="other">
+            <directory>tests/Models</directory>
+            <directory>tests/Support</directory>
         </testsuite>
     </testsuites>
 

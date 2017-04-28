@@ -29,23 +29,31 @@ class Base extends TestCase
 
     protected function setUp()
     {
-        ini_set('xdebug.max_nesting_level', 2048);
-
         $this->context = new TestContext();
 
-        static::$staticGuzzleClient = static::$staticGuzzleClient
-            ?? GuzzleClientFactory::build(
-                $this->context->apiUrl,
-                $this->context->apiKey,
-                $this->context->apiVersion,
-                $this->context->testUsername,
-                $this->context->testValidPassword
-            );
+        $this->guzzleClient = GuzzleClientFactory::build(
+            $this->context->apiUrl,
+            $this->context->apiKey,
+            $this->context->apiVersion,
+            $this->context->testUsername,
+            $this->context->testValidPassword
+        );
 
-        static::$staticClient = static::$staticClient ?? new JustGivingClient(static::$staticGuzzleClient);
-
-        $this->guzzleClient = static::$staticGuzzleClient;
-        $this->client = static::$staticClient;
+        $this->client = new JustGivingClient($this->guzzleClient);
+        sleep(3);
+//        static::$staticGuzzleClient = static::$staticGuzzleClient
+//            ?? GuzzleClientFactory::build(
+//                $this->context->apiUrl,
+//                $this->context->apiKey,
+//                $this->context->apiVersion,
+//                $this->context->testUsername,
+//                $this->context->testValidPassword
+//            );
+//
+//        static::$staticClient = static::$staticClient ?? new JustGivingClient(static::$staticGuzzleClient);
+//
+//        $this->guzzleClient = static::$staticGuzzleClient;
+//        $this->client = static::$staticClient;
     }
 
     /**

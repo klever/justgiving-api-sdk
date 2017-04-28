@@ -1,18 +1,26 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests;
+namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
 use Klever\JustGivingApiSdk\ResourceClients\Models\SearchInMemoryRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\SearchTeamRequest;
+use Klever\JustGivingApiSdk\Tests\Base;
 
 class SearchTest extends Base
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        sleep(5);
+    }
+
     /** @test */
     public function it_finds_a_charity_from_a_search_string()
     {
         $response = $this->client->Search->charity('the demo charity1');
 
-        foreach ($response->charitySearchResults as $charity) {
+        foreach ($response->body->charitySearchResults as $charity) {
             if ($charity->charityId == 2050) {
                 $this->assertEquals('the demo charity1', strtolower($charity->name));
             }
@@ -46,7 +54,7 @@ class SearchTest extends Base
     {
         $searchRequest = new SearchInMemoryRequest([
             'firstName' => 'Bob',
-            'lastName' => 'Smith',
+            'lastName'  => 'Smith',
         ]);
 
         $response = $this->client->search->inMemory($searchRequest);
@@ -65,8 +73,8 @@ class SearchTest extends Base
 
         $response = $this->client->search->team($searchRequest);
 
-        $this->assertTrue($response->wasSuccessful());
         $this->assertObjectHasAttributes(['next', 'numberOfHits', 'prev', 'query', 'totalPages', 'results'], $response->body);
         $this->assertObjectHasAttributes(['id', 'name', 'story', 'targetType', 'teamMembers', 'teamShortName', 'teamTarget', 'teamType'], $response->body->results[0]);
+        $this->assertTrue($response->wasSuccessful());
     }
 }

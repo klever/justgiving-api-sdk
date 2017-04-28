@@ -1,8 +1,8 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests;
+namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
+use Klever\JustGivingApiSdk\Tests\Base;
 
 class CampaignTest extends Base
 {

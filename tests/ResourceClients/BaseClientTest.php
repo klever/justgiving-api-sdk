@@ -1,12 +1,13 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests;
+namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Klever\JustGivingApiSdk\ResourceClients\BaseClient;
+use Klever\JustGivingApiSdk\Tests\Base;
 use Mockery;
 use ReflectionClass;
 
@@ -115,7 +116,7 @@ class BaseClientTest extends Base
         $httpClient = new MockHttpClient(['handler' => $handler]);
         $baseClient = new BaseClientChild($httpClient);
 
-        $baseClient->postFile('test', __DIR__ . '/img/jpg.jpg', 'some content type');
+        $baseClient->postFile('test', __DIR__ . '/../img/jpg.jpg', 'some content type');
 
         $this->assertEquals(['Content-Type' => 'some content type'], $httpClient->options['headers']);
     }

@@ -1,13 +1,21 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests;
+namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
 use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 use Klever\JustGivingApiSdk\ResourceClients\Models\RegisterPageRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\UpdatePageSmsCodeRequest;
+use Klever\JustGivingApiSdk\Tests\Base;
 
 class SmsTest extends Base
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        sleep(5);
+    }
+
     /** @test */
     public function it_retrieves_the_sms_code_for_a_page()
     {

@@ -1,6 +1,8 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests;
+namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
+
+use Klever\JustGivingApiSdk\Tests\Base;
 
 class DonationTest extends Base
 {

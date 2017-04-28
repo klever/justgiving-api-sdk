@@ -1,12 +1,13 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests;
+namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
 use Klever\JustGivingApiSdk\ResourceClients\Models\AddImageRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\AddPostToPageUpdateRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\AddVideoRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 use Klever\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttributionRequest;
+use Klever\JustGivingApiSdk\Tests\Base;
 
 class FundraisingTest extends Base
 {
@@ -154,7 +155,7 @@ class FundraisingTest extends Base
     public function it_uploads_an_image_and_caption_to_a_page()
     {
         $caption = "PHP Image Caption - " . uniqid();
-        $filename = __DIR__ . "/img/jpg.jpg";
+        $filename = __DIR__ . "/../img/jpg.jpg";
         $response = $this->client->fundraising->uploadImage(static::$pageShortName, $caption, $filename);
 
         $this->assertTrue($response->wasSuccessful());
@@ -163,7 +164,7 @@ class FundraisingTest extends Base
     /** @test */
     public function it_uploads_a_default_image_to_a_page()
     {
-        $filename = __DIR__ . "/img/jpg.jpg";
+        $filename = __DIR__ . "/../img/jpg.jpg";
         $response = $this->client->fundraising->uploadDefaultImage(static::$pageShortName, $filename);
 
         $this->assertTrue($response->wasSuccessful());

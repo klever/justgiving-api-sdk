@@ -1,16 +1,28 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests;
+namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
 use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 use Klever\JustGivingApiSdk\ResourceClients\Models\JoinTeamRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\Team;
 use Klever\JustGivingApiSdk\ResourceClients\Models\TeamMember;
+use Klever\JustGivingApiSdk\Tests\Base;
 
 class TeamTest extends Base
 {
     protected $pageShortName;
-    protected $team;
+    protected static $team;
+    protected static $teamShortName;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        sleep(5);
+
+        static::$teamShortName = static::$teamShortName ?? 'team' . uniqid();
+        static::$team = static::$team ?? $this->createTeam(static::$teamShortName);
+    }
 
     /** @test */
     public function it_creates_a_team()
@@ -33,10 +45,8 @@ class TeamTest extends Base
     /** @test */
     public function it_updates_a_team()
     {
-        $teamShortName = 'team' . uniqid();
-        $this->createTeam($teamShortName);
         $updatedTeam = new Team([
-            'teamShortName' => $teamShortName,
+            'teamShortName' => static::$teamShortName,
             'name'          => 'New Team Name',
             'story'         => 'New story',
             'targetType'    => 'Fixed',
@@ -44,10 +54,10 @@ class TeamTest extends Base
             'teamTarget'    => 10000,
         ]);
 
-        $response = $this->client->team->update($teamShortName, $updatedTeam);
+        $response = $this->client->team->update(static::$teamShortName, $updatedTeam);
 
         $this->assertTrue($response->wasSuccessful());
-        $this->assertEquals('New Team Name', $this->client->team->getByShortName($teamShortName)->body->name);
+        $this->assertEquals('New Team Name', $this->client->team->getByShortName(static::$teamShortName)->body->name);
     }
 
     /** @test */
