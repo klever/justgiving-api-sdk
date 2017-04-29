@@ -57,7 +57,7 @@ class GuzzleClientFactory
      * Static method for easily creating a client. Requires the same parameters as the class constructor.
      *
      * @param array ...$args
-     * @return mixed
+     * @return Client
      */
     public static function build(...$args)
     {
@@ -72,7 +72,7 @@ class GuzzleClientFactory
     public function createClient()
     {
         $stack = HandlerStack::create();
-        $stack->push(Middleware::mapResponse(function (ResponseInterface $response) {
+        $stack->push(Middleware::mapResponse(function(ResponseInterface $response) {
             return new Response($response);
         }));
 
