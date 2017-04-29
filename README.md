@@ -1,4 +1,8 @@
 # JustGiving API SDK
+[![Build Status](https://scrutinizer-ci.com/g/klever/justgiving-api-sdk/badges/build.png?b=master)](https://scrutinizer-ci.com/g/klever/justgiving-api-sdk/build-status/master)
+[![Code Coverage](https://scrutinizer-ci.com/g/klever/justgiving-api-sdk/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/klever/justgiving-api-sdk/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/klever/justgiving-api-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/klever/justgiving-api-sdk/?branch=master)
+
 A PHP SDK for communicating with the JustGiving API. Based on the [original SDK](https://github.com/JustGiving/JustGiving.Api.Sdk) by [JustGiving _et al_](https://github.com/JustGiving/JustGiving.Api.Sdk/graphs/contributors).
 
 ## Quick Start
