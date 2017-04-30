@@ -122,7 +122,7 @@ class Response implements ResponseInterface
      */
     public function getBodyAsObject()
     {
-        return json_decode($this->response->getBody()->getContents());
+        return json_decode($this->response->getBody()->__toString());
     }
 
     /**
