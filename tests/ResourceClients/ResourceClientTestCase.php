@@ -41,7 +41,7 @@ class ResourceClientTestCase extends TestCase
         );
 
         $this->client = new JustGivingClient($this->guzzleClient);
-        sleep(3);
+        $this->wait(3);
     }
 
     /**

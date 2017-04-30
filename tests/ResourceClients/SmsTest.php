@@ -12,7 +12,7 @@ class SmsTest extends ResourceClientTestCase
     {
         parent::setUp();
 
-        sleep(5);
+        $this->wait(5);
     }
 
     /** @test */

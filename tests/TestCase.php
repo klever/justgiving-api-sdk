@@ -33,4 +33,14 @@ class TestCase extends PHPUnitTestCase
             $this->assertObjectHasAttribute($attribute, $object);
         }
     }
+
+    /**
+     * Wait for the designated number of seconds.
+     *
+     * @param int $seconds
+     */
+    protected function wait($seconds)
+    {
+        sleep($seconds);
+    }
 }

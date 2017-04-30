@@ -49,7 +49,6 @@ class Response implements ResponseInterface
         switch ($name) {
             case 'body':
                 return $this->getBodyAsObject();
-                break;
             case 'errors':
                 return $this->formatErrors($this->body);
         }
@@ -123,7 +122,7 @@ class Response implements ResponseInterface
      */
     public function getBodyAsObject()
     {
-        return json_decode($this->response->getBody()->__toString());
+        return json_decode($this->response->getBody()->getContents());
     }
 
     /**

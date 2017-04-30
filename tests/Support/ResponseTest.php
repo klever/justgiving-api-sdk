@@ -5,10 +5,11 @@ namespace Klever\JustGivingApiSdk\Tests\Support;
 use Klever\JustGivingApiSdk\Exceptions\UnexpectedStatusException;
 use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
 use Klever\JustGivingApiSdk\Support\Response;
+use Klever\JustGivingApiSdk\Tests\ResourceClients\ResourceClientTestCase;
 use Klever\JustGivingApiSdk\Tests\TestCase;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 
-class ResponseTest extends TestCase
+class ResponseTest extends ResourceClientTestCase
 {
     /**
      * @var Response
