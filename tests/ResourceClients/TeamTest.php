@@ -6,9 +6,8 @@ use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 use Klever\JustGivingApiSdk\ResourceClients\Models\JoinTeamRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\Team;
 use Klever\JustGivingApiSdk\ResourceClients\Models\TeamMember;
-use Klever\JustGivingApiSdk\Tests\Base;
 
-class TeamTest extends Base
+class TeamTest extends ResourceClientTestCase
 {
     protected $pageShortName;
     protected static $team;

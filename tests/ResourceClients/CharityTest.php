@@ -3,9 +3,8 @@
 namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
 use Klever\JustGivingApiSdk\ResourceClients\Models\AuthenticateCharityAccountRequest;
-use Klever\JustGivingApiSdk\Tests\Base;
 
-class CharityTest extends Base
+class CharityTest extends ResourceClientTestCase
 {
     /** @test */
     public function it_retrieves_a_charity_by_charity_id()

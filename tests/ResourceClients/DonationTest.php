@@ -2,18 +2,16 @@
 
 namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\Tests\Base;
-
-class DonationTest extends Base
+class DonationTest extends ResourceClientTestCase
 {
     /** @test */
     public function it_retrieves_a_donation_by_id()
     {
         $response = $this->client->donation->getById(21303723);
 
-        $this->assertNotNull($response->amount);
-        $this->assertEquals($response->currencyCode, "GBP");
-        $this->assertEquals($response->status, "Accepted");
+        $this->assertNotNull($response->body->amount);
+        $this->assertEquals($response->body->currencyCode, "GBP");
+        $this->assertEquals($response->body->status, "Accepted");
     }
 
     /** @test */
@@ -29,7 +27,7 @@ class DonationTest extends Base
     {
         $response = $this->client->donation->getDetailsByReference('1234-my-sdi-ref');
 
-        $this->assertTrue(is_array($response->donations));
+        $this->assertTrue(is_array($response->body->donations));
     }
 
     /** @test */

@@ -2,9 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\Tests\Base;
-
-class CurrencyTest extends Base
+class CurrencyTest extends ResourceClientTestCase
 {
     /** @test */
     public function get_valid_currencies_return_currencies()

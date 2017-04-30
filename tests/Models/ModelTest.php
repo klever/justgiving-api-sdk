@@ -4,9 +4,9 @@ namespace Klever\JustGivingApiSdk\Tests\Models;
 
 use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\Team;
-use Klever\JustGivingApiSdk\Tests\Base;
+use Klever\JustGivingApiSdk\Tests\TestCase;
 
-class ModelTest extends Base
+class ModelTest extends TestCase
 {
     /**
      * @var Team

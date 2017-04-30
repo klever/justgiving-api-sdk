@@ -7,11 +7,10 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Klever\JustGivingApiSdk\ResourceClients\BaseClient;
-use Klever\JustGivingApiSdk\Tests\Base;
 use Mockery;
 use ReflectionClass;
 
-class BaseClientTest extends Base
+class TestCaseClientTest extends ResourceClientTestCase
 {
     protected static $childApi;
 

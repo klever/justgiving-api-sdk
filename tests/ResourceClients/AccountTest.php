@@ -6,10 +6,9 @@ use Klever\JustGivingApiSdk\ResourceClients\Models\Address;
 use Klever\JustGivingApiSdk\ResourceClients\Models\ChangePasswordRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\ValidateAccountRequest;
-use Klever\JustGivingApiSdk\Tests\Base;
 
 
-class AccountTest extends Base
+class AccountTest extends ResourceClientTestCase
 {
     /** @test */
     public function it_creates_a_new_account()

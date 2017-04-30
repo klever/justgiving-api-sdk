@@ -4,9 +4,8 @@ namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
 use Klever\JustGivingApiSdk\ResourceClients\Models\SearchInMemoryRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\SearchTeamRequest;
-use Klever\JustGivingApiSdk\Tests\Base;
 
-class SearchTest extends Base
+class SearchTest extends ResourceClientTestCase
 {
     public function setUp()
     {

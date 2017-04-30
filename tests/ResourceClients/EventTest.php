@@ -3,9 +3,8 @@
 namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
 use Klever\JustGivingApiSdk\ResourceClients\Models\EventRequest;
-use Klever\JustGivingApiSdk\Tests\Base;
 
-class EventTest extends Base
+class EventTest extends ResourceClientTestCase
 {
     /** @test */
     public function it_registers_an_event()

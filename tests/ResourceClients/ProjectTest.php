@@ -2,9 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\Tests\Base;
-
-class ProjectTest extends Base
+class ProjectTest extends ResourceClientTestCase
 {
     /** @test */
     public function it_retrieves_a_project_by_its_id()

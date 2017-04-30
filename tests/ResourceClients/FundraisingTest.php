@@ -7,9 +7,8 @@ use Klever\JustGivingApiSdk\ResourceClients\Models\AddPostToPageUpdateRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\AddVideoRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 use Klever\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttributionRequest;
-use Klever\JustGivingApiSdk\Tests\Base;
 
-class FundraisingTest extends Base
+class FundraisingTest extends ResourceClientTestCase
 {
     protected static $pageShortName;
 

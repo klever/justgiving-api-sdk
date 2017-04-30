@@ -5,9 +5,8 @@ namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 use Klever\JustGivingApiSdk\ResourceClients\Models\RegisterPageRequest;
 use Klever\JustGivingApiSdk\ResourceClients\Models\UpdatePageSmsCodeRequest;
-use Klever\JustGivingApiSdk\Tests\Base;
 
-class SmsTest extends Base
+class SmsTest extends ResourceClientTestCase
 {
     public function setUp()
     {

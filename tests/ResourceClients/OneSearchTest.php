@@ -2,9 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\Tests\Base;
-
-class OneSearchTest extends Base
+class OneSearchTest extends ResourceClientTestCase
 {
     /** @test */
     public function it_searches_the_entire_site()

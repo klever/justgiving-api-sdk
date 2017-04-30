@@ -2,9 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\Tests\Base;
-
-class CountriesTest extends Base
+class CountriesTest extends ResourceClientTestCase
 {
     public function testGetCountries_ReturnCountries()
     {

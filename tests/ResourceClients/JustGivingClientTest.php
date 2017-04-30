@@ -4,9 +4,8 @@ namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
 use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 use Klever\JustGivingApiSdk\ResourceClients\AccountClient;
-use Klever\JustGivingApiSdk\Tests\Base;
 
-class JustGivingClientTest extends Base
+class JustGivingClientTest extends ResourceClientTestCase
 {
     /** @test */
     public function it_returns_an_api_client_class_from_a_property_call()

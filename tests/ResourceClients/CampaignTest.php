@@ -2,9 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\Tests\Base;
-
-class CampaignTest extends Base
+class CampaignTest extends ResourceClientTestCase
 {
     /** @test */
     public function it_retrieves_campaign_details_given_the_charity_and_campaign_names()

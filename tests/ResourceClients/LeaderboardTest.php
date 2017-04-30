@@ -2,9 +2,7 @@
 
 namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\Tests\Base;
-
-class LeaderboardTest extends Base
+class LeaderboardTest extends ResourceClientTestCase
 {
     /** @test */
     public function it_retrieves_the_charity_leaderboard_listing_for_a_charity_id()
@@ -17,7 +15,7 @@ class LeaderboardTest extends Base
     /** @test */
     public function it_retrieves_the_event_leaderboard_listing_for_an_event_id()
     {
-        $response = $this->client->Leaderboard->getEventLeaderboard(479546);
+        $response = $this->client->leaderboard->getEventLeaderboard(479546);
 
         $this->assertEquals('GBP', $response->body->currency);
         $this->assertEquals([], $response->body->pages);
