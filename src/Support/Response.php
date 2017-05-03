@@ -72,13 +72,32 @@ class Response implements ResponseInterface
         $errors['ReasonPhrase'] = $this->getReasonPhrase();
 
         if (isset($errorBody->errorMessage)) {
-            return ['General' => $errorBody->errorMessage];
+            $errors += ['General' => $errorBody->errorMessage];
+        }
+
+        if (isset($errorBody->error)) {
+            $errors += $this->errorsToArray($errorBody->error);
         }
 
         if (is_array($errorBody) && isset($errorBody[0]->id) && isset($errorBody[0]->desc)) {
-            foreach ($errorBody as $error) {
-                $errors[$error->id ?? null] = $error->desc ?? null;
-            }
+            $errors += $this->errorsToArray($errorBody);
+        }
+
+        return $errors;
+    }
+
+    /**
+     * Take in an array of errors with separate ID and description, and format them as an associative array of [$id =>
+     * $description].
+     *
+     * @param array $inputErrors
+     * @return array
+     */
+    protected function errorsToArray($inputErrors)
+    {
+        $errors = [];
+        foreach ($inputErrors as $error) {
+            $errors[$error->id ?? null] = $error->desc ?? null;
         }
 
         return $errors;
