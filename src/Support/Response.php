@@ -76,7 +76,7 @@ class Response implements ResponseInterface
         }
 
         if (isset($errorBody->error)) {
-            $errors += $this->errorsToArray($errorBody->error);
+            $errors += [$errorBody->id => $errorBody->desc];
         }
 
         if (is_array($errorBody) && isset($errorBody[0]->id) && isset($errorBody[0]->desc)) {
