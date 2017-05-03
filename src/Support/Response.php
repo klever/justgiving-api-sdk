@@ -69,7 +69,7 @@ class Response implements ResponseInterface
             return [];
         }
 
-        $errors['ReasonPhrase'] = $this->getReasonPhrase();
+        $errors = ['ReasonPhrase' => $this->getReasonPhrase()];
 
         if (isset($errorBody->errorMessage)) {
             $errors += ['General' => $errorBody->errorMessage];
