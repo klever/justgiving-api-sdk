@@ -59,7 +59,7 @@ class FundraisingClient extends BaseClient
         return $this->get("fundraising/pages");
     }
 
-    public function getDonations($pageShortName, $pageSize = 50, $pageNumber = 1)
+    public function getDonations($pageShortName, $pageSize = 50, $pageNumber = 0)
     {
         return $this->get("fundraising/pages/" . $pageShortName . "/donations" . "?PageSize=" . $pageSize . "&PageNum=" . $pageNumber);
     }

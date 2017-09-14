@@ -2,12 +2,12 @@
 
 namespace Klever\JustGivingApiSdk\Tests\Support;
 
+use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use Klever\JustGivingApiSdk\Exceptions\UnexpectedStatusException;
 use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
 use Klever\JustGivingApiSdk\Support\Response;
 use Klever\JustGivingApiSdk\Tests\ResourceClients\ResourceClientTestCase;
-use Klever\JustGivingApiSdk\Tests\TestCase;
-use GuzzleHttp\Psr7\Response as GuzzleResponse;
+use Psr\Http\Message\ResponseInterface;
 
 class ResponseTest extends ResourceClientTestCase
 {
@@ -16,11 +16,61 @@ class ResponseTest extends ResourceClientTestCase
      */
     protected static $donationResponse;
 
+    /**
+     * @var string
+     */
+    protected $savedResponseDirectory = __DIR__ . '/../responses/';
+
+    protected $savedResponses = [
+        [
+            'resource' => 'account',
+            'action'   => 'getDonations'
+        ]
+    ];
+
     protected function setUp()
     {
         parent::setUp();
 
-        static::$donationResponse =  static:: $donationResponse ?? $this->client->account->getDonations();
+        static::$donationResponse = static::$donationResponse ?? $this->client->account->getDonations();
+    }
+
+    /**
+     * Build up a response object from data contained in a JSON file.
+     *
+     * @param string $name
+     * @return Response
+     */
+    protected function buildResponseFromFile($name)
+    {
+        $responseData = json_decode($this->savedResponseDirectory . $name . '.json');
+        $guzzleResponse = new GuzzleResponse(
+            $responseData->status_code,
+            $headers = [],
+            $responseData->body,
+            '1.1',
+            $responseData->reason_phrase
+        );
+
+        return new Response($guzzleResponse);
+    }
+
+    /**
+     * Take a JSON representation of a response's status code, reason phrase and body, and save it to file.
+     *
+     * @param string            $name
+     * @param ResponseInterface $response
+     * @return bool|int
+     */
+    protected function saveResponseToFile($name, ResponseInterface $response)
+    {
+        $responseArray = [
+            'status_code'   => $response->getStatusCode(),
+            'reason_phrase' => $response->getReasonPhrase(),
+            'body'          => json_decode($response->getBody()->__toString()),
+        ];
+
+        return file_put_contents($this->savedResponseDirectory . $name . '.json', json_encode($responseArray));
     }
 
     /** @test */

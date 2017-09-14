@@ -23,7 +23,7 @@ class EventClient extends BaseClient
         return $this->get('event/types');
     }
 
-    public function getPages($eventId, $pageSize = 50, $pageNumber = 1)
+    public function getPages($eventId, $pageSize = 50, $pageNumber = 0)
     {
         return $this->get("event/" . $eventId . "/pages?PageSize=" . $pageSize . "&PageNum=" . $pageNumber);
     }
