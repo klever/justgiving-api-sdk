@@ -19,8 +19,8 @@ class TeamTest extends ResourceClientTestCase
 
         $this->wait(5);
 
-        static::$teamShortName = static::$teamShortName ?? 'team' . uniqid();
-        static::$team = static::$team ?? $this->createTeam(static::$teamShortName);
+        static::$teamShortName = static::$teamShortName ?: 'team' . uniqid();
+        static::$team = static::$team ?: $this->createTeam(static::$teamShortName);
     }
 
     /** @test */
@@ -77,7 +77,7 @@ class TeamTest extends ResourceClientTestCase
 
     protected function createTeam($teamShortName = null, $pageShortName = null)
     {
-        $pageShortName = $pageShortName ?? "api-test-" . uniqid();
+        $pageShortName = $pageShortName ?: "api-test-" . uniqid();
         $this->client->fundraising->register(new FundraisingPage([
             'reference'       => "12345",
             'pageShortName'   => $pageShortName,
@@ -94,7 +94,7 @@ class TeamTest extends ResourceClientTestCase
         ]));
 
         $team = new Team([
-            'teamShortName' => $teamShortName ?? 'myTeam' . uniqid(),
+            'teamShortName' => $teamShortName ?: 'myTeam' . uniqid(),
             'name'          => 'My Team',
             'story'         => 'This is my team.',
             'targetType'    => 'Fixed',

@@ -19,7 +19,7 @@ class TestCaseClientTest extends ResourceClientTestCase
     public function setUp()
     {
         parent::setUp();
-        static::$childApi = static::$childApi ?? new BaseClientChild($this->guzzleClient);
+        static::$childApi = static::$childApi ?: new BaseClientChild($this->guzzleClient);
     }
 
     public function tearDown()

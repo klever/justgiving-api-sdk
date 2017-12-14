@@ -3,6 +3,7 @@
 namespace Klever\JustGivingApiSdk;
 
 use GuzzleHttp\ClientInterface;
+use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 use Klever\JustGivingApiSdk\ResourceClients\AccountClient;
 use Klever\JustGivingApiSdk\ResourceClients\CampaignClient;
 use Klever\JustGivingApiSdk\ResourceClients\CharityClient;
@@ -17,7 +18,6 @@ use Klever\JustGivingApiSdk\ResourceClients\ProjectClient;
 use Klever\JustGivingApiSdk\ResourceClients\SearchClient;
 use Klever\JustGivingApiSdk\ResourceClients\SmsClient;
 use Klever\JustGivingApiSdk\ResourceClients\TeamClient;
-use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 
 /**
  * Class JustGivingClient
@@ -90,7 +90,9 @@ class JustGivingClient
             throw new ClassNotFoundException($class);
         }
 
-        $this->clients[$class] = $this->clients[$class] ?? new $class($this->httpClient, $this);
+        $this->clients[$class] = isset($this->clients[$class])
+            ? $this->clients[$class]
+            : new $class($this->httpClient, $this);
 
         return $this->clients[$class];
     }

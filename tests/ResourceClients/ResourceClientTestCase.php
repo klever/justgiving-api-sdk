@@ -55,7 +55,7 @@ class ResourceClientTestCase extends TestCase
     {
         $uniqueId = uniqid();
         $request = new CreateAccountRequest(array_merge([
-            'email'     => $email ?? "test+" . $uniqueId . "@testing.com",
+            'email'     => $email ?: "test+" . $uniqueId . "@testing.com",
             'firstName' => "first" . $uniqueId,
             'lastName'  => "last" . $uniqueId,
             'password'  => $this->context->testValidPassword,

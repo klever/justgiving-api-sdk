@@ -32,7 +32,7 @@ class ResponseTest extends ResourceClientTestCase
     {
         parent::setUp();
 
-        static::$donationResponse = static::$donationResponse ?? $this->client->account->getDonations();
+        static::$donationResponse = static::$donationResponse ?: $this->client->account->getDonations();
     }
 
     /**

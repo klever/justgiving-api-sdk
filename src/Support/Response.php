@@ -97,7 +97,7 @@ class Response implements ResponseInterface
     {
         $errors = [];
         foreach ($inputErrors as $error) {
-            $errors[$error->id ?? null] = $error->desc ?? null;
+            $errors[$error->id ?: null] = $error->desc ?: null;
         }
 
         return $errors;
@@ -153,7 +153,7 @@ class Response implements ResponseInterface
     public function wasSuccessful()
     {
         return $this->body->success
-            ?? $this->getStatusCode() >= 200 && $this->getStatusCode() < 300;
+            ?: $this->getStatusCode() >= 200 && $this->getStatusCode() < 300;
     }
 
     /**
