@@ -1,9 +1,9 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\ResourceClients;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\AuthenticateCharityAccountRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttributionRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\AuthenticateCharityAccountRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttributionRequest;
 
 class CharityClient extends BaseClient
 {

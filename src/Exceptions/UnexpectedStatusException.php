@@ -1,6 +1,6 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Exceptions;
+namespace Konsulting\JustGivingApiSdk\Exceptions;
 
 use Psr\Http\Message\ResponseInterface;
 use Throwable;

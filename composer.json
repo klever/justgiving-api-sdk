@@ -10,12 +10,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "Klever\\JustGivingApiSdk\\": "src/"
+      "Konsulting\\JustGivingApiSdk\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Klever\\JustGivingApiSdk\\Tests\\": "tests/"
+      "Konsulting\\JustGivingApiSdk\\Tests\\": "tests/"
     }
   },
   "require": {

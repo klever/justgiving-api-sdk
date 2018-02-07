@@ -1,8 +1,8 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\ResourceClients;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\EventRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\EventRequest;
 
 class EventClient extends BaseClient
 {

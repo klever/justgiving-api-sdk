@@ -1,10 +1,10 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\ResourceClients;
 
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\SearchInMemoryRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\SearchTeamRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\SearchInMemoryRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\SearchTeamRequest;
 
 class SearchClient extends BaseClient
 {

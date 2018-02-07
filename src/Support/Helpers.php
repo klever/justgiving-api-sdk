@@ -1,6 +1,6 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Support;
+namespace Konsulting\JustGivingApiSdk\Support;
 
 use Carbon\Carbon;
 use DateTime;

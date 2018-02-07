@@ -1,23 +1,23 @@
 <?php
 
-namespace Klever\JustGivingApiSdk;
+namespace Konsulting\JustGivingApiSdk;
 
 use GuzzleHttp\ClientInterface;
-use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
-use Klever\JustGivingApiSdk\ResourceClients\AccountClient;
-use Klever\JustGivingApiSdk\ResourceClients\CampaignClient;
-use Klever\JustGivingApiSdk\ResourceClients\CharityClient;
-use Klever\JustGivingApiSdk\ResourceClients\CountriesClient;
-use Klever\JustGivingApiSdk\ResourceClients\CurrencyClient;
-use Klever\JustGivingApiSdk\ResourceClients\DonationClient;
-use Klever\JustGivingApiSdk\ResourceClients\EventClient;
-use Klever\JustGivingApiSdk\ResourceClients\FundraisingClient;
-use Klever\JustGivingApiSdk\ResourceClients\LeaderboardClient;
-use Klever\JustGivingApiSdk\ResourceClients\OneSearchClient;
-use Klever\JustGivingApiSdk\ResourceClients\ProjectClient;
-use Klever\JustGivingApiSdk\ResourceClients\SearchClient;
-use Klever\JustGivingApiSdk\ResourceClients\SmsClient;
-use Klever\JustGivingApiSdk\ResourceClients\TeamClient;
+use Konsulting\JustGivingApiSdk\Exceptions\ClassNotFoundException;
+use Konsulting\JustGivingApiSdk\ResourceClients\AccountClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\CampaignClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\CharityClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\CountriesClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\CurrencyClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\DonationClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\EventClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\FundraisingClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\LeaderboardClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\OneSearchClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\ProjectClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\SearchClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\SmsClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\TeamClient;
 
 /**
  * Class JustGivingClient

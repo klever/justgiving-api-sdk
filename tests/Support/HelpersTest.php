@@ -1,11 +1,11 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\Support;
+namespace Konsulting\JustGivingApiSdk\Tests\Support;
 
 use Carbon\Carbon;
 use DateTime;
-use Klever\JustGivingApiSdk\Support\Helpers;
-use Klever\JustGivingApiSdk\Tests\TestCase;
+use Konsulting\JustGivingApiSdk\Support\Helpers;
+use Konsulting\JustGivingApiSdk\Tests\TestCase;
 
 class HelpersTest extends TestCase
 {

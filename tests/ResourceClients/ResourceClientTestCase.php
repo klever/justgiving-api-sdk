@@ -1,15 +1,15 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
 use GuzzleHttp\Client;
-use Klever\JustGivingApiSdk\JustGivingClient;
-use Klever\JustGivingApiSdk\ResourceClients\Models\Address;
-use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
-use Klever\JustGivingApiSdk\Support\GuzzleClientFactory;
-use Klever\JustGivingApiSdk\Support\Response;
-use Klever\JustGivingApiSdk\Tests\TestCase;
-use Klever\JustGivingApiSdk\Tests\TestContext;
+use Konsulting\JustGivingApiSdk\JustGivingClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\Address;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
+use Konsulting\JustGivingApiSdk\Support\GuzzleClientFactory;
+use Konsulting\JustGivingApiSdk\Support\Response;
+use Konsulting\JustGivingApiSdk\Tests\TestCase;
+use Konsulting\JustGivingApiSdk\Tests\TestContext;
 
 class ResourceClientTestCase extends TestCase
 {

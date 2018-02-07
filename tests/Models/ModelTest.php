@@ -1,10 +1,10 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\Models;
+namespace Konsulting\JustGivingApiSdk\Tests\Models;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\Team;
-use Klever\JustGivingApiSdk\Tests\TestCase;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\Team;
+use Konsulting\JustGivingApiSdk\Tests\TestCase;
 
 class ModelTest extends TestCase
 {

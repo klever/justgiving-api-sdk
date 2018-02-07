@@ -1,6 +1,6 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
 class DonationTest extends ResourceClientTestCase
 {

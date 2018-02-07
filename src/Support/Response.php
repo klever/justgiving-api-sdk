@@ -1,8 +1,8 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Support;
+namespace Konsulting\JustGivingApiSdk\Support;
 
-use Klever\JustGivingApiSdk\Exceptions\UnexpectedStatusException;
+use Konsulting\JustGivingApiSdk\Exceptions\UnexpectedStatusException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 

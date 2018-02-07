@@ -1,12 +1,12 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use Klever\JustGivingApiSdk\ResourceClients\BaseClient;
+use Konsulting\JustGivingApiSdk\ResourceClients\BaseClient;
 use Mockery;
 use ReflectionClass;
 
@@ -32,7 +32,7 @@ class TestCaseClientTest extends ResourceClientTestCase
     {
         // Cycle through all API client classes
         foreach ($this->childClients as $childClient) {
-            $className = '\\Klever\\JustGivingApiSdk\\ResourceClients\\' . $childClient . 'Client';
+            $className = '\\Konsulting\\JustGivingApiSdk\\ResourceClients\\' . $childClient . 'Client';
             $object = new $className($this->client);
 
             // Get the protected alias properties via reflection

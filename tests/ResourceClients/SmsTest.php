@@ -1,10 +1,10 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
-use Klever\JustGivingApiSdk\ResourceClients\Models\RegisterPageRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\UpdatePageSmsCodeRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\RegisterPageRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\UpdatePageSmsCodeRequest;
 
 class SmsTest extends ResourceClientTestCase
 {

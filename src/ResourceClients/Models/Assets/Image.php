@@ -1,8 +1,8 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\ResourceClients\Models\Assets;
+namespace Konsulting\JustGivingApiSdk\ResourceClients\Models\Assets;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\Model;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\Model;
 
 class Image extends Model
 {

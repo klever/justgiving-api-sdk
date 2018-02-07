@@ -1,8 +1,8 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\ResourceClients;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\RegisterCampaignRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\RegisterCampaignRequest;
 
 class CampaignClient extends BaseClient
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\ResourceClients;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\ChangePasswordRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\ValidateAccountRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\ChangePasswordRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\ValidateAccountRequest;
 
 class AccountClient extends BaseClient
 {

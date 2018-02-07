@@ -1,12 +1,12 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\ResourceClients;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\AddImageRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\AddVideoRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
-use Klever\JustGivingApiSdk\ResourceClients\Models\StoryUpdateRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttributionRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\AddImageRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\AddVideoRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\StoryUpdateRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttributionRequest;
 
 class FundraisingClient extends BaseClient
 {

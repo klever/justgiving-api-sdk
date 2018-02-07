@@ -1,11 +1,11 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
-use Klever\JustGivingApiSdk\ResourceClients\Models\JoinTeamRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\Team;
-use Klever\JustGivingApiSdk\ResourceClients\Models\TeamMember;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\JoinTeamRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\Team;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\TeamMember;
 
 class TeamTest extends ResourceClientTestCase
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\ResourceClients\Models;
+namespace Konsulting\JustGivingApiSdk\ResourceClients\Models;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\Assets\Theme;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\Assets\Theme;
 
 class FundraisingPage extends Model
 {

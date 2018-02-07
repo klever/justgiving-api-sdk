@@ -1,9 +1,9 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\ResourceClients;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\JoinTeamRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\Team;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\JoinTeamRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\Team;
 
 class TeamClient extends BaseClient
 {

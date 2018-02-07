@@ -1,9 +1,9 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\SearchInMemoryRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\SearchTeamRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\SearchInMemoryRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\SearchTeamRequest;
 
 class SearchTest extends ResourceClientTestCase
 {

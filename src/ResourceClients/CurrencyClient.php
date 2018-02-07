@@ -1,6 +1,6 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\ResourceClients;
 
 class CurrencyClient extends BaseClient
 {

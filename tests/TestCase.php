@@ -1,6 +1,6 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests;
+namespace Konsulting\JustGivingApiSdk\Tests;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 

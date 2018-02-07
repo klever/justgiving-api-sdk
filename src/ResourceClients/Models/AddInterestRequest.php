@@ -1,6 +1,6 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\ResourceClients\Models;
+namespace Konsulting\JustGivingApiSdk\ResourceClients\Models;
 
 class AddInterestRequest extends Model
 {

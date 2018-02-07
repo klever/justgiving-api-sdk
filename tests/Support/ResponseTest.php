@@ -1,12 +1,12 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\Support;
+namespace Konsulting\JustGivingApiSdk\Tests\Support;
 
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
-use Klever\JustGivingApiSdk\Exceptions\UnexpectedStatusException;
-use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
-use Klever\JustGivingApiSdk\Support\Response;
-use Klever\JustGivingApiSdk\Tests\ResourceClients\ResourceClientTestCase;
+use Konsulting\JustGivingApiSdk\Exceptions\UnexpectedStatusException;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
+use Konsulting\JustGivingApiSdk\Support\Response;
+use Konsulting\JustGivingApiSdk\Tests\ResourceClients\ResourceClientTestCase;
 use Psr\Http\Message\ResponseInterface;
 
 class ResponseTest extends ResourceClientTestCase

@@ -1,9 +1,9 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\Support;
+namespace Konsulting\JustGivingApiSdk\Tests\Support;
 
-use Klever\JustGivingApiSdk\Support\GuzzleClientFactory;
-use Klever\JustGivingApiSdk\Tests\TestCase;
+use Konsulting\JustGivingApiSdk\Support\GuzzleClientFactory;
+use Konsulting\JustGivingApiSdk\Tests\TestCase;
 
 class GuzzleClientFactoryTest extends TestCase
 {

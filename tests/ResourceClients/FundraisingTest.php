@@ -1,12 +1,12 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\AddImageRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\AddPostToPageUpdateRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\AddVideoRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
-use Klever\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttributionRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\AddImageRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\AddPostToPageUpdateRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\AddVideoRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttributionRequest;
 
 class FundraisingTest extends ResourceClientTestCase
 {

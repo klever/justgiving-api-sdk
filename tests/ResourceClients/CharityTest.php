@@ -1,8 +1,8 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\AuthenticateCharityAccountRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\AuthenticateCharityAccountRequest;
 
 class CharityTest extends ResourceClientTestCase
 {

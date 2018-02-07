@@ -1,11 +1,11 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\ResourceClients\Models\Address;
-use Klever\JustGivingApiSdk\ResourceClients\Models\ChangePasswordRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
-use Klever\JustGivingApiSdk\ResourceClients\Models\ValidateAccountRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\Address;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\ChangePasswordRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\ValidateAccountRequest;
 
 
 class AccountTest extends ResourceClientTestCase

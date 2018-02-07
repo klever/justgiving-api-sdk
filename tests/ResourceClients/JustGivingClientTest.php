@@ -1,9 +1,9 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\Tests\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use Klever\JustGivingApiSdk\Exceptions\ClassNotFoundException;
-use Klever\JustGivingApiSdk\ResourceClients\AccountClient;
+use Konsulting\JustGivingApiSdk\Exceptions\ClassNotFoundException;
+use Konsulting\JustGivingApiSdk\ResourceClients\AccountClient;
 
 class JustGivingClientTest extends ResourceClientTestCase
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Klever\JustGivingApiSdk\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\ResourceClients;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
-use Klever\JustGivingApiSdk\ResourceClients\Models\Model;
-use Klever\JustGivingApiSdk\Support\Response;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\Model;
+use Konsulting\JustGivingApiSdk\Support\Response;
 use Psr\Http\Message\ResponseInterface;
 
 class BaseClient
