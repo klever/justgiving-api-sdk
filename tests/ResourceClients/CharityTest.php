@@ -11,7 +11,7 @@ class CharityTest extends ResourceClientTestCase
     {
         $response = $this->client->Charity->getById(2050);
 
-        $this->assertEquals('The Demo Charity1', $response->name);
+        $this->assertSame('The Demo Charity', $response->name);
     }
 
     /** @test */

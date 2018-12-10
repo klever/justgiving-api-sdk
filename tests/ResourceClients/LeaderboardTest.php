@@ -19,6 +19,6 @@ class LeaderboardTest extends ResourceClientTestCase
 
         $this->assertEquals('GBP', $response->body->currency);
         $this->assertEquals([], $response->body->pages);
-        $this->assertEquals(0, $response->body->raisedAmount);
+        $this->assertEquals(49006.2, $response->body->raisedAmount);
     }
 }

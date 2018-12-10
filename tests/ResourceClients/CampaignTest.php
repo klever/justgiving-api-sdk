@@ -24,7 +24,7 @@ class CampaignTest extends ResourceClientTestCase
 
         $response = $this->client->Campaign->getAllByCharityId("2050");
 
-        $this->assertEquals($response->body->campaignsDetails[0]->campaignPageName, $expectedCampaignPageName);
+        $this->assertEquals($expectedCampaignPageName, $response->body->campaignsDetails[0]->campaignPageName);
     }
 
     /** @test */
