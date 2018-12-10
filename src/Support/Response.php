@@ -152,8 +152,11 @@ class Response implements ResponseInterface
      */
     public function wasSuccessful()
     {
-        return $this->body->success
-            ?? $this->getStatusCode() >= 200 && $this->getStatusCode() < 300;
+        if (isset($this->body->success)) {
+            return $this->body->success;
+        }
+
+        return $this->getStatusCode() >= 200 && $this->getStatusCode() < 300;
     }
 
     /**
@@ -164,7 +167,7 @@ class Response implements ResponseInterface
      */
     public function existenceCheck()
     {
-        if ( ! in_array($this->getStatusCode(), [200, 404])) {
+        if (! in_array($this->getStatusCode(), [200, 404])) {
             throw new UnexpectedStatusException($this);
         }
 
