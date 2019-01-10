@@ -2,8 +2,15 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\Support;
 
+
+use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
+use Konsulting\JustGivingApiSdk\Support\Auth\BasicAuth;
 use Konsulting\JustGivingApiSdk\Support\GuzzleClientFactory;
+use Konsulting\JustGivingApiSdk\Support\Response;
 use Konsulting\JustGivingApiSdk\Tests\TestCase;
+use Psr\Http\Message\ResponseInterface;
 
 class GuzzleClientFactoryTest extends TestCase
 {
@@ -14,6 +21,33 @@ class GuzzleClientFactoryTest extends TestCase
         $authenticationString = $factory->buildAuthenticationValue();
 
         $this->assertEquals('', $authenticationString);
+    }
+
+    /** @test */
+    public function it_builds_a_client_with_basic_auth()
+    {
+        $auth = new BasicAuth('my user', 'pass123');
+        $factory = new GuzzleClientFactory('root domain', 'api key', 2, $auth);
+
+        $client = $factory->createClient();
+
+        $stack = HandlerStack::create();
+        $stack->push(Middleware::mapResponse(function (ResponseInterface $response) {
+            return new Response($response);
+        }));
+
+        $expected = new Client([
+            'http_errors' => false,
+            'handler'     => $stack,
+            'base_uri'    => 'root domain/v2/',
+            'headers'     => [
+                'Accept'        => 'application/json',
+                'Authorization' => 'Basic ' . base64_encode('my user:pass123'),
+                'x-api-key'     => 'api key',
+            ],
+        ]);
+
+        $this->assertEquals($expected, $client);
     }
 }
 
