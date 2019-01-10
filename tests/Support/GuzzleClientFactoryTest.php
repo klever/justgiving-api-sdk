@@ -15,17 +15,19 @@ use Psr\Http\Message\ResponseInterface;
 
 class GuzzleClientFactoryTest extends TestCase
 {
-    /** @test */
-    public function it_builds_a_client_with_basic_auth()
+    /**
+     * @test
+     * @dataProvider clientAuthProvider
+     */
+    public function it_builds_a_client_with_auth($auth, $expectedAuthString)
     {
-        $auth = new BasicAuth('my user', 'pass123');
         $factory = new GuzzleClientFactory('root domain', 'api key', 2, $auth);
         $client = $factory->createClient();
 
         $expected = $this->buildExpectedClient([
             'headers' => [
                 'Accept'        => 'application/json',
-                'Authorization' => 'Basic ' . base64_encode('my user:pass123'),
+                'Authorization' => $expectedAuthString,
                 'x-api-key'     => 'api key',
             ],
         ]);
@@ -33,22 +35,12 @@ class GuzzleClientFactoryTest extends TestCase
         $this->assertEquals($expected, $client);
     }
 
-    /** @test */
-    public function it_builds_a_client_with_a_bearer_token()
+    public function clientAuthProvider()
     {
-        $auth = new BearerAuth('my_token');
-        $factory = new GuzzleClientFactory('root domain', 'api key', 2, $auth);
-        $client = $factory->createClient();
-
-        $expected = $this->buildExpectedClient([
-            'headers' => [
-                'Accept'        => 'application/json',
-                'Authorization' => 'Bearer my_token',
-                'x-api-key'     => 'api key',
-            ],
-        ]);
-
-        $this->assertEquals($expected, $client);
+        return [
+            [new BasicAuth('my user', 'pass123'), 'Basic ' . base64_encode('my user:pass123')],
+            [new BearerAuth('my_token'), 'Bearer my_token'],
+        ];
     }
 
     /**
