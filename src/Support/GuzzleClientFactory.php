@@ -79,7 +79,7 @@ class GuzzleClientFactory
      *
      * @return string
      */
-    public function baseUrl()
+    protected function baseUrl()
     {
         return $this->rootDomain . '/v' . $this->apiVersion . '/';
     }
