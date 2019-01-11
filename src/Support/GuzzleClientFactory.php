@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
+use Konsulting\JustGivingApiSdk\Support\Auth\NoAuth;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -46,7 +47,7 @@ class GuzzleClientFactory
         $this->apiKey = $apiKey;
         $this->apiVersion = $apiVersion;
         $this->userOptions = $options;
-        $this->auth = $auth;
+        $this->auth = $auth ?: new NoAuth;
     }
 
     /**

@@ -40,6 +40,7 @@ class GuzzleClientFactoryTest extends TestCase
         return [
             [new BasicAuth('my user', 'pass123'), 'Basic ' . base64_encode('my user:pass123')],
             [new BearerAuth('my_token'), 'Bearer my_token'],
+            [null, ''],
         ];
     }
 
