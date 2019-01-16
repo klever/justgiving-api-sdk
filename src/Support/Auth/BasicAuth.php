@@ -4,25 +4,45 @@ namespace Konsulting\JustGivingApiSdk\Support\Auth;
 
 class BasicAuth implements AuthValue
 {
-    /** @var string */
+    /**
+     * The app ID.
+     *
+     * @see https://developer.justgiving.com/apidocs/documentation#AppId
+     * @var string
+     */
+    protected $appId;
+
+    /**
+     * The username of the JustGiving user being authenticated.
+     *
+     * @var string
+     */
     protected $username;
 
-    /** @var string */
+    /**
+     * The password of the JustGiving user being authenticated.
+     *
+     * @var string
+     */
     protected $password;
 
-    public function __construct($username, $password)
+    public function __construct($appId, $username, $password)
     {
         $this->username = $username;
         $this->password = $password;
+        $this->appId = $appId;
     }
 
     /**
-     * Get the authentication string.
+     * Get the authentication headers.
      *
-     * @return string
+     * @return array
      */
-    public function getAuthString()
+    public function getHeaders()
     {
-        return 'Basic ' . base64_encode($this->username . ":" . $this->password);
+        return [
+            'Authorization' => 'Basic ' . base64_encode($this->username . ":" . $this->password),
+            'x-api-key'     => $this->appId,
+        ];
     }
 }

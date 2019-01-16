@@ -5,9 +5,9 @@ namespace Konsulting\JustGivingApiSdk\Support\Auth;
 interface AuthValue
 {
     /**
-     * Get the authentication string.
+     * Get the authentication headers.
      *
-     * @return string
+     * @return array
      */
-    public function getAuthString();
+    public function getHeaders();
 }

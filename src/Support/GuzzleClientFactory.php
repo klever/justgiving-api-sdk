@@ -5,8 +5,8 @@ namespace Konsulting\JustGivingApiSdk\Support;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use Illuminate\Support\Arr;
 use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
-use Konsulting\JustGivingApiSdk\Support\Auth\NoAuth;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -17,9 +17,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 class GuzzleClientFactory
 {
-    /** @var string */
-    protected $apiKey;
-
     /** @var string */
     protected $apiVersion;
 
@@ -35,19 +32,15 @@ class GuzzleClientFactory
     /**
      * GuzzleClientFactory constructor.
      *
-     * @param string    $rootDomain
-     * @param string    $apiKey
-     * @param string    $apiVersion
      * @param AuthValue $auth
      * @param array     $options
      */
-    public function __construct($rootDomain, $apiKey, $apiVersion, AuthValue $auth = null, $options = [])
+    public function __construct(AuthValue $auth, $options = [])
     {
-        $this->rootDomain = $rootDomain;
-        $this->apiKey = $apiKey;
-        $this->apiVersion = $apiVersion;
+        $this->rootDomain = Arr::pull($options, 'root_domain', 'https://api.justgiving.com');
+        $this->apiVersion = Arr::pull($options, 'api_version', 1);
         $this->userOptions = $options;
-        $this->auth = $auth ?: new NoAuth;
+        $this->auth = $auth;
     }
 
     /**
@@ -62,15 +55,13 @@ class GuzzleClientFactory
             return new Response($response);
         }));
 
+        $defaultHeaders = ['Accept' => 'application/json'];
+
         return new Client(array_merge([
             'http_errors' => false,
             'handler'     => $stack,
             'base_uri'    => $this->baseUrl(),
-            'headers'     => [
-                'Accept'        => 'application/json',
-                'Authorization' => $this->auth->getAuthString(),
-                'x-api-key'     => $this->apiKey,
-            ],
+            'headers'     => array_merge($defaultHeaders, $this->auth->getHeaders()),
         ], $this->userOptions));
     }
 
