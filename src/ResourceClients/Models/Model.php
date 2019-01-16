@@ -2,6 +2,8 @@
 
 namespace Konsulting\JustGivingApiSdk\ResourceClients\Models;
 
+use Konsulting\JustGivingApiSdk\Exceptions\InvalidPropertyException;
+
 class Model
 {
     /**
@@ -41,10 +43,15 @@ class Model
      *
      * @param iterable $data
      * @return $this
+     * @throws InvalidPropertyException
      */
     public function fill($data)
     {
         foreach ($data as $key => $value) {
+            if (! property_exists($this, $key)) {
+                throw new InvalidPropertyException($key . ' is not a property on ' . get_class($this));
+            }
+
             $this->$key = $value;
         }
 
