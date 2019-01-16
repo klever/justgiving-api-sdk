@@ -72,7 +72,7 @@ class GuzzleClientFactoryTest extends TestCase
     /**
      * Build a client so we can compare within tests.
      *
-     * @param array $headers
+     * @param array $options
      * @return Client
      */
     protected function buildExpectedClient($options)
