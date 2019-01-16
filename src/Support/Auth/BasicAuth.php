@@ -5,7 +5,7 @@ namespace Konsulting\JustGivingApiSdk\Support\Auth;
 class BasicAuth implements AuthValue
 {
     /**
-     * The app ID.
+     * The application ID (also known as API key).
      *
      * @see https://developer.justgiving.com/apidocs/documentation#AppId
      * @var string

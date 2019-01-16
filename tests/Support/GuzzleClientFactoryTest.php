@@ -59,9 +59,10 @@ class GuzzleClientFactoryTest extends TestCase
                 ],
             ],
             [
-                new BearerAuth('oauth_secret', 'my_token'),
+                new BearerAuth('my_key', 'oauth_secret', 'my_token'),
                 [
                     'Authorization'     => 'Bearer my_token',
+                    'x-api-key'         => 'my_key',
                     'x-application-key' => 'oauth_secret',
                 ],
             ],

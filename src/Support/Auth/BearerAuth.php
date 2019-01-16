@@ -5,6 +5,14 @@ namespace Konsulting\JustGivingApiSdk\Support\Auth;
 class BearerAuth implements AuthValue
 {
     /**
+     * The application ID (also known as API key).
+     *
+     * @see https://developer.justgiving.com/apidocs/documentation#AppId
+     * @var string
+     */
+    protected $appId;
+
+    /**
      * The bearer token obtained via oAuth.
      *
      * @see https://justgivingdeveloper.zendesk.com/hc/en-us/articles/207071499-Getting-a-bearer-token
@@ -20,8 +28,9 @@ class BearerAuth implements AuthValue
      */
     protected $oAuthSecret;
 
-    public function __construct($oAuthSecret, $token)
+    public function __construct($appId, $oAuthSecret, $token)
     {
+        $this->appId = $appId;
         $this->token = $token;
         $this->oAuthSecret = $oAuthSecret;
     }
@@ -35,6 +44,7 @@ class BearerAuth implements AuthValue
     {
         return [
             'Authorization'     => 'Bearer ' . $this->token,
+            'x-api-key'         => $this->appId,
             'x-application-key' => $this->oAuthSecret,
         ];
     }
