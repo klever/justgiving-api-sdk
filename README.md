@@ -41,9 +41,9 @@ This class implements the PSR-7 `ResponseInterface` and adds support for dealing
 
 There is a helper class `GuzzleClientFactory`, that will create a correctly configured [Guzzle](http://docs.guzzlephp.org/en/latest/) client ready to be passed in.
 The factory takes an authorisation object to set the auth headers on the HTTP client. The available classes are:
-    - `AppAuth($appId)` for unprotected endpoints
-    - `BasicAuth($appId, $username, $password)` for protected endpoints, where you have the username and password
-    - `BearerAuth($appId, $oAuthSecret, $token)` for protected endpoints, where you have a bearer token (from oAuth)
+ - `AppAuth($appId)` for unprotected endpoints
+ - `BasicAuth($appId, $username, $password)` for protected endpoints, where you have the username and password
+ - `BearerAuth($appId, $oAuthSecret, $token)` for protected endpoints, where you have a bearer token (from oAuth)
 
 The API base URL and version are set automatically, but may be overridden by passing an associative array with keys `root_domain` and `api_version` as the $options argument.
 Any options apart from this will be passed to Guzzle as custom options (e.g. custom headers or turning on debug mode).
@@ -51,7 +51,7 @@ Any options apart from this will be passed to Guzzle as custom options (e.g. cus
 For example:
 ```php
 $auth = new BasicAuth('abced123', 'user@example.com', 'pass123');
-$guzzleClient = (new GuzzleClientFactory($auth, ['api_version' => 2]);
+$guzzleClient = (new GuzzleClientFactory($auth, ['api_version' => 2])->buildClient();
 
 $client = new JustGivingClient($guzzleClient);
 ```
