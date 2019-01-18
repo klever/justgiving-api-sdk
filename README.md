@@ -7,7 +7,8 @@ A PHP SDK for communicating with the JustGiving API. Based on the [original SDK]
 
 ## Quick start
 ```php
-$guzzleClient = GuzzleClientFactory::build('https://api.justgiving.com/', 'abcde1f2g', 1, 'user@example.com', 'myPassword');
+$auth = new AppAuth('abcde123');
+$guzzleClient = (new GuzzleClientFactory($auth))->createClient();
 $client = new JustGivingClient($guzzleClient);
 ```
 
@@ -38,18 +39,22 @@ See the [JustGiving API documentation](https://api.justgiving.com/docs) for more
 The `JustGivingClient` should be instantiated with a suitable HTTP client passed in as a parameter. This client must adhere to the [PSR-7 interfaces](http://www.php-fig.org/psr/psr-7/), and should return from requests an instance of `JustGivingApiSdk\Support\Response`.
 This class implements the PSR-7 `ResponseInterface` and adds support for dealing with JSON responses, as well as making it easy to access response data.
 
-There is a helper class `GuzzleClientFactory`, that will create a correctly configured [Guzzle](http://docs.guzzlephp.org/en/latest/) client ready to be passed in. The usage of this is:
+There is a helper class `GuzzleClientFactory`, that will create a correctly configured [Guzzle](http://docs.guzzlephp.org/en/latest/) client ready to be passed in.
+The factory takes an authorisation object to set the auth headers on the HTTP client. The available classes are:
+ - `AppAuth($appId)` for unprotected endpoints
+ - `BasicAuth($appId, $username, $password)` for protected endpoints, where you have the username and password
+ - `BearerAuth($appId, $oAuthSecret, $token)` for protected endpoints, where you have a bearer token (from oAuth)
 
-```php
-$guzzleClient = GuzzleClientFactory::build($rootDomain, $apiKey, $apiVersion, $username = '', $password = '', $options = []);
-```
+The API base URL and version are set automatically, but may be overridden by passing an associative array with keys `root_domain` and `api_version` as the $options argument.
+Any options apart from this will be passed to Guzzle as custom options (e.g. custom headers or turning on debug mode).
+
 For example:
 ```php
-$guzzleClient = GuzzleClientFactory::build('https://api.justgiving.com/', 'abcde1f2g', 1, 'user@example.com', 'myPassword', ['debug' => true]);
+$auth = new BasicAuth('abced123', 'user@example.com', 'pass123');
+$guzzleClient = (new GuzzleClientFactory($auth, ['api_version' => 2])->buildClient();
 
 $client = new JustGivingClient($guzzleClient);
 ```
-The `options` array is optional, and is merged with the existing configuration to allow for customisation of the Guzzle client configuration (e.g. turning on debug mode as above).
 
 ### Querying the API
 The SDK defines a separate client class for each resource as define by the [API documentation](https://api.justgiving.com/docs), and each of those classes contain methods that correspond to API actions.

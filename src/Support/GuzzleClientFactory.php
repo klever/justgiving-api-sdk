@@ -5,6 +5,8 @@ namespace Konsulting\JustGivingApiSdk\Support;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use Illuminate\Support\Arr;
+use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -16,16 +18,7 @@ use Psr\Http\Message\ResponseInterface;
 class GuzzleClientFactory
 {
     /** @var string */
-    protected $apiKey;
-
-    /** @var string */
     protected $apiVersion;
-
-    /** @var string */
-    protected $username;
-
-    /** @var string */
-    protected $password;
 
     /** @var string */
     protected $rootDomain;
@@ -33,40 +26,21 @@ class GuzzleClientFactory
     /** @var array */
     protected $userOptions;
 
+    /** @var AuthValue */
+    protected $auth;
+
     /**
      * GuzzleClientFactory constructor.
      *
-     * @param string $rootDomain
-     * @param string $apiKey
-     * @param string $apiVersion
-     * @param string $username
-     * @param string $password
-     * @param array  $options
+     * @param AuthValue $auth
+     * @param array     $options
      */
-    public function __construct($rootDomain, $apiKey, $apiVersion, $username = '', $password = '', $options = [])
+    public function __construct(AuthValue $auth, $options = [])
     {
-        $this->rootDomain = $rootDomain;
-        $this->apiKey = $apiKey;
-        $this->apiVersion = $apiVersion;
-        $this->username = $username;
-        $this->password = $password;
+        $this->rootDomain = Arr::pull($options, 'root_domain', 'https://api.justgiving.com');
+        $this->apiVersion = Arr::pull($options, 'api_version', 1);
         $this->userOptions = $options;
-    }
-
-    /**
-     * Static method for easily creating a client. Requires the same parameters as the class constructor.
-     *
-     * @param string $rootDomain
-     * @param string $apiKey
-     * @param string $apiVersion
-     * @param string $username
-     * @param string $password
-     * @param array  $options
-     * @return Client
-     */
-    public static function build($rootDomain, $apiKey, $apiVersion, $username = '', $password = '', $options = [])
-    {
-        return (new static($rootDomain, $apiKey, $apiVersion, $username, $password, $options))->createClient();
+        $this->auth = $auth;
     }
 
     /**
@@ -81,15 +55,13 @@ class GuzzleClientFactory
             return new Response($response);
         }));
 
+        $defaultHeaders = ['Accept' => 'application/json'];
+
         return new Client(array_merge([
             'http_errors' => false,
             'handler'     => $stack,
             'base_uri'    => $this->baseUrl(),
-            'headers'     => [
-                'Accept'        => 'application/json',
-                'Authorize'     => 'Basic ' . $this->buildAuthenticationValue(),
-                'Authorization' => 'Basic ' . $this->buildAuthenticationValue(),
-            ]
+            'headers'     => array_merge($defaultHeaders, $this->auth->getHeaders()),
         ], $this->userOptions));
     }
 
@@ -98,20 +70,8 @@ class GuzzleClientFactory
      *
      * @return string
      */
-    public function baseUrl()
+    protected function baseUrl()
     {
-        return $this->rootDomain . $this->apiKey . '/v' . $this->apiVersion . '/';
-    }
-
-    /**
-     * Build the base 64 encoded string that contains authentication credentials.
-     *
-     * @return string
-     */
-    protected function buildAuthenticationValue()
-    {
-        return empty($this->username)
-            ? ''
-            : base64_encode($this->username . ":" . $this->password);
+        return $this->rootDomain . '/v' . $this->apiVersion . '/';
     }
 }
