@@ -5,6 +5,12 @@
 
 A PHP SDK for communicating with the JustGiving API. Based on the [original SDK](https://github.com/JustGiving/JustGiving.Api.Sdk) by [JustGiving _et al_](https://github.com/JustGiving/JustGiving.Api.Sdk/graphs/contributors).
 
+## Installation
+Install via composer:
+```
+composer require konsulting/justgiving-api-sdk
+```
+
 ## Quick start
 ```php
 $auth = new AppAuth('abcde123');
