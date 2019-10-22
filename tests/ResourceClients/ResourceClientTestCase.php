@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\Address;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
+use Konsulting\JustGivingApiSdk\Support\Auth\BasicAuth;
 use Konsulting\JustGivingApiSdk\Support\GuzzleClientFactory;
 use Konsulting\JustGivingApiSdk\Support\Response;
 use Konsulting\JustGivingApiSdk\Tests\TestCase;
@@ -32,13 +33,9 @@ class ResourceClientTestCase extends TestCase
 
         $this->context = new TestContext();
 
-        $this->guzzleClient = GuzzleClientFactory::build(
-            $this->context->apiUrl,
-            $this->context->apiKey,
-            $this->context->apiVersion,
-            $this->context->testUsername,
-            $this->context->testValidPassword
-        );
+        $auth = new BasicAuth($this->context->apiKey, $this->context->testUsername, $this->context->testValidPassword);
+
+        $this->guzzleClient = (new GuzzleClientFactory($auth))->createClient();
 
         $this->client = new JustGivingClient($this->guzzleClient);
         $this->wait(3);
@@ -70,7 +67,7 @@ class ResourceClientTestCase extends TestCase
                 'postcodeOrZipcode' => "M130EJ",
             ]),
 
-            'acceptTermsAndConditions' => true
+            'acceptTermsAndConditions' => true,
         ], $options));
 
         return $this->client->Account->create($request);
