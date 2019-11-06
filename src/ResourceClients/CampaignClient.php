@@ -18,6 +18,13 @@ class CampaignClient extends BaseClient
     {
         return $this->get("campaigns/" . $charityName . "/" . $campaignName);
     }
+    
+    // Add support for v2 of the API to allow retrieval of newer campaigns
+    public function retrieveBeta($campaignGUID)
+    {
+        return $this->get("campaign/". $campaignGUID);
+    }
+
 
     /**
      * Test context account is not authorised to create a new campaign.
