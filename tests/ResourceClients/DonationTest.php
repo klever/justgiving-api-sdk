@@ -9,7 +9,7 @@ class DonationTest extends ResourceClientTestCase
     {
         $response = $this->client->donation->getById(21303723);
 
-        $this->assertNotNull($response->body->amount);
+        $this->assertNotNull($response->body->amount, 'Amount not present in body.');
         $this->assertEquals($response->body->currencyCode, "GBP");
         $this->assertEquals($response->body->status, "Accepted");
     }

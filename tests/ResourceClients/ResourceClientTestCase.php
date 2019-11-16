@@ -73,4 +73,8 @@ class ResourceClientTestCase extends TestCase
         return $this->client->Account->create($request);
     }
 
+    protected function assertSuccessfulResponse(Response $response)
+    {
+        $this->assertTrue($response->wasSuccessful(), implode(PHP_EOL, $response->errors));
+    }
 }

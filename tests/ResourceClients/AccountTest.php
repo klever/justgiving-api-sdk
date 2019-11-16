@@ -33,7 +33,7 @@ class AccountTest extends ResourceClientTestCase
 
         $response = $this->client->account->create($request);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
     }
 
     /** @test */
@@ -77,7 +77,7 @@ class AccountTest extends ResourceClientTestCase
         ]);
         $response = $this->client->account->validate($request);
 
-        $this->assertTrue($response->consumerId > 0);
+        $this->assertGreaterThan(0, $response->consumerId, 'The consumer ID is not greater than 0.');
         $this->assertTrue($response->body->isValid);
     }
 
@@ -99,7 +99,7 @@ class AccountTest extends ResourceClientTestCase
     {
         $response = $this->client->account->retrieve();
 
-        $this->assertNotNull($response->email);
+        $this->assertNotNull($response->email, 'Email not returned in response body.');
         $this->assertEquals($this->context->testUsername, $response->body->email);
     }
 
@@ -134,7 +134,7 @@ class AccountTest extends ResourceClientTestCase
         ]);
         $response = $this->client->account->changePassword($request);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
     }
 
     /** @test */
@@ -178,6 +178,6 @@ class AccountTest extends ResourceClientTestCase
     {
         $response = $this->client->account->requestPasswordReminder($this->context->testUsername);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
     }
 }

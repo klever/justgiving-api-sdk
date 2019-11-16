@@ -49,7 +49,7 @@ class SmsTest extends ResourceClientTestCase
 
         $response = $this->client->sms->updatePageCode($pageShortName, $payload);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
     }
 
     /** @test */

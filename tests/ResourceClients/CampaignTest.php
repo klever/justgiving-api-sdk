@@ -13,7 +13,7 @@ class CampaignTest extends ResourceClientTestCase
 
         $response = $this->client->Campaign->retrieve($charityName, $campaignName);
 
-        $this->assertTrue($response->existenceCheck());
+        $this->assertTrue($response->existenceCheck(), implode("\n", $response->errors));
         $this->assertEquals($expectedCampaignPageName, $response->campaignPageName);
     }
 
