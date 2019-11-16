@@ -169,6 +169,8 @@ class AccountTest extends ResourceClientTestCase
             'donorLocalAmount',
             'donorLocalCurrencyCode',
         ];
+
+        $this->assertSuccessfulResponse($response);
         $this->assertObjectHasAttributes($attributes, $response->body->donations[0]);
         $this->assertTrue(is_array($response->body->donations));
     }
