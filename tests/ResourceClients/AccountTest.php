@@ -39,7 +39,7 @@ class AccountTest extends ResourceClientTestCase
     /** @test */
     public function it_lists_all_fundraising_pages_when_supplied_with_a_valid_account()
     {
-        $response = $this->client->account->listAllPages("apiunittest@justgiving.com");
+        $response = $this->client->account->listAllPages("support@justgiving.com");
 
         $attributes = ['pageId', 'pageTitle', 'pageStatus', 'pageShortName', 'raisedAmount', 'designId', 'companyAppealId', 'targetAmount', 'offlineDonations', 'totalRaisedOnline', 'giftAidPlusSupplement', 'pageImages'];
         $this->assertObjectHasAttributes($attributes, $response->getAttributes()[0]);
@@ -49,7 +49,7 @@ class AccountTest extends ResourceClientTestCase
     public function it_checks_for_a_registered_email()
     {
         $nonRegisteredEmailResponse = $this->client->account->isEmailRegistered(uniqid() . "@" . uniqid() . "-justgiving.com");
-        $alreadyRegisteredEmailResponse = $this->client->account->isEmailRegistered($this->context->testUsername);
+        $alreadyRegisteredEmailResponse = $this->client->account->isEmailRegistered('support@justgiving.com');
 
         $this->assertFalse($nonRegisteredEmailResponse->existenceCheck());
         $this->assertTrue($alreadyRegisteredEmailResponse->existenceCheck());
