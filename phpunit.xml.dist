@@ -25,4 +25,7 @@
         </whitelist>
     </filter>
 
+    <php>
+        <env name="API_KEY" value=""/>
+    </php>
 </phpunit>

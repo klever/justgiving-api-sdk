@@ -28,7 +28,7 @@ class AccountTest extends ResourceClientTestCase
                 'countyOrState'     => "testCountyOrState" . $uniqueId,
                 'townOrCity'        => "testTownOrCity" . $uniqueId,
                 'postcodeOrZipcode' => "M130EJ",
-            ])
+            ]),
         ]);
 
         $response = $this->client->account->create($request);
@@ -41,7 +41,20 @@ class AccountTest extends ResourceClientTestCase
     {
         $response = $this->client->account->listAllPages("support@justgiving.com");
 
-        $attributes = ['pageId', 'pageTitle', 'pageStatus', 'pageShortName', 'raisedAmount', 'designId', 'companyAppealId', 'targetAmount', 'offlineDonations', 'totalRaisedOnline', 'giftAidPlusSupplement', 'pageImages'];
+        $attributes = [
+            'pageId',
+            'pageTitle',
+            'pageStatus',
+            'pageShortName',
+            'raisedAmount',
+            'designId',
+            'companyAppealId',
+            'targetAmount',
+            'offlineDonations',
+            'totalRaisedOnline',
+            'giftAidPlusSupplement',
+            'pageImages',
+        ];
         $this->assertObjectHasAttributes($attributes, $response->getAttributes()[0]);
     }
 
@@ -129,7 +142,15 @@ class AccountTest extends ResourceClientTestCase
     {
         $response = $this->client->account->getDonationsByCharity('jgdemo');
 
-        $attributes = ['amount', 'currencyCode', 'donationDate', 'donationRef', 'donorDisplayName', 'donorLocalAmount', 'donorLocalCurrencyCode'];
+        $attributes = [
+            'amount',
+            'currencyCode',
+            'donationDate',
+            'donationRef',
+            'donorDisplayName',
+            'donorLocalAmount',
+            'donorLocalCurrencyCode',
+        ];
         $this->assertObjectHasAttributes($attributes, $response->body->donations[0]);
         $this->assertTrue(is_array($response->body->donations));
     }
@@ -139,7 +160,15 @@ class AccountTest extends ResourceClientTestCase
     {
         $response = $this->client->account->getDonations();
 
-        $attributes = ['amount', 'currencyCode', 'donationDate', 'donationRef', 'donorDisplayName', 'donorLocalAmount', 'donorLocalCurrencyCode'];
+        $attributes = [
+            'amount',
+            'currencyCode',
+            'donationDate',
+            'donationRef',
+            'donorDisplayName',
+            'donorLocalAmount',
+            'donorLocalCurrencyCode',
+        ];
         $this->assertObjectHasAttributes($attributes, $response->body->donations[0]);
         $this->assertTrue(is_array($response->body->donations));
     }
