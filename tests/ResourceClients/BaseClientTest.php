@@ -10,7 +10,7 @@ use Konsulting\JustGivingApiSdk\ResourceClients\BaseClient;
 use Mockery;
 use ReflectionClass;
 
-class TestCaseClientTest extends ResourceClientTestCase
+class BaseClientTest extends ResourceClientTestCase
 {
     protected static $childApi;
 
