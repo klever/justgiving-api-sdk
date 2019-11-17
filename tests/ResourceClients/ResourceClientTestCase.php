@@ -84,7 +84,6 @@ class ResourceClientTestCase extends TestCase
         $this->guzzleClient = (new GuzzleClientFactory($auth))->createClient();
 
         $this->client = new JustGivingClient($this->guzzleClient);
-        $this->wait(1);
     }
 
     /**

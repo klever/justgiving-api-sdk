@@ -30,13 +30,14 @@ class CampaignTest extends ResourceClientTestCase
     /** @test */
     public function it_retrieves_campaign_pages_when_given_a_charity_short_name_and_short_url()
     {
-        $charityShortName = "jgdemo";
-        $campaignShortUrl = "testsandboxcampaign";
+        $charityShortName = "porthospcf";
+        $campaignShortUrl = "supportporthospcharity";
 
         $response = $this->client->Campaign->pages($charityShortName, $campaignShortUrl);
 
+        $this->assertSuccessfulResponse($response);
         $this->assertTrue(is_array($response->fundraisingPages));
-        $this->assertEquals($response->campaignShortUrl, $campaignShortUrl);
-        $this->assertEquals($response->charityShortName, $charityShortName);
+        $this->assertEquals($campaignShortUrl, $response->campaignShortUrl);
+        $this->assertEquals($charityShortName, $response->charityShortName);
     }
 }
