@@ -7,14 +7,14 @@ class CampaignTest extends ResourceClientTestCase
     /** @test */
     public function it_retrieves_campaign_details_given_the_charity_and_campaign_names()
     {
-        $charityName = "jgdemo";
-        $campaignName = "testsandboxcampaign";
-        $expectedCampaignPageName = "The name of my campaign";
+        $charityName = "porthospcf";
+        $campaignName = "supportporthospcharity";
+        $expectedCampaignPageName = "Portsmouth Hospitals Charity";
 
         $response = $this->client->Campaign->retrieve($charityName, $campaignName);
 
         $this->assertTrue($response->existenceCheck(), implode("\n", $response->errors));
-        $this->assertEquals($expectedCampaignPageName, $response->campaignPageName);
+        $this->assertEquals($response->campaignPageName, $expectedCampaignPageName);
     }
 
     /** @test */
