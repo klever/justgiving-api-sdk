@@ -72,7 +72,7 @@ class AccountTest extends ResourceClientTestCase
     public function it_validates_that_supplied_account_credentials_are_correct()
     {
         $request = new ValidateAccountRequest([
-            'email'    => $this->context->testUsername,
+            'email'    => static::$testEmail,
             'password' => $this->context->testValidPassword,
         ]);
         $response = $this->client->account->validate($request);
