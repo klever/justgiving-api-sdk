@@ -38,7 +38,6 @@ class FundraisingTest extends ResourceClientTestCase
             'charityId'       => 2050,
             'targetAmount'    => 20,
             'eventDate'       => "/Date(1235764800000)/",
-            'justGivingOptIn' => true,
             'charityOptIn'    => true,
             'charityFunded'   => false,
         ], $options));
@@ -53,7 +52,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertEquals(73347, $response->body->activityId);
         $this->assertEquals("rasha25", $response->body->eventName);
         $this->assertEquals("rasha25", $response->body->pageShortName);
-        $this->assertEquals("Active", $response->body->status);
+        $this->assertEquals("Completed", $response->body->status);
         $this->assertEquals("Itgtm Wqepuy", $response->body->owner);
     }
 

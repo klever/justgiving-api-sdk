@@ -100,7 +100,7 @@ class AccountTest extends ResourceClientTestCase
         $response = $this->client->account->retrieve();
 
         $this->assertNotNull($response->email, 'Email not returned in response body.');
-        $this->assertEquals($this->context->testUsername, $response->body->email);
+        $this->assertEquals(static::$testEmail, $response->body->email);
     }
 
     //test change password

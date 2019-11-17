@@ -9,7 +9,7 @@ class TestContext
     public $apiUrl = "https://api.staging.justgiving.com/";
     public $apiKey;
     public $apiVersion = 1;
-    public $testUsername = "apiunittest@justgiving.com";
+    public $testUsername = "support@justgiving.com";
     public $testValidPassword = "password";
     public $testInvalidPassword = "badPassword";
 

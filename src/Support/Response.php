@@ -153,7 +153,7 @@ class Response implements ResponseInterface
     public function wasSuccessful()
     {
         if (isset($this->body->success)) {
-            return $this->body->success;
+            return true;
         }
 
         return $this->getStatusCode() >= 200 && $this->getStatusCode() < 300;
