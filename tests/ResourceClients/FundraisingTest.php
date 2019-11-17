@@ -116,8 +116,9 @@ class FundraisingTest extends ResourceClientTestCase
     /** @test */
     public function it_gets_page_updates()
     {
-        $response = $this->client->fundraising->getUpdates('api-test-54787f3435f75');
+        $response = $this->client->fundraising->getUpdates('mike-page5');
 
+        var_dump($response->body);
         $this->assertTrue(is_array($response->body));
         $this->assertObjectHasAttributes(['CreatedDate', 'Id', 'Message', 'Video'], $response->body[0]);
     }
@@ -125,7 +126,7 @@ class FundraisingTest extends ResourceClientTestCase
     /** @test */
     public function it_gets_page_updates_by_id()
     {
-        $response = $this->client->fundraising->getUpdatesById('api-test-54787f3435f75', 100125);
+        $response = $this->client->fundraising->getUpdatesById('mike-page5', 913425);
 
         $this->assertSuccessfulResponse($response);
         $this->assertObjectHasAttributes(['CreatedDate', 'Id', 'Message', 'Video'], $response->body);
