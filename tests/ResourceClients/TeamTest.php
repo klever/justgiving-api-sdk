@@ -88,7 +88,6 @@ class TeamTest extends ResourceClientTestCase
             'charityId'       => 2050,
             'targetAmount'    => 20,
             'eventDate'       => "/Date(1235764800000)/",
-            'justGivingOptIn' => true,
             'charityOptIn'    => true,
             'charityFunded'   => false,
         ]));
