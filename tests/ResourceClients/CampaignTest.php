@@ -20,10 +20,11 @@ class CampaignTest extends ResourceClientTestCase
     /** @test */
     public function it_retrieves_a_list_of_campaigns_given_a_charity_id()
     {
-        $expectedCampaignPageName = "The name of my campaign";
+        $expectedCampaignPageName = "test";
 
-        $response = $this->client->Campaign->getAllByCharityId("2050");
+        $response = $this->client->Campaign->getAllByCharityId('249335');
 
+        $this->assertSuccessfulResponse($response);
         $this->assertEquals($expectedCampaignPageName, $response->body->campaignsDetails[0]->campaignPageName);
     }
 
