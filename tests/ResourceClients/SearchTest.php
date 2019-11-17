@@ -32,9 +32,23 @@ class SearchTest extends ResourceClientTestCase
         $response = $this->client->search->event('event');
 
         $this->assertSuccessfulResponse($response);
-        $this->assertObjectHasAttributes(['next', 'numberOfHits', 'prev', 'query', 'totalPages', 'events'], $response->body);
+        $this->assertObjectHasAttributes(['next', 'numberOfHits', 'prev', 'query', 'totalPages', 'events'],
+            $response->body);
         $this->assertObjectHasAttributes(
-            ['amountGiftAid', 'amountRaised', 'categoryId', 'completionDate', 'description', 'expiryDate', 'id', 'isManaged', 'location', 'name', 'numberOfLivePages', 'startDate'],
+            [
+                'amountGiftAid',
+                'amountRaised',
+                'categoryId',
+                'completionDate',
+                'description',
+                'expiryDate',
+                'id',
+                'isManaged',
+                'location',
+                'name',
+                'numberOfLivePages',
+                'startDate',
+            ],
             $response->body->events[0]
         );
     }
@@ -45,7 +59,15 @@ class SearchTest extends ResourceClientTestCase
         $response = $this->client->search->fundraiser('fundraiser', 2050);
 
         $this->assertSuccessfulResponse($response);
-        $this->assertObjectHasAttributes(['PageUrl', 'Photo', 'ImageAbsoluteUrl', 'PageName', 'PageOwner', 'TeamMembers', 'EventName'], $response->body->SearchResults[0]);
+        $this->assertObjectHasAttributes([
+            'PageUrl',
+            'Photo',
+            'ImageAbsoluteUrl',
+            'PageName',
+            'PageOwner',
+            'TeamMembers',
+            'EventName',
+        ], $response->body->SearchResults[0]);
     }
 
     /** @test */
@@ -59,21 +81,41 @@ class SearchTest extends ResourceClientTestCase
         $response = $this->client->search->inMemory($searchRequest);
 
         $this->assertSuccessfulResponse($response);
-        $this->assertObjectHasAttributes(['next', 'numberOfHits', 'prev', 'query', 'totalPages', 'results'], $response->body);
-        $this->assertObjectHasAttributes(['createdBy', 'dateOfBirth', 'dateOfDeath', 'firstName', 'gender', 'id', 'lastName', 'town'], $response->body->results[0]);
+        $this->assertObjectHasAttributes(['next', 'numberOfHits', 'prev', 'query', 'totalPages', 'results'],
+            $response->body);
+        $this->assertObjectHasAttributes([
+            'createdBy',
+            'dateOfBirth',
+            'dateOfDeath',
+            'firstName',
+            'gender',
+            'id',
+            'lastName',
+            'town',
+        ], $response->body->results[0]);
     }
 
     /** @test */
     public function it_searches_for_a_team()
     {
         $searchRequest = new SearchTeamRequest([
-            'teamShortName' => 'team'
+            'teamShortName' => 'team',
         ]);
 
         $response = $this->client->search->team($searchRequest);
 
-        $this->assertObjectHasAttributes(['next', 'numberOfHits', 'prev', 'query', 'totalPages', 'results'], $response->body);
-        $this->assertObjectHasAttributes(['id', 'name', 'story', 'targetType', 'teamMembers', 'teamShortName', 'teamTarget', 'teamType'], $response->body->results[0]);
         $this->assertSuccessfulResponse($response);
+        $this->assertObjectHasAttributes(['next', 'numberOfHits', 'prev', 'query', 'totalPages', 'results'],
+            $response->body);
+        $this->assertObjectHasAttributes([
+            'id',
+            'name',
+            'story',
+            'targetType',
+            'teamMembers',
+            'teamShortName',
+            'teamTarget',
+            'teamType',
+        ], $response->body->results[0]);
     }
 }
