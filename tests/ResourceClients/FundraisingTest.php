@@ -48,12 +48,12 @@ class FundraisingTest extends ResourceClientTestCase
     {
         $response = $this->client->fundraising->getByShortName("rasha25");
 
-        $this->assertEquals(640916, $response->body->pageId);
-        $this->assertEquals(73347, $response->body->activityId);
-        $this->assertEquals("rasha25", $response->body->eventName);
-        $this->assertEquals("rasha25", $response->body->pageShortName);
-        $this->assertEquals("Completed", $response->body->status);
-        $this->assertEquals("Itgtm Wqepuy", $response->body->owner);
+        $this->assertSame('640916', $response->body->pageId);
+        $this->assertSame('73347', $response->body->activityId);
+        $this->assertSame("rasha25", $response->body->eventName);
+        $this->assertSame("rasha25", $response->body->pageShortName);
+        $this->assertSame("Completed", $response->body->status);
+        $this->assertSame("Rasha Hassan", $response->body->owner);
     }
 
     /** @test */
