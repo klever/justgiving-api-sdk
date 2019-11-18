@@ -7,21 +7,19 @@ use Konsulting\JustGivingApiSdk\ResourceClients\Models\SearchTeamRequest;
 
 class SearchTest extends ResourceClientTestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->wait(5);
-    }
-
     /** @test */
     public function it_finds_a_charity_from_a_search_string()
     {
         $response = $this->client->Search->charity('the demo charity');
 
+        $this->assertSuccessfulResponse($response);
+        $this->assertGreaterThan(0, count($response->body->charitySearchResults), 'No search results returned.');
+        $attributes = ['charityId', 'name', 'charityDisplayName', 'registrationNumber', 'description'];
+        $this->assertObjectHasAttributes($attributes, $response->body->charitySearchResults[0]);
+
         foreach ($response->body->charitySearchResults as $charity) {
-            if ($charity->charityId == 2050) {
-                $this->assertEquals('the demo charity', strtolower($charity->name));
+            if ($charity->charityId === '189701') {
+                $this->assertSame('citizens uk', strtolower($charity->name));
             }
         }
     }
