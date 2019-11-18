@@ -12,9 +12,23 @@ class AppAuth implements AuthValue
      */
     protected $appId;
 
-    public function __construct($appId)
+    /**
+     * The secret key associated with the App ID. Required if JustGiving have set up a secret key for the app.
+     *
+     * @var string
+     */
+    protected $secretKey;
+
+    /**
+     * AppAuth constructor.
+     *
+     * @param string $appId
+     * @param string $secretKey
+     */
+    public function __construct($appId, $secretKey = null)
     {
         $this->appId = $appId;
+        $this->secretKey = $secretKey;
     }
 
     /**
@@ -24,6 +38,12 @@ class AppAuth implements AuthValue
      */
     public function getHeaders()
     {
-        return ['x-api-key' => $this->appId];
+        $headers = ['x-api-key' => $this->appId];
+
+        if ($this->secretKey !== null) {
+            $headers['x-application-key'] = $this->secretKey;
+        }
+
+        return $headers;
     }
 }

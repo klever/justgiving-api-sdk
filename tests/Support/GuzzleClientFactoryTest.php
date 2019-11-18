@@ -67,6 +67,13 @@ class GuzzleClientFactoryTest extends TestCase
                 ],
             ],
             [new AppAuth('my_key'), ['x-api-key' => 'my_key']],
+            [
+                new AppAuth('my_key', 'secret_key'),
+                [
+                    'x-api-key'         => 'my_key',
+                    'x-application-key' => 'secret_key',
+                ],
+            ],
         ];
     }
 
