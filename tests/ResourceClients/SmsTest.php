@@ -26,6 +26,7 @@ class SmsTest extends ResourceClientTestCase
     /** @test */
     public function it_updates_the_sms_code_for_a_page()
     {
+        $this->markTestSkipped('No documentation found for this endpoint.');
         $pageShortName = "api-test-" . uniqid();
         $pageResponse = $this->client->fundraising->register(new FundraisingPage([
             'reference'     => "12345",
