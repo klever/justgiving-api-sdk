@@ -3,7 +3,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/klever/justgiving-api-sdk/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/klever/justgiving-api-sdk/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/klever/justgiving-api-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/klever/justgiving-api-sdk/?branch=master)
 
-A PHP SDK for communicating with the JustGiving API. Based on the [original SDK](https://github.com/JustGiving/JustGiving.Api.Sdk) by [JustGiving _et al_](https://github.com/JustGiving/JustGiving.Api.Sdk/graphs/contributors).
+A PHP SDK for communicating with the JustGiving API. Based on the [original SDK](https://github.com/JustGiving/JustGiving.Api.Sdk) by [JustGiving and contributors](https://github.com/JustGiving/JustGiving.Api.Sdk/graphs/contributors).
 
 ## Installation
 Install via composer:
@@ -137,7 +137,7 @@ $result->pageShortName;         // 'jgdemo'
 ```
 
 #### Errors
-The API provides two formats of error message(s): the first is a general error message relating to the whole request (e.g. `That email address is already in use`), 
+The API provides two formats of error message(s): the first is a general error message relating to the whole request (e.g. `That email address is already in use`),
 and the second is a list of error messages that relate to problems with specific parts of the request or data, with an identifier and description (e.g. ID: `FirstNameNotSpecified`, description `The FirstName field is required.`).
 
 In the API documentation, the former is referred to as being the `errorMessage` property, and the latter refers to errors contained in `Error` objects (with properties `Error.id` and `Error.desc`).
