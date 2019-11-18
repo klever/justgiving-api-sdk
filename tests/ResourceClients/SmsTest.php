@@ -8,13 +8,6 @@ use Konsulting\JustGivingApiSdk\ResourceClients\Models\UpdatePageSmsCodeRequest;
 
 class SmsTest extends ResourceClientTestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->wait(5);
-    }
-
     /** @test */
     public function it_retrieves_the_sms_code_for_a_page()
     {

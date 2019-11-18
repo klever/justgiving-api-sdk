@@ -17,8 +17,6 @@ class TeamTest extends ResourceClientTestCase
     {
         parent::setUp();
 
-        $this->wait(5);
-
         static::$teamShortName = static::$teamShortName ?: 'team' . uniqid();
         static::$team = static::$team ?: $this->createTeam(static::$teamShortName);
     }
