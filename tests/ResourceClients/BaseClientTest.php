@@ -14,7 +14,22 @@ class BaseClientTest extends ResourceClientTestCase
 {
     protected static $childApi;
 
-    protected $childClients = ['Account', 'Campaign', 'Charity', 'Countries', 'Currency', 'Donation', 'Event', 'Fundraising', 'Leaderboard', 'OneSearch', 'Project', 'Search', 'Sms', 'Team'];
+    protected $childClients = [
+        'Account',
+        'Campaign',
+        'Charity',
+        'Countries',
+        'Currency',
+        'Donation',
+        'Event',
+        'Fundraising',
+        'Leaderboard',
+        'OneSearch',
+        'Project',
+        'Search',
+        'Sms',
+        'Team',
+    ];
 
     public function setUp()
     {
@@ -39,12 +54,8 @@ class BaseClientTest extends ResourceClientTestCase
             $aliases = $this->exposeProperty($object, 'aliases');
 
             foreach ($aliases as $method => $alias) {
-                // Check that the aliased methods actually exist, dump out if not.
-                if ( ! method_exists($object, $method)) {
-                    var_dump(get_class($object), $method);
-                }
-
-                $this->assertTrue(method_exists($object, $method));
+                $this->assertTrue(method_exists($object, $method),
+                    "The method `{$method}` does not exist on " . get_class($object));
             }
         }
     }
@@ -110,7 +121,7 @@ class BaseClientTest extends ResourceClientTestCase
     public function the_content_type_can_be_manually_set_when_posting_a_file()
     {
         $handler = HandlerStack::create(new MockHandler([
-            new Response(200)
+            new Response(200),
         ]));
         $httpClient = new MockHttpClient(['handler' => $handler]);
         $baseClient = new BaseClientChild($httpClient);

@@ -118,7 +118,6 @@ class FundraisingTest extends ResourceClientTestCase
     {
         $response = $this->client->fundraising->getUpdates('mike-page5');
 
-        var_dump($response->body);
         $this->assertTrue(is_array($response->body));
         $this->assertObjectHasAttributes(['CreatedDate', 'Id', 'Message', 'Video'], $response->body[0]);
     }
