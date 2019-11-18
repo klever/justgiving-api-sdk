@@ -8,7 +8,7 @@ use Konsulting\JustGivingApiSdk\ResourceClients\Models\Model;
 use Konsulting\JustGivingApiSdk\Support\Response;
 use Psr\Http\Message\ResponseInterface;
 
-class BaseClient
+abstract class BaseClient
 {
     /**
      * Method name aliases.
