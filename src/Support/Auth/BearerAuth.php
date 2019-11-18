@@ -21,18 +21,18 @@ class BearerAuth implements AuthValue
     protected $token;
 
     /**
-     * The oAuth secret provided by JustGiving (this currently has to be requested manually).
+     * The secret key provided by JustGiving (this currently has to be requested manually).
      *
      * @see https://justgivingdeveloper.zendesk.com/hc/en-us/articles/115002238925-How-do-I-get-a-secret-key-
      * @var string
      */
-    protected $oAuthSecret;
+    protected $secretKey;
 
-    public function __construct($appId, $oAuthSecret, $token)
+    public function __construct($appId, $secretKey, $token)
     {
         $this->appId = $appId;
         $this->token = $token;
-        $this->oAuthSecret = $oAuthSecret;
+        $this->secretKey = $secretKey;
     }
 
     /**
@@ -45,7 +45,7 @@ class BearerAuth implements AuthValue
         return [
             'Authorization'     => 'Bearer ' . $this->token,
             'x-api-key'         => $this->appId,
-            'x-application-key' => $this->oAuthSecret,
+            'x-application-key' => $this->secretKey,
         ];
     }
 }
