@@ -5,7 +5,7 @@ build:
     tests:
         override:
             -
-                command: 'vendor/bin/phpunit --coverage-clover=coverage-file'
+                command: 'vendor/bin/phpunit --coverage-clover=coverage-file --stop-on-failure'
                 coverage:
                     file: 'coverage-file'
                     format: 'clover'
