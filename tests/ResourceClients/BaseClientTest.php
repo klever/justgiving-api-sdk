@@ -7,7 +7,6 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Konsulting\JustGivingApiSdk\ResourceClients\BaseClient;
-use Mockery;
 use ReflectionClass;
 
 class BaseClientTest extends ResourceClientTestCase
@@ -31,15 +30,10 @@ class BaseClientTest extends ResourceClientTestCase
         'Team',
     ];
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         static::$childApi = static::$childApi ?: new BaseClientChild($this->guzzleClient);
-    }
-
-    public function tearDown()
-    {
-        Mockery::close();
     }
 
     /** @test */

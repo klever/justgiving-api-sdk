@@ -12,7 +12,7 @@ class FundraisingTest extends ResourceClientTestCase
 {
     protected static $pageShortName;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

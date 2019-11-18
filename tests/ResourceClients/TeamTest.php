@@ -13,7 +13,7 @@ class TeamTest extends ResourceClientTestCase
     protected static $team;
     protected static $teamShortName;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

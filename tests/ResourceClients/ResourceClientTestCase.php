@@ -35,7 +35,7 @@ class ResourceClientTestCase extends TestCase
      */
     protected $context;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
@@ -73,7 +73,7 @@ class ResourceClientTestCase extends TestCase
     }
 
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -18,7 +18,7 @@ class ModelTest extends TestCase
      */
     protected $teamData;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->teamData = [
             'teamShortName' => 'tst',

@@ -2,10 +2,12 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests;
 
-use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-class TestCase extends PHPUnitTestCase
+class TestCase extends \PHPUnit\Framework\TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     /**
      * Tests if two objects have the same attributes.
      *
