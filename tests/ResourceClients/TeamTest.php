@@ -17,8 +17,6 @@ class TeamTest extends ResourceClientTestCase
     {
         parent::setUp();
 
-        $this->wait(5);
-
         static::$teamShortName = static::$teamShortName ?: 'team' . uniqid();
         static::$team = static::$team ?: $this->createTeam(static::$teamShortName);
     }
@@ -55,7 +53,7 @@ class TeamTest extends ResourceClientTestCase
 
         $response = $this->client->team->update(static::$teamShortName, $updatedTeam);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
         $this->assertEquals('New Team Name', $this->client->team->getByShortName(static::$teamShortName)->body->name);
     }
 
@@ -71,7 +69,7 @@ class TeamTest extends ResourceClientTestCase
             new JoinTeamRequest(compact('pageShortName'))
         );
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
         $this->assertContains('has been sent to the team owner', $response->getReasonPhrase());
     }
 
@@ -88,7 +86,6 @@ class TeamTest extends ResourceClientTestCase
             'charityId'       => 2050,
             'targetAmount'    => 20,
             'eventDate'       => "/Date(1235764800000)/",
-            'justGivingOptIn' => true,
             'charityOptIn'    => true,
             'charityFunded'   => false,
         ]));

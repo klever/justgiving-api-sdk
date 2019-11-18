@@ -38,7 +38,6 @@ class FundraisingTest extends ResourceClientTestCase
             'charityId'       => 2050,
             'targetAmount'    => 20,
             'eventDate'       => "/Date(1235764800000)/",
-            'justGivingOptIn' => true,
             'charityOptIn'    => true,
             'charityFunded'   => false,
         ], $options));
@@ -49,12 +48,12 @@ class FundraisingTest extends ResourceClientTestCase
     {
         $response = $this->client->fundraising->getByShortName("rasha25");
 
-        $this->assertEquals(640916, $response->body->pageId);
-        $this->assertEquals(73347, $response->body->activityId);
-        $this->assertEquals("rasha25", $response->body->eventName);
-        $this->assertEquals("rasha25", $response->body->pageShortName);
-        $this->assertEquals("Active", $response->body->status);
-        $this->assertEquals("Itgtm Wqepuy", $response->body->owner);
+        $this->assertSame('640916', $response->body->pageId);
+        $this->assertSame('73347', $response->body->activityId);
+        $this->assertSame("rasha25", $response->body->eventName);
+        $this->assertSame("rasha25", $response->body->pageShortName);
+        $this->assertSame("Completed", $response->body->status);
+        $this->assertSame("Rasha Hassan", $response->body->owner);
     }
 
     /** @test */
@@ -62,7 +61,7 @@ class FundraisingTest extends ResourceClientTestCase
     {
         $response = $this->client->fundraising->getAllPages();
 
-        $this->assertTrue(is_array($response->body));
+        $this->assertTrue(is_array($response->body), 'Response body is not an array.');
         $this->assertObjectHasAttributes(
             ['pageId', 'pageTitle', 'pageStatus', 'pageShortName', 'raisedAmount', 'designId', 'companyAppealId', 'targetAmount'],
             $response->body[0]
@@ -88,7 +87,7 @@ class FundraisingTest extends ResourceClientTestCase
         $newPage = $this->newPage();
         $response = $this->client->fundraising->register($newPage);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
         $this->assertNotNull($response->body->next->uri);
         $this->assertNotNull($response->body->pageId);
     }
@@ -117,7 +116,7 @@ class FundraisingTest extends ResourceClientTestCase
     /** @test */
     public function it_gets_page_updates()
     {
-        $response = $this->client->fundraising->getUpdates('api-test-54787f3435f75');
+        $response = $this->client->fundraising->getUpdates('mike-page5');
 
         $this->assertTrue(is_array($response->body));
         $this->assertObjectHasAttributes(['CreatedDate', 'Id', 'Message', 'Video'], $response->body[0]);
@@ -126,9 +125,9 @@ class FundraisingTest extends ResourceClientTestCase
     /** @test */
     public function it_gets_page_updates_by_id()
     {
-        $response = $this->client->fundraising->getUpdatesById('api-test-54787f3435f75', 100125);
+        $response = $this->client->fundraising->getUpdatesById('mike-page5', 913425);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
         $this->assertObjectHasAttributes(['CreatedDate', 'Id', 'Message', 'Video'], $response->body);
     }
 
@@ -147,7 +146,7 @@ class FundraisingTest extends ResourceClientTestCase
         $update = "Updated this story with update - " . uniqid();
         $response = $this->client->fundraising->UpdateStory(static::$pageShortName, $update);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
     }
 
     /** @test */
@@ -157,7 +156,7 @@ class FundraisingTest extends ResourceClientTestCase
         $filename = __DIR__ . "/../img/jpg.jpg";
         $response = $this->client->fundraising->uploadImage(static::$pageShortName, $caption, $filename);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
     }
 
     /** @test */
@@ -166,7 +165,7 @@ class FundraisingTest extends ResourceClientTestCase
         $filename = __DIR__ . "/../img/jpg.jpg";
         $response = $this->client->fundraising->uploadDefaultImage(static::$pageShortName, $filename);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
     }
 
     /** @test */
@@ -180,7 +179,7 @@ class FundraisingTest extends ResourceClientTestCase
 
         $response = $this->client->fundraising->addImage(static::$pageShortName, $newImage);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
         $this->assertObjectHasAttributes(['rel', 'uri', 'type'], $response->body->next);
     }
 
@@ -209,7 +208,7 @@ class FundraisingTest extends ResourceClientTestCase
 
         $response = $this->client->fundraising->deleteImage(static::$pageShortName, $fileNameOnServer . '.png');
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
     }
 
     /** @test */
@@ -218,7 +217,7 @@ class FundraisingTest extends ResourceClientTestCase
         $request = new AddPostToPageUpdateRequest(['Message' => 'update story']);
 
         $response = $this->client->fundraising->addPostToPageUpdate(static::$pageShortName, $request);
-        $this->assertNotNull($response->Created);
+        $this->assertNotNull($response->Created, 'Created response not received.');
     }
 
     /** @test */
@@ -230,7 +229,7 @@ class FundraisingTest extends ResourceClientTestCase
 
         $response = $this->client->fundraising->deletePageUpdate(static::$pageShortName, $updateId);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
     }
 
     /** @test */
@@ -252,7 +251,7 @@ class FundraisingTest extends ResourceClientTestCase
 
         $response = $this->client->fundraising->addVideo(static::$pageShortName, $newVideo);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
         $this->assertObjectHasAttributes(['rel', 'uri', 'type'], $response->body->next);
     }
 
@@ -273,7 +272,7 @@ class FundraisingTest extends ResourceClientTestCase
 
         $response = $this->client->fundraising->cancel($pageShortName);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
     }
 
     /** @test */
@@ -283,7 +282,7 @@ class FundraisingTest extends ResourceClientTestCase
         $response = $this->client->fundraising->updateAttribution(static::$pageShortName, $update);
         $getAttribution = $this->client->fundraising->getAttribution(static::$pageShortName);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
         $this->assertEquals('An updated attribution', $getAttribution->body->attribution);
     }
 
@@ -295,7 +294,7 @@ class FundraisingTest extends ResourceClientTestCase
         $response = $this->client->fundraising->appendToAttribution(static::$pageShortName, $update);
         $getAttribution = $this->client->fundraising->getAttribution(static::$pageShortName);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
         $this->assertEquals('Attribution. Attribution. ', $getAttribution->body->attribution);
     }
 
@@ -307,7 +306,7 @@ class FundraisingTest extends ResourceClientTestCase
         $response = $this->client->fundraising->deleteAttribution(static::$pageShortName);
         $getAttribution = $this->client->fundraising->getAttribution(static::$pageShortName);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
         $this->assertEquals('', $getAttribution->body->attribution);
     }
 }

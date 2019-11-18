@@ -1,11 +1,11 @@
 build:
     environment:
         php:
-            version: 7.1
+            version: '7.3.10'
     tests:
         override:
             -
-                command: 'vendor/bin/phpunit --coverage-clover=coverage-file'
+                command: 'vendor/bin/phpunit --coverage-clover=coverage-file --stop-on-failure'
                 coverage:
                     file: 'coverage-file'
                     format: 'clover'

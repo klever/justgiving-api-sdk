@@ -7,76 +7,37 @@ use Konsulting\JustGivingApiSdk\Exceptions\UnexpectedStatusException;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
 use Konsulting\JustGivingApiSdk\Support\Response;
 use Konsulting\JustGivingApiSdk\Tests\ResourceClients\ResourceClientTestCase;
-use Psr\Http\Message\ResponseInterface;
 
 class ResponseTest extends ResourceClientTestCase
 {
     /**
-     * @var Response
-     */
-    protected static $donationResponse;
-
-    /**
-     * @var string
-     */
-    protected $savedResponseDirectory = __DIR__ . '/../responses/';
-
-    protected $savedResponses = [
-        [
-            'resource' => 'account',
-            'action'   => 'getDonations'
-        ]
-    ];
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        static::$donationResponse = static::$donationResponse ?: $this->client->account->getDonations();
-    }
-
-    /**
-     * Build up a response object from data contained in a JSON file.
+     * Get a response object representative of that which would be returned from the API.
      *
-     * @param string $name
      * @return Response
      */
-    protected function buildResponseFromFile($name)
+    protected function exampleResponse()
     {
-        $responseData = json_decode($this->savedResponseDirectory . $name . '.json');
+        $body = [
+            'donations' => [
+                ['amount' => 100],
+            ],
+        ];
+
         $guzzleResponse = new GuzzleResponse(
-            $responseData->status_code,
+            200,
             $headers = [],
-            $responseData->body,
+            json_encode($body),
             '1.1',
-            $responseData->reason_phrase
+            'OK'
         );
 
         return new Response($guzzleResponse);
     }
 
-    /**
-     * Take a JSON representation of a response's status code, reason phrase and body, and save it to file.
-     *
-     * @param string            $name
-     * @param ResponseInterface $response
-     * @return bool|int
-     */
-    protected function saveResponseToFile($name, ResponseInterface $response)
-    {
-        $responseArray = [
-            'status_code'   => $response->getStatusCode(),
-            'reason_phrase' => $response->getReasonPhrase(),
-            'body'          => json_decode($response->getBody()->__toString()),
-        ];
-
-        return file_put_contents($this->savedResponseDirectory . $name . '.json', json_encode($responseArray));
-    }
-
     /** @test */
     public function attributes_can_be_called_as_magic_properties()
     {
-        $response = static::$donationResponse;
+        $response = $this->exampleResponse();
 
         $this->assertTrue(is_numeric($response->body->donations[0]->amount));
     }
@@ -84,7 +45,7 @@ class ResponseTest extends ResourceClientTestCase
     /** @test */
     public function attributes_can_be_retrieved_with_the_get_attribute_method()
     {
-        $response = static::$donationResponse;
+        $response = $this->exampleResponse();
 
         $this->assertTrue(is_numeric($response->getAttribute('donations')[0]->amount));
     }
@@ -92,7 +53,7 @@ class ResponseTest extends ResourceClientTestCase
     /** @test */
     public function the_body_attribute_returns_the_decoded_json_response()
     {
-        $response = static::$donationResponse;
+        $response = $this->exampleResponse();
 
         $this->assertTrue(is_numeric($response->body->donations[0]->amount));
     }
@@ -100,7 +61,7 @@ class ResponseTest extends ResourceClientTestCase
     /** @test */
     public function the_errors_attribute_returns_an_empty_array_if_no_valid_errors_are_sent()
     {
-        $response = static::$donationResponse;
+        $response = $this->exampleResponse();
 
         $this->assertEquals([], $response->errors);
     }
@@ -112,13 +73,13 @@ class ResponseTest extends ResourceClientTestCase
         $email = 'user' . $uniqueId . '@testing.com';
         $response = $this->createAccount($email, [
             'firstName'                => '',
-            'acceptTermsAndConditions' => false
+            'acceptTermsAndConditions' => false,
         ]);
 
         $this->assertEquals([
             'FirstNameNotSpecified'              => 'The FirstName field is required.',
             'AcceptTermsAndConditionsMustBeTrue' => 'You must agree to the terms and conditions',
-            'ReasonPhrase'                       => 'Validation errors occured.'
+            'ReasonPhrase'                       => 'Validation errors occured.',
         ], $response->errors);
     }
 
@@ -135,7 +96,7 @@ class ResponseTest extends ResourceClientTestCase
     /** @test */
     public function it_checks_if_any_errors_are_present()
     {
-        $responseWithoutErrors = static::$donationResponse;
+        $responseWithoutErrors = $this->exampleResponse();
         $responseWithErrors = $this->client->account->create(new CreateAccountRequest());
 
         $this->assertFalse($responseWithoutErrors->hasErrorMessages());

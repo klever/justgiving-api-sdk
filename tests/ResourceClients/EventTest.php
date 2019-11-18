@@ -21,7 +21,7 @@ class EventTest extends ResourceClientTestCase
 
         $response = $this->client->event->create($eventRequest);
 
-        $this->assertTrue($response->wasSuccessful());
+        $this->assertSuccessfulResponse($response);
     }
 
     /** @test */

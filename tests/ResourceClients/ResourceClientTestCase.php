@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\Address;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
+use Konsulting\JustGivingApiSdk\Support\Auth\AppAuth;
 use Konsulting\JustGivingApiSdk\Support\Auth\BasicAuth;
 use Konsulting\JustGivingApiSdk\Support\GuzzleClientFactory;
 use Konsulting\JustGivingApiSdk\Support\Response;
@@ -14,6 +15,13 @@ use Konsulting\JustGivingApiSdk\Tests\TestContext;
 
 class ResourceClientTestCase extends TestCase
 {
+    /**
+     * The email belonging to the (temporary) test account created on the API. Password is 'password'.
+     *
+     * @var string
+     */
+    protected static $testEmail;
+
     /** @var JustGivingClient */
     protected $client;
 
@@ -27,18 +35,55 @@ class ResourceClientTestCase extends TestCase
      */
     protected $context;
 
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
+
+        $client = new JustGivingClient(
+            (new GuzzleClientFactory(
+                new AppAuth((new TestContext)->apiKey)
+            ))->createClient()
+        );
+
+        $uniqueId = uniqid();
+        static::$testEmail = "test+" . $uniqueId . "@testing.com";
+
+        $request = new CreateAccountRequest([
+            'email'     => static::$testEmail,
+            'firstName' => "first" . $uniqueId,
+            'lastName'  => "last" . $uniqueId,
+            'password'  => 'password',
+            'title'     => "Mr",
+
+            'address'                  => new Address([
+                'line1'             => "testLine1" . $uniqueId,
+                'line2'             => "testLine2" . $uniqueId,
+                'country'           => "United Kingdom",
+                'countyOrState'     => "testCountyOrState" . $uniqueId,
+                'townOrCity'        => "testTownOrCity" . $uniqueId,
+                'postcodeOrZipcode' => "M130EJ",
+            ]),
+            'acceptTermsAndConditions' => true,
+        ]);
+
+        $response = $client->Account->create($request);
+
+        static::assertTrue($response->wasSuccessful(),
+            'Could not create test account.' . PHP_EOL . implode(PHP_EOL, $response->errors));
+    }
+
+
     protected function setUp()
     {
         parent::setUp();
 
         $this->context = new TestContext();
 
-        $auth = new BasicAuth($this->context->apiKey, $this->context->testUsername, $this->context->testValidPassword);
+        $auth = new BasicAuth($this->context->apiKey, static::$testEmail, $this->context->testValidPassword);
 
         $this->guzzleClient = (new GuzzleClientFactory($auth))->createClient();
 
         $this->client = new JustGivingClient($this->guzzleClient);
-        $this->wait(3);
     }
 
     /**
@@ -73,4 +118,8 @@ class ResourceClientTestCase extends TestCase
         return $this->client->Account->create($request);
     }
 
+    protected function assertSuccessfulResponse(Response $response)
+    {
+        $this->assertTrue($response->wasSuccessful(), implode(PHP_EOL, $response->errors));
+    }
 }
