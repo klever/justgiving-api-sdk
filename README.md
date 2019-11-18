@@ -47,7 +47,8 @@ This class implements the PSR-7 `ResponseInterface` and adds support for dealing
 
 There is a helper class `GuzzleClientFactory`, that will create a correctly configured [Guzzle](http://docs.guzzlephp.org/en/latest/) client ready to be passed in.
 The factory takes an authorisation object to set the auth headers on the HTTP client. The available classes are:
- - `AppAuth($appId)` for unprotected endpoints
+ - `AppAuth($appId, $secretKey = null)` for unprotected endpoints
+    - **Note**: If JustGiving has generated a secret key for your app ID, you must include it here (even though the endpoints do not require authorisation). If not, just provide the app ID.
  - `BasicAuth($appId, $username, $password)` for protected endpoints, where you have the username and password
  - `BearerAuth($appId, $oAuthSecret, $token)` for protected endpoints, where you have a bearer token (from oAuth)
 
