@@ -50,7 +50,7 @@ The factory takes an authorisation object to set the auth headers on the HTTP cl
  - `AppAuth($appId, $secretKey = null)` for unprotected endpoints
     - **Note**: If JustGiving has generated a secret key for your app ID, you must include it here (even though the endpoints do not require authorisation). If not, just provide the app ID.
  - `BasicAuth($appId, $username, $password)` for protected endpoints, where you have the username and password
- - `BearerAuth($appId, $oAuthSecret, $token)` for protected endpoints, where you have a bearer token (from oAuth)
+ - `BearerAuth($appId, $secretKey, $token)` for protected endpoints, where you have a bearer token (from oAuth)
 
 The API base URL and version are set automatically, but may be overridden by passing an associative array with keys `root_domain` and `api_version` as the $options argument.
 Any options apart from this will be passed to Guzzle as custom options (e.g. custom headers or turning on debug mode).
