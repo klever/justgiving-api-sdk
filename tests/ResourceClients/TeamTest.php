@@ -70,7 +70,7 @@ class TeamTest extends ResourceClientTestCase
         );
 
         $this->assertSuccessfulResponse($response);
-        $this->assertContains('has been sent to the team owner', $response->getReasonPhrase());
+        $this->assertStringContainsString('has been sent to the team owner', $response->getReasonPhrase());
     }
 
     protected function createTeam($teamShortName = null, $pageShortName = null)
