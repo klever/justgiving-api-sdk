@@ -2,7 +2,7 @@
 
 namespace Konsulting\JustGivingApiSdk\ResourceClients;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Illuminate\Support\Str;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\Model;
 use Konsulting\JustGivingApiSdk\Support\Response;
@@ -20,16 +20,16 @@ abstract class BaseClient
     /**
      * The HTTP client used to perform requests.
      *
-     * @var Client;
+     * @var ClientInterface;
      */
     public $httpClient;
 
     /**
      * ClientBase constructor.
      *
-     * @param $httpClient
+     * @param ClientInterface $httpClient
      */
-    public function __construct($httpClient)
+    public function __construct(ClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
     }
@@ -66,43 +66,43 @@ abstract class BaseClient
      */
     protected function get($uri)
     {
-        return $this->httpClient->get($uri);
+        return $this->httpClient->request('get', $uri);
     }
 
     /**
      * Perform a HEAD request.
      *
      * @param string $uri
-     * @return ResponseInterface|Response
+     * @return Response|ResponseInterface
      */
     protected function head($uri)
     {
-        return $this->httpClient->head($uri);
+        return $this->httpClient->request('head', $uri);
     }
 
     /**
      * Perform a PUT request.
      *
-     * @param $uri
-     * @param $payload
-     * @return ResponseInterface|Response
+     * @param       $uri
+     * @param Model $payload
+     * @return Response|ResponseInterface
      */
     protected function put($uri, Model $payload = null)
     {
-        return $this->httpClient->put($uri,
+        return $this->httpClient->request('put', $uri,
             ['json' => isset($payload) ? $payload->getAttributes() : '']);
     }
 
     /**
      * Perform a POST request.
      *
-     * @param $uri
-     * @param $payload
-     * @return ResponseInterface|Response
+     * @param       $uri
+     * @param Model $payload
+     * @return Response|ResponseInterface
      */
     protected function post($uri, Model $payload = null)
     {
-        return $this->httpClient->post($uri,
+        return $this->httpClient->request('post', $uri,
             ['json' => isset($payload) ? $payload->getAttributes() : '']);
     }
 
@@ -122,17 +122,17 @@ abstract class BaseClient
             $options['headers']['Content-Type'] = $contentType;
         }
 
-        return $this->httpClient->post($uri, $options);
+        return $this->httpClient->request('post', $uri, $options);
     }
 
     /**
      * Perform a DELETE request.
      *
      * @param string $uri
-     * @return ResponseInterface|Response
+     * @return Response|ResponseInterface
      */
     protected function delete($uri)
     {
-        return $this->httpClient->delete($uri);
+        return $this->httpClient->request('delete', $uri);
     }
 }
