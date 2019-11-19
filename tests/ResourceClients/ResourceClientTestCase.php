@@ -2,7 +2,7 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use DivineOmega\Psr18GuzzleAdapter\Client;
+use RicardoFiorani\GuzzlePsr18Adapter\Client;
 use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\Address;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
