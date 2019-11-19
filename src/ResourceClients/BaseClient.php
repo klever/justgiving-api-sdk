@@ -66,7 +66,7 @@ abstract class BaseClient
      */
     protected function get($uri)
     {
-        return $this->httpClient->request('get', $uri);
+        return $this->request('get', $uri);
     }
 
     /**
@@ -77,7 +77,7 @@ abstract class BaseClient
      */
     protected function head($uri)
     {
-        return $this->httpClient->request('head', $uri);
+        return $this->request('head', $uri);
     }
 
     /**
@@ -89,7 +89,7 @@ abstract class BaseClient
      */
     protected function put($uri, Model $payload = null)
     {
-        return $this->httpClient->request('put', $uri,
+        return $this->request('put', $uri,
             ['json' => isset($payload) ? $payload->getAttributes() : '']);
     }
 
@@ -102,7 +102,7 @@ abstract class BaseClient
      */
     protected function post($uri, Model $payload = null)
     {
-        return $this->httpClient->request('post', $uri,
+        return $this->request('post', $uri,
             ['json' => isset($payload) ? $payload->getAttributes() : '']);
     }
 
@@ -122,7 +122,7 @@ abstract class BaseClient
             $options['headers']['Content-Type'] = $contentType;
         }
 
-        return $this->httpClient->request('post', $uri, $options);
+        return $this->request('post', $uri, $options);
     }
 
     /**
@@ -133,6 +133,18 @@ abstract class BaseClient
      */
     protected function delete($uri)
     {
-        return $this->httpClient->request('delete', $uri);
+        return $this->request('delete', $uri);
+    }
+
+    /**
+     * Perform a request on the HTTP client.
+     *
+     * @param string $method
+     * @param string $uri
+     * @param array  $options
+     */
+    private function request($method, $uri, $options = [])
+    {
+        return $this->httpClient->request($method, $uri, $options);
     }
 }
