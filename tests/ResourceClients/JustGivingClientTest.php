@@ -2,7 +2,8 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use GuzzleHttp\ClientInterface;
+use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
+use Psr\Http\Client\ClientInterface;
 use Konsulting\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\AccountClient;
@@ -41,7 +42,9 @@ class JustGivingClientTest extends ResourceClientTestCase
             ->withArgs(['get', 'https://api.justgiving.com/v1/account', []])
             ->once();
 
-        $client = new JustGivingClient($http);
+        $auth = \Mockery::mock(AuthValue::class);
+
+        $client = new JustGivingClient($auth, $http);
 
         $client->Account->retrieve();
     }
@@ -54,7 +57,9 @@ class JustGivingClientTest extends ResourceClientTestCase
             ->withArgs(['get', 'https://example.com/v3/account', []])
             ->once();
 
-        $client = new JustGivingClient($http, [
+        $auth = \Mockery::mock(AuthValue::class);
+
+        $client = new JustGivingClient($auth, $http, [
             'root_domain' => 'https://example.com',
             'api_version' => 3,
         ]);
