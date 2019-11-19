@@ -2,7 +2,7 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use GuzzleHttp\Client;
+use DivineOmega\Psr18GuzzleAdapter\Client;
 use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\Address;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
@@ -39,11 +39,8 @@ class ResourceClientTestCase extends TestCase
     {
         parent::setUpBeforeClass();
 
-        $client = new JustGivingClient(
-            (new GuzzleClientFactory(
-                new AppAuth((new TestContext)->apiKey)
-            ))->createClient()
-        );
+        $auth = new AppAuth((new TestContext)->apiKey);
+        $client = new JustGivingClient($auth, new Client());
 
         $uniqueId = uniqid();
         static::$testEmail = "test+" . $uniqueId . "@testing.com";
@@ -81,9 +78,7 @@ class ResourceClientTestCase extends TestCase
 
         $auth = new BasicAuth($this->context->apiKey, static::$testEmail, $this->context->testValidPassword);
 
-        $this->guzzleClient = (new GuzzleClientFactory($auth))->createClient();
-
-        $this->client = new JustGivingClient($this->guzzleClient);
+        $this->client = new JustGivingClient($auth, new Client);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Konsulting\JustGivingApiSdk;
 
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Request;
 use Konsulting\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 use Konsulting\JustGivingApiSdk\ResourceClients\AccountClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\CampaignClient;
@@ -18,6 +18,9 @@ use Konsulting\JustGivingApiSdk\ResourceClients\ProjectClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\SearchClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\SmsClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\TeamClient;
+use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
+use Konsulting\JustGivingApiSdk\Support\Response;
+use Psr\Http\Client\ClientInterface;
 
 /**
  * Class JustGivingClient
@@ -78,15 +81,21 @@ class JustGivingClient
      * @var int
      */
     protected $apiVersion;
+    /**
+     * @var AuthValue
+     */
+    private $auth;
 
     /**
      * JustGivingClient constructor.
      *
+     * @param AuthValue       $auth
      * @param ClientInterface $client
      * @param array           $options
      */
-    public function __construct($client, $options = [])
+    public function __construct(AuthValue $auth, ClientInterface $client, $options = [])
     {
+        $this->auth = $auth;
         $this->httpClient = $client;
         $this->rootDomain = $options['root_domain'] ?? 'https://api.justgiving.com';
         $this->apiVersion = $options['api_version'] ?? 1;
@@ -102,9 +111,44 @@ class JustGivingClient
      */
     public function request($method, $uri, $options = [])
     {
-        $uri = $this->rootDomain . '/v' . $this->apiVersion . '/' . $uri;
+        $headers = $options['headers'] ?? [];
+        $body = $options['body'] ?? null;
+        $version = $options['version'] ?? '1.1';
 
-        return $this->httpClient->request($method, $uri, $options);
+        if (isset($options['json'])) {
+            $headers += ['Content-Type' => 'application_json'];
+            $body = json_encode($options['json']);
+        }
+
+        $request = new Request($method, $this->buildUri($uri), $this->buildHeaders($headers), $body, $version);
+
+        $response = $this->httpClient->sendRequest($request);
+
+        return new Response($response);
+    }
+
+    /**
+     * Build the full URI using the root URI and API version.
+     *
+     * @param string $uri
+     * @return string
+     */
+    private function buildUri($uri)
+    {
+        return $this->rootDomain . '/v' . $this->apiVersion . '/' . $uri;
+    }
+
+    /**
+     * Merge the per-request headers with the auth headers.
+     *
+     * @param array $requestHeaders
+     * @return array
+     */
+    private function buildHeaders($requestHeaders)
+    {
+        $defaultHeaders = ['Accept' => 'application/json'];
+
+        return array_merge($defaultHeaders, $this->auth->getHeaders(), $requestHeaders);
     }
 
     /**
