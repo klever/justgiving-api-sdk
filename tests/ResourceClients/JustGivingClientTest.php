@@ -2,11 +2,13 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
-use Psr\Http\Client\ClientInterface;
+use GuzzleHttp\Psr7\Response;
 use Konsulting\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\AccountClient;
+use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestInterface;
 
 class JustGivingClientTest extends ResourceClientTestCase
 {
@@ -38,9 +40,12 @@ class JustGivingClientTest extends ResourceClientTestCase
     public function it_uses_a_default_base_url_and_api_version()
     {
         $http = \Mockery::mock(ClientInterface::class);
-        $http->shouldReceive('request')
-            ->withArgs(['get', 'https://api.justgiving.com/v1/account', []])
-            ->once();
+        $http->shouldReceive('sendRequest')
+            ->withArgs(function (RequestInterface $request) {
+                return $request->getUri()->__toString() === 'https://api.justgiving.com/v1/account';
+            })
+            ->once()
+            ->andReturn(new Response);
 
         $client = new JustGivingClient($this->getAuthMock(), $http);
 
@@ -51,9 +56,13 @@ class JustGivingClientTest extends ResourceClientTestCase
     public function it_uses_the_given_base_url_and_api_version()
     {
         $http = \Mockery::mock(ClientInterface::class);
-        $http->shouldReceive('request')
-            ->withArgs(['get', 'https://example.com/v3/account', []])
-            ->once();
+        $http->shouldReceive('sendRequest')
+            ->withArgs(function (RequestInterface $request) {
+                return $request->getUri()->__toString() === 'https://example.com/v3/account';
+            })
+            ->once()
+            ->andReturn(new Response);
+
 
         $client = new JustGivingClient($this->getAuthMock(), $http, [
             'root_domain' => 'https://example.com',
