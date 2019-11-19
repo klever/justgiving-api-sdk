@@ -42,9 +42,7 @@ class JustGivingClientTest extends ResourceClientTestCase
             ->withArgs(['get', 'https://api.justgiving.com/v1/account', []])
             ->once();
 
-        $auth = \Mockery::mock(AuthValue::class);
-
-        $client = new JustGivingClient($auth, $http);
+        $client = new JustGivingClient($this->getAuthMock(), $http);
 
         $client->Account->retrieve();
     }
@@ -57,13 +55,20 @@ class JustGivingClientTest extends ResourceClientTestCase
             ->withArgs(['get', 'https://example.com/v3/account', []])
             ->once();
 
-        $auth = \Mockery::mock(AuthValue::class);
-
-        $client = new JustGivingClient($auth, $http, [
+        $client = new JustGivingClient($this->getAuthMock(), $http, [
             'root_domain' => 'https://example.com',
             'api_version' => 3,
         ]);
 
         $client->Account->retrieve();
+    }
+
+    private function getAuthMock()
+    {
+        $auth = \Mockery::mock(AuthValue::class);
+        $auth->shouldReceive('getHeaders')
+            ->andReturn([]);
+
+        return $auth;
     }
 }
