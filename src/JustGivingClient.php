@@ -116,7 +116,7 @@ class JustGivingClient
         $version = $options['version'] ?? '1.1';
 
         if (isset($options['json'])) {
-            $headers += ['Content-Type' => 'application_json'];
+            $headers += ['Content-Type' => 'application/json'];
             $body = json_encode($options['json']);
         }
 
