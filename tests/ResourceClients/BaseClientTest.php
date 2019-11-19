@@ -42,7 +42,7 @@ class BaseClientTest extends ResourceClientTestCase
         // Cycle through all API client classes
         foreach ($this->childClients as $childClient) {
             $className = '\\Konsulting\\JustGivingApiSdk\\ResourceClients\\' . $childClient . 'Client';
-            $object = new $className($this->client);
+            $object = new $className($this->guzzleClient);
 
             // Get the protected alias properties via reflection
             $aliases = $this->exposeProperty($object, 'aliases');
@@ -153,7 +153,7 @@ class MockHttpClient extends Client
 {
     public $options;
 
-    public function post($uri, array $options = [])
+    public function request($method, $uri = '', array $options = [])
     {
         $this->options = $options;
 
