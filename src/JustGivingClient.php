@@ -66,13 +66,45 @@ class JustGivingClient
     protected $httpClient;
 
     /**
+     * The root domain of the API.
+     *
+     * @var string
+     */
+    protected $rootDomain;
+
+    /**
+     * The API version to use.
+     *
+     * @var int
+     */
+    protected $apiVersion;
+
+    /**
      * JustGivingClient constructor.
      *
      * @param ClientInterface $client
+     * @param array           $options
      */
-    public function __construct($client)
+    public function __construct($client, $options = [])
     {
         $this->httpClient = $client;
+        $this->rootDomain = $options['root_domain'] ?? 'https://api.justgiving.com';
+        $this->apiVersion = $options['api_version'] ?? 1;
+    }
+
+    /**
+     * Proxy a request onto the HTTP client, using the fully qualified URI.
+     *
+     * @param string $method
+     * @param string $uri
+     * @param array  $options
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function request($method, $uri, $options = [])
+    {
+        $uri = $this->rootDomain . '/v' . $this->apiVersion . '/' . $uri;
+
+        return $this->httpClient->request($method, $uri, $options);
     }
 
     /**
@@ -86,13 +118,13 @@ class JustGivingClient
     {
         $class = __NAMESPACE__ . '\\ResourceClients\\' . ucfirst($property) . 'Client';
 
-        if ( ! class_exists($class)) {
+        if (! class_exists($class)) {
             throw new ClassNotFoundException($class);
         }
 
         $this->clients[$class] = isset($this->clients[$class])
             ? $this->clients[$class]
-            : new $class($this->httpClient, $this);
+            : new $class($this);
 
         return $this->clients[$class];
     }

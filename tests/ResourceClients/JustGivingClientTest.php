@@ -2,7 +2,9 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
+use GuzzleHttp\ClientInterface;
 use Konsulting\JustGivingApiSdk\Exceptions\ClassNotFoundException;
+use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\AccountClient;
 
 class JustGivingClientTest extends ResourceClientTestCase
@@ -29,5 +31,34 @@ class JustGivingClientTest extends ResourceClientTestCase
         $clientTwo = $this->client->account;
 
         $this->assertSame($clientOne, $clientTwo);
+    }
+
+    /** @test */
+    public function it_uses_a_default_base_url_and_api_version()
+    {
+        $http = \Mockery::mock(ClientInterface::class);
+        $http->shouldReceive('request')
+            ->withArgs(['get', 'https://api.justgiving.com/v1/account', []])
+            ->once();
+
+        $client = new JustGivingClient($http);
+
+        $client->Account->retrieve();
+    }
+
+    /** @test */
+    public function it_uses_the_given_base_url_and_api_version()
+    {
+        $http = \Mockery::mock(ClientInterface::class);
+        $http->shouldReceive('request')
+            ->withArgs(['get', 'https://example.com/v3/account', []])
+            ->once();
+
+        $client = new JustGivingClient($http, [
+            'root_domain' => 'https://example.com',
+            'api_version' => 3,
+        ]);
+
+        $client->Account->retrieve();
     }
 }

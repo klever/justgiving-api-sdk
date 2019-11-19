@@ -37,10 +37,8 @@ class GuzzleClientFactory
      */
     public function __construct(AuthValue $auth, $options = [])
     {
-        $this->rootDomain = Arr::pull($options, 'root_domain', 'https://api.justgiving.com');
-        $this->apiVersion = Arr::pull($options, 'api_version', 1);
-        $this->userOptions = $options;
         $this->auth = $auth;
+        $this->userOptions = $options;
     }
 
     /**
@@ -60,7 +58,6 @@ class GuzzleClientFactory
         return new Client(array_merge([
             'http_errors' => false,
             'handler'     => $stack,
-            'base_uri'    => $this->baseUrl(),
             'headers'     => array_merge($defaultHeaders, $this->auth->getHeaders()),
         ], $this->userOptions));
     }
