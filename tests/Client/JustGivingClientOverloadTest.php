@@ -1,6 +1,6 @@
 <?php
 
-namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\Tests\Client;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;

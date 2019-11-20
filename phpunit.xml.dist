@@ -16,6 +16,7 @@
         <testsuite name="other">
             <directory>tests/Models</directory>
             <directory>tests/Support</directory>
+            <directory>tests/Client</directory>
         </testsuite>
     </testsuites>
 

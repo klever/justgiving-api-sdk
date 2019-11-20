@@ -1,13 +1,11 @@
 <?php
 
-namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
+namespace Konsulting\JustGivingApiSdk\Tests\Client;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Konsulting\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\AccountClient;
-use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
 use Konsulting\JustGivingApiSdk\Tests\TestCase;
 use Mockery;
 use Psr\Http\Client\ClientInterface;
