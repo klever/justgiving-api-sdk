@@ -7,6 +7,7 @@ use Konsulting\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\AccountClient;
 use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
+use Mockery;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 
@@ -39,7 +40,7 @@ class JustGivingClientTest extends ResourceClientTestCase
     /** @test */
     public function it_uses_a_default_base_url_and_api_version()
     {
-        $http = \Mockery::mock(ClientInterface::class);
+        $http = Mockery::mock(ClientInterface::class);
         $http->shouldReceive('sendRequest')
             ->withArgs(function (RequestInterface $request) {
                 return $request->getUri()->__toString() === 'https://api.justgiving.com/v1/account';
@@ -55,7 +56,7 @@ class JustGivingClientTest extends ResourceClientTestCase
     /** @test */
     public function it_uses_the_given_base_url_and_api_version()
     {
-        $http = \Mockery::mock(ClientInterface::class);
+        $http = Mockery::mock(ClientInterface::class);
         $http->shouldReceive('sendRequest')
             ->withArgs(function (RequestInterface $request) {
                 return $request->getUri()->__toString() === 'https://example.com/v3/account';
@@ -72,9 +73,14 @@ class JustGivingClientTest extends ResourceClientTestCase
         $client->Account->retrieve();
     }
 
+    /**
+     * Get a mock AuthValue object.
+     *
+     * @return AuthValue|\Mockery\MockInterface
+     */
     private function getAuthMock()
     {
-        $auth = \Mockery::mock(AuthValue::class);
+        $auth = Mockery::mock(AuthValue::class);
         $auth->shouldReceive('getHeaders')
             ->andReturn([]);
 
