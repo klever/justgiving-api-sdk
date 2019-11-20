@@ -116,7 +116,7 @@ class JustGivingClient
      * @param string $uri
      * @param array  $httpOptions   Custom options for the HTTP client (e.g. headers)
      * @param array  $clientOptions Custom options for the JustGiving client (e.g. API version)
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return Response
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function request($method, $uri, $httpOptions = [], $clientOptions = [])
@@ -124,22 +124,34 @@ class JustGivingClient
         $optionsBackup = $this->options;
         $this->setOptions($clientOptions);
 
-        $headers = $httpOptions['headers'] ?? [];
-        $body = $httpOptions['body'] ?? null;
-        $version = $httpOptions['version'] ?? '1.1';
-
-        if (isset($httpOptions['json'])) {
-            $headers += ['Content-Type' => 'application/json'];
-            $body = json_encode($httpOptions['json']);
-        }
-
-        $request = new Request($method, $this->buildUri($uri), $this->buildHeaders($headers), $body, $version);
-
+        $request = $this->buildRequest($method, $uri, $httpOptions);
         $response = $this->httpClient->sendRequest($request);
 
         $this->options = $optionsBackup;
 
         return new Response($response);
+    }
+
+    /**
+     * Build the PSR-7 request object. Encode JSON payload and set headers if needed.
+     *
+     * @param string $method
+     * @param string $uri
+     * @param array  $options
+     * @return Request
+     */
+    private function buildRequest($method, $uri, $options)
+    {
+        $headers = $options['headers'] ?? [];
+        $body = $options['body'] ?? null;
+        $version = $options['version'] ?? '1.1';
+
+        if (isset($options['json'])) {
+            $headers += ['Content-Type' => 'application/json'];
+            $body = json_encode($options['json']);
+        }
+
+        return new Request($method, $this->buildUri($uri), $this->buildHeaders($headers), $body, $version);
     }
 
     /**
