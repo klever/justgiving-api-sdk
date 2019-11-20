@@ -2,7 +2,10 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests;
 
+use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Mockery\MockInterface;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
@@ -34,5 +37,19 @@ class TestCase extends \PHPUnit\Framework\TestCase
         foreach ($attributes as $attribute) {
             $this->assertObjectHasAttribute($attribute, $object);
         }
+    }
+
+    /**
+     * Get a mock AuthValue object.
+     *
+     * @return AuthValue|MockInterface
+     */
+    protected function getAuthMock()
+    {
+        $auth = Mockery::mock(AuthValue::class);
+        $auth->shouldReceive('getHeaders')
+            ->andReturn([]);
+
+        return $auth;
     }
 }
