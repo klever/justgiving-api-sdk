@@ -35,7 +35,15 @@ class CharityTest extends ResourceClientTestCase
         $response = $this->client->Charity->getEventsByCharityId(2050);
 
         $this->assertObjectHasAttributes(['pageNumber', 'totalPages'], $response->pagination);
-        $this->assertObjectHasAttributes(['name', 'description', 'completionDate', 'expiryDate', 'startDate', 'eventType', 'location',], $response->events[0]);
+        $this->assertObjectHasAttributes([
+            'name',
+            'description',
+            'completionDate',
+            'expiryDate',
+            'startDate',
+            'eventType',
+            'location',
+        ], $response->events[0]);
     }
 
     /** @test */

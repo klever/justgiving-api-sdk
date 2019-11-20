@@ -2,7 +2,6 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use RicardoFiorani\GuzzlePsr18Adapter\Client;
 use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\Address;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
@@ -12,6 +11,7 @@ use Konsulting\JustGivingApiSdk\Support\GuzzleClientFactory;
 use Konsulting\JustGivingApiSdk\Support\Response;
 use Konsulting\JustGivingApiSdk\Tests\TestCase;
 use Konsulting\JustGivingApiSdk\Tests\TestContext;
+use RicardoFiorani\GuzzlePsr18Adapter\Client;
 
 class ResourceClientTestCase extends TestCase
 {

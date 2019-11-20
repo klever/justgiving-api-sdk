@@ -26,7 +26,7 @@ class ModelTest extends TestCase
             'story'         => 'story',
             'targetType'    => 'target type',
             'teamType'      => 'team type',
-            'teamTarget'        => 'target',
+            'teamTarget'    => 'target',
             'teamMembers'   => ['one', 'two'],
         ];
         $this->team = (new Team)->fill($this->teamData);

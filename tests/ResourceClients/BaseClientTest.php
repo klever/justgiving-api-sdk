@@ -2,7 +2,6 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use GuzzleHttp\Client;
 use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\BaseClient;
 use ReflectionClass;

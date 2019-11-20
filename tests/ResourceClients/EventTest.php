@@ -37,7 +37,15 @@ class EventTest extends ResourceClientTestCase
     {
         $response = $this->client->event->getById(479546);
 
-        $this->assertObjectHasAttributes(['name', 'description', 'completionDate', 'expiryDate', 'startDate', 'eventType', 'location',], $response->body);
+        $this->assertObjectHasAttributes([
+            'name',
+            'description',
+            'completionDate',
+            'expiryDate',
+            'startDate',
+            'eventType',
+            'location',
+        ], $response->body);
     }
 
     /** @test */
@@ -45,7 +53,8 @@ class EventTest extends ResourceClientTestCase
     {
         $response = $this->client->event->getPages(479546);
 
-        $this->assertObjectHasAttributes(['companyAppealId', 'createdDate', 'currencyCode'], $response->body->fundraisingPages[0]);
+        $this->assertObjectHasAttributes(['companyAppealId', 'createdDate', 'currencyCode'],
+            $response->body->fundraisingPages[0]);
     }
 
     /** @test */

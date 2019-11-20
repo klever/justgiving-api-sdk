@@ -31,7 +31,8 @@ class Helpers
     }
 
     /**
-     * Create a Carbon instance from a string. Can be in '/Date(1365004652303-0500)/' format or any other standard format that Carbon will parse.
+     * Create a Carbon instance from a string. Can be in '/Date(1365004652303-0500)/' format or any other standard
+     * format that Carbon will parse.
      *
      * @param string $date
      * @return Carbon

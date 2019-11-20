@@ -77,17 +77,17 @@ class TeamTest extends ResourceClientTestCase
     {
         $pageShortName = $pageShortName ?: "api-test-" . uniqid();
         $this->client->fundraising->register(new FundraisingPage([
-            'reference'       => "12345",
-            'pageShortName'   => $pageShortName,
-            'activityType'    => "OtherCelebration",
-            'pageTitle'       => "api test",
-            'pageStory'       => "This is my custom page story, which will override the default.",
-            'eventName'       => "The Other Occasion of ApTest and APITest",
-            'charityId'       => 2050,
-            'targetAmount'    => 20,
-            'eventDate'       => "/Date(1235764800000)/",
-            'charityOptIn'    => true,
-            'charityFunded'   => false,
+            'reference'     => "12345",
+            'pageShortName' => $pageShortName,
+            'activityType'  => "OtherCelebration",
+            'pageTitle'     => "api test",
+            'pageStory'     => "This is my custom page story, which will override the default.",
+            'eventName'     => "The Other Occasion of ApTest and APITest",
+            'charityId'     => 2050,
+            'targetAmount'  => 20,
+            'eventDate'     => "/Date(1235764800000)/",
+            'charityOptIn'  => true,
+            'charityFunded' => false,
         ]));
 
         $team = new Team([

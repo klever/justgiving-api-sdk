@@ -18,7 +18,7 @@ class FundraisingTest extends ResourceClientTestCase
 
         // Create one test page to use across tests to help with API timeouts/lockouts
         // DO NOT MODIFY this response within tests
-        if ( ! isset(static::$pageShortName)) {
+        if (! isset(static::$pageShortName)) {
             static::$pageShortName = "api-test-" . uniqid();
             $this->client->fundraising->register(
                 $this->newPage(['pageShortName' => static::$pageShortName])
@@ -29,17 +29,17 @@ class FundraisingTest extends ResourceClientTestCase
     protected function newPage($options = [])
     {
         return new FundraisingPage(array_merge([
-            'reference'       => "12345",
-            'pageShortName'   => "api-test-" . uniqid(),
-            'activityType'    => "OtherCelebration",
-            'pageTitle'       => "api test",
-            'pageStory'       => "This is my custom page story, which will override the default.",
-            'eventName'       => "The Other Occasion of ApTest and APITest",
-            'charityId'       => 2050,
-            'targetAmount'    => 20,
-            'eventDate'       => "/Date(1235764800000)/",
-            'charityOptIn'    => true,
-            'charityFunded'   => false,
+            'reference'     => "12345",
+            'pageShortName' => "api-test-" . uniqid(),
+            'activityType'  => "OtherCelebration",
+            'pageTitle'     => "api test",
+            'pageStory'     => "This is my custom page story, which will override the default.",
+            'eventName'     => "The Other Occasion of ApTest and APITest",
+            'charityId'     => 2050,
+            'targetAmount'  => 20,
+            'eventDate'     => "/Date(1235764800000)/",
+            'charityOptIn'  => true,
+            'charityFunded' => false,
         ], $options));
     }
 
@@ -63,7 +63,16 @@ class FundraisingTest extends ResourceClientTestCase
 
         $this->assertTrue(is_array($response->body), 'Response body is not an array.');
         $this->assertObjectHasAttributes(
-            ['pageId', 'pageTitle', 'pageStatus', 'pageShortName', 'raisedAmount', 'designId', 'companyAppealId', 'targetAmount'],
+            [
+                'pageId',
+                'pageTitle',
+                'pageStatus',
+                'pageShortName',
+                'raisedAmount',
+                'designId',
+                'companyAppealId',
+                'targetAmount',
+            ],
             $response->body[0]
         );
     }
@@ -110,7 +119,8 @@ class FundraisingTest extends ResourceClientTestCase
         $response = $this->client->fundraising->getDonations('rasha25');
 
         $this->assertTrue(is_array($response->body->donations));
-        $this->assertObjectHasAttributes(['amount', 'currencyCode', 'donationRef', 'donorDisplayName', 'message'], $response->body->donations[0]);
+        $this->assertObjectHasAttributes(['amount', 'currencyCode', 'donationRef', 'donorDisplayName', 'message'],
+            $response->body->donations[0]);
     }
 
     /** @test */
@@ -174,7 +184,7 @@ class FundraisingTest extends ResourceClientTestCase
         $newImage = new AddImageRequest([
             'caption'   => 'An image',
             'isDefault' => true,
-            'url'       => 'https://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png'
+            'url'       => 'https://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png',
         ]);
 
         $response = $this->client->fundraising->addImage(static::$pageShortName, $newImage);
@@ -198,7 +208,7 @@ class FundraisingTest extends ResourceClientTestCase
         $newImage = new AddImageRequest([
             'caption'   => 'An image to delete',
             'isDefault' => false,
-            'url'       => 'https://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png'
+            'url'       => 'https://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png',
         ]);
         $this->client->fundraising->addImage(static::$pageShortName, $newImage);
 
@@ -246,7 +256,7 @@ class FundraisingTest extends ResourceClientTestCase
         $newVideo = new AddVideoRequest([
             'caption'   => 'A video',
             'isDefault' => true,
-            'url'       => 'https://www.youtube.com/watch?v=XTrqHP17kBw'
+            'url'       => 'https://www.youtube.com/watch?v=XTrqHP17kBw',
         ]);
 
         $response = $this->client->fundraising->addVideo(static::$pageShortName, $newVideo);

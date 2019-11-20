@@ -2,10 +2,7 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests;
 
-use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
-use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
-use Mockery\MockInterface;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
