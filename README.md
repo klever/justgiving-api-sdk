@@ -44,10 +44,10 @@ See the [JustGiving API documentation](https://api.justgiving.com/docs) for more
 The client requires an authentication object with your JustGiving API credentials. The available classes are:
  - `AppAuth($appId, $secretKey = null)` for unprotected endpoints
     - **Note**: If JustGiving has generated a secret key for your app ID, you must include it here (even though the endpoints do not require authorisation). If not, just provide the app ID.
- - `BasicAuth($appId, $username, $password)` for protected endpoints, where you have the username and password
- - `BearerAuth($appId, $secretKey, $token)` for protected endpoints, where you have a bearer token (from oAuth)
+ - `BasicAuth($appId, $username, $password)` for protected endpoints, where you have the username and password.
+ - `BearerAuth($appId, $secretKey, $token)` for protected endpoints, where you have a bearer token (from oAuth).
 
-You may also pass in a [PSR-18](http://www.php-fig.org/psr/psr-18/) HTTP client as the second paramter. If this is not provided (or set to null), a default Guzzle client will be used.
+You may also pass in a [PSR-18](http://www.php-fig.org/psr/psr-18/) HTTP client as the second parameter. If this is not provided (or set to null), a default Guzzle client will be used.
 
 The API base URL and version are set automatically, but may be overridden by passing an associative array with keys `root_domain` and `api_version` as the third argument.
 
