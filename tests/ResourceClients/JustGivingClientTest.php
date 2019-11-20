@@ -2,22 +2,34 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Konsulting\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\AccountClient;
 use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
+use Konsulting\JustGivingApiSdk\Tests\TestCase;
 use Mockery;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 
-class JustGivingClientTest extends ResourceClientTestCase
+class JustGivingClientTest extends TestCase
 {
+    /**
+     * Get a new JustGiving client instance.
+     *
+     * @return JustGivingClient
+     */
+    private function getClient()
+    {
+        return new JustGivingClient($this->getAuthMock(), Mockery::mock(ClientInterface::class));
+    }
+
     /** @test */
     public function it_returns_an_api_client_class_from_a_property_call()
     {
-        $this->assertInstanceOf(AccountClient::class, $this->client->account);
-        $this->assertInstanceOf(AccountClient::class, $this->client->Account);
+        $this->assertInstanceOf(AccountClient::class, $this->getClient()->account);
+        $this->assertInstanceOf(AccountClient::class, $this->getClient()->Account);
     }
 
     /** @test */
@@ -25,14 +37,16 @@ class JustGivingClientTest extends ResourceClientTestCase
     {
         $this->expectException(ClassNotFoundException::class);
 
-        $this->client->InvalidClass;
+        $this->getClient()->InvalidClass;
     }
 
     /** @test */
     public function it_returns_the_same_client_class_instance_if_called_twice()
     {
-        $clientOne = $this->client->account;
-        $clientTwo = $this->client->account;
+        $client = $this->getClient();
+
+        $clientOne = $client->account;
+        $clientTwo = $client->account;
 
         $this->assertSame($clientOne, $clientTwo);
     }
@@ -85,5 +99,25 @@ class JustGivingClientTest extends ResourceClientTestCase
             ->andReturn([]);
 
         return $auth;
+    }
+
+    /**
+     * @runInSeparateProcess as we're using an overload mock, which interferes with the autoloading process
+     * @test
+     */
+    public function it_automatically_instantiates_a_psr_18_client()
+    {
+        // Overload the Guzzle client class to make sure the JustGiving client is instantiating it internally
+        $http = Mockery::mock('overload:' . Client::class);
+        $http->shouldReceive('send')
+            ->withArgs(function (RequestInterface $request) {
+                return $request->getUri()->__toString() === 'https://api.justgiving.com/v1/account';
+            })
+            ->once()
+            ->andReturn(new Response);
+
+        $client = new JustGivingClient($this->getAuthMock());
+
+        $client->Account->retrieve();
     }
 }

@@ -21,6 +21,7 @@ use Konsulting\JustGivingApiSdk\ResourceClients\TeamClient;
 use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
 use Konsulting\JustGivingApiSdk\Support\Response;
 use Psr\Http\Client\ClientInterface;
+use RicardoFiorani\GuzzlePsr18Adapter\Client;
 
 /**
  * Class JustGivingClient
@@ -93,10 +94,10 @@ class JustGivingClient
      * @param ClientInterface $client
      * @param array           $options
      */
-    public function __construct(AuthValue $auth, ClientInterface $client, $options = [])
+    public function __construct(AuthValue $auth, ClientInterface $client = null, $options = [])
     {
         $this->auth = $auth;
-        $this->httpClient = $client;
+        $this->httpClient = $client ?: new Client;
         $this->rootDomain = $options['root_domain'] ?? 'https://api.justgiving.com';
         $this->apiVersion = $options['api_version'] ?? 1;
     }
