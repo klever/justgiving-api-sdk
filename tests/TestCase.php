@@ -38,18 +38,4 @@ class TestCase extends \PHPUnit\Framework\TestCase
             $this->assertObjectHasAttribute($attribute, $object);
         }
     }
-
-    /**
-     * Get a mock AuthValue object.
-     *
-     * @return AuthValue|MockInterface
-     */
-    protected function getAuthMock()
-    {
-        $auth = Mockery::mock(AuthValue::class);
-        $auth->shouldReceive('getHeaders')
-            ->andReturn([]);
-
-        return $auth;
-    }
 }

@@ -7,8 +7,10 @@ use GuzzleHttp\Psr7\Response;
 use Konsulting\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\AccountClient;
+use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
 use Konsulting\JustGivingApiSdk\Tests\TestCase;
 use Mockery;
+use Mockery\MockInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 
@@ -22,6 +24,20 @@ class JustGivingClientTest extends TestCase
     private function getClient()
     {
         return new JustGivingClient($this->getAuthMock(), Mockery::mock(ClientInterface::class));
+    }
+
+    /**
+     * Get a mock AuthValue object.
+     *
+     * @return AuthValue|MockInterface
+     */
+    private function getAuthMock()
+    {
+        $auth = Mockery::mock(AuthValue::class);
+        $auth->shouldReceive('getHeaders')
+            ->andReturn([]);
+
+        return $auth;
     }
 
     /** @test */
