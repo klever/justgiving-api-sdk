@@ -35,7 +35,10 @@ class JustGivingClientTest extends TestCase
     {
         $auth = Mockery::mock(AuthValue::class);
         $auth->shouldReceive('getHeaders')
-            ->andReturn([]);
+            ->andReturn([
+                'x-api-key'         => 'abcdef',
+                'x-application-key' => 'secret',
+            ]);
 
         return $auth;
     }
@@ -93,7 +96,6 @@ class JustGivingClientTest extends TestCase
             ->once()
             ->andReturn(new Response);
 
-
         $client = new JustGivingClient($this->getAuthMock(), $http, [
             'root_domain' => 'https://example.com',
             'api_version' => 3,
@@ -121,6 +123,57 @@ class JustGivingClientTest extends TestCase
             ->andReturn(new Response);
 
         $client = new JustGivingClient($this->getAuthMock());
+
+        $client->Account->retrieve();
+    }
+
+    /** @test */
+    public function it_allows_a_custom_request_with_new_parameters_and_restores_parameters_after()
+    {
+        $http = Mockery::mock(ClientInterface::class);
+
+        $expectedHeaders = [
+            'Host'              => ['example3.com'],
+            'Accept'            => ['application/json'],
+            'x-api-key'         => ['abcdef'],
+            'x-application-key' => ['secret'],
+            'x-custom-header'   => ['custom'],
+            'Content-Type'      => ['application/json'],
+        ];
+
+        // Test custom request
+        $http->shouldReceive('sendRequest')
+            ->withArgs(function (RequestInterface $request) use ($expectedHeaders) {
+                return $request->getUri()->__toString() === 'https://example3.com/v5/new-endpoint'
+                    && $request->getHeaders() === $expectedHeaders
+                    && $request->getMethod() === 'MY METHOD'
+                    && $request->getBody()->getContents() === '{"test":"json"}';
+            })
+            ->once()
+            ->andReturn(new Response)
+            ->ordered();
+
+        // Check everything has been restored to how it was before
+        $http->shouldReceive('sendRequest')
+            ->withArgs(function (RequestInterface $request) {
+                return $request->getUri()->__toString() === 'https://example.com/v3/account';
+            })
+            ->once()
+            ->andReturn(new Response)
+            ->ordered();
+
+        $client = new JustGivingClient($this->getAuthMock(), $http, [
+            'root_domain' => 'https://example.com',
+            'api_version' => 3,
+        ]);
+
+        $client->request('my method', 'new-endpoint', [
+            'headers' => ['x-custom-header' => 'custom'],
+            'json'    => ['test' => 'json'],
+        ], [
+            'root_domain' => 'https://example3.com',
+            'api_version' => 5,
+        ]);
 
         $client->Account->retrieve();
     }

@@ -70,18 +70,15 @@ class JustGivingClient
     protected $httpClient;
 
     /**
-     * The root domain of the API.
+     * The client options.
      *
-     * @var string
+     * @var array
      */
-    protected $rootDomain;
+    protected $options = [
+        'api_version' => 1,
+        'root_domain' => 'https://api.justgiving.com',
+    ];
 
-    /**
-     * The API version to use.
-     *
-     * @var int
-     */
-    protected $apiVersion;
     /**
      * @var AuthValue
      */
@@ -98,8 +95,18 @@ class JustGivingClient
     {
         $this->auth = $auth;
         $this->httpClient = $client ?: new Client;
-        $this->rootDomain = $options['root_domain'] ?? 'https://api.justgiving.com';
-        $this->apiVersion = $options['api_version'] ?? 1;
+        $this->setOptions($options);
+    }
+
+    /**
+     * Set the client options, using defaults for any that are not provided.
+     *
+     * @param array $options
+     */
+    private function setOptions(array $options)
+    {
+        $this->options['root_domain'] = $options['root_domain'] ?? $this->options['root_domain'];
+        $this->options['api_version'] = $options['api_version'] ?? $this->options['api_version'];
     }
 
     /**
@@ -107,23 +114,30 @@ class JustGivingClient
      *
      * @param string $method
      * @param string $uri
-     * @param array  $options
+     * @param array  $httpOptions   Custom options for the HTTP client (e.g. headers)
+     * @param array  $clientOptions Custom options for the JustGiving client (e.g. API version)
      * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Psr\Http\Client\ClientExceptionInterface
      */
-    public function request($method, $uri, $options = [])
+    public function request($method, $uri, $httpOptions = [], $clientOptions = [])
     {
-        $headers = $options['headers'] ?? [];
-        $body = $options['body'] ?? null;
-        $version = $options['version'] ?? '1.1';
+        $optionsBackup = $this->options;
+        $this->setOptions($clientOptions);
 
-        if (isset($options['json'])) {
+        $headers = $httpOptions['headers'] ?? [];
+        $body = $httpOptions['body'] ?? null;
+        $version = $httpOptions['version'] ?? '1.1';
+
+        if (isset($httpOptions['json'])) {
             $headers += ['Content-Type' => 'application/json'];
-            $body = json_encode($options['json']);
+            $body = json_encode($httpOptions['json']);
         }
 
         $request = new Request($method, $this->buildUri($uri), $this->buildHeaders($headers), $body, $version);
 
         $response = $this->httpClient->sendRequest($request);
+
+        $this->options = $optionsBackup;
 
         return new Response($response);
     }
@@ -136,7 +150,7 @@ class JustGivingClient
      */
     private function buildUri($uri)
     {
-        return $this->rootDomain . '/v' . $this->apiVersion . '/' . $uri;
+        return $this->options['root_domain'] . '/v' . $this->options['api_version'] . '/' . $uri;
     }
 
     /**
