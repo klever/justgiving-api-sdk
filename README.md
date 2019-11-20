@@ -14,8 +14,7 @@ composer require konsulting/justgiving-api-sdk
 ## Quick start
 ```php
 $auth = new AppAuth('abcde123');
-$guzzleClient = (new GuzzleClientFactory($auth))->createClient();
-$client = new JustGivingClient($guzzleClient);
+$client = new JustGivingClient($auth);
 ```
 
 ```php
@@ -29,7 +28,7 @@ if ($response->existenceCheck()) {
 ```php
 $response = $client->charity->getById(2050);
 
-if ( ! $response->wasSuccessful()) {
+if (! $response->wasSuccessful()) {
     throw new Exception(implode(', ', $response->errors));
 }
 
@@ -42,25 +41,26 @@ See the [JustGiving API documentation](https://api.justgiving.com/docs) for more
 
 ## Usage
 ### Setup
-The `JustGivingClient` should be instantiated with a suitable HTTP client passed in as a parameter. This client must adhere to the [PSR-7 interfaces](http://www.php-fig.org/psr/psr-7/), and should return from requests an instance of `JustGivingApiSdk\Support\Response`.
-This class implements the PSR-7 `ResponseInterface` and adds support for dealing with JSON responses, as well as making it easy to access response data.
-
-There is a helper class `GuzzleClientFactory`, that will create a correctly configured [Guzzle](http://docs.guzzlephp.org/en/latest/) client ready to be passed in.
-The factory takes an authorisation object to set the auth headers on the HTTP client. The available classes are:
+The client requires an authentication object with your JustGiving API credentials. The available classes are:
  - `AppAuth($appId, $secretKey = null)` for unprotected endpoints
     - **Note**: If JustGiving has generated a secret key for your app ID, you must include it here (even though the endpoints do not require authorisation). If not, just provide the app ID.
  - `BasicAuth($appId, $username, $password)` for protected endpoints, where you have the username and password
  - `BearerAuth($appId, $secretKey, $token)` for protected endpoints, where you have a bearer token (from oAuth)
 
-The API base URL and version are set automatically, but may be overridden by passing an associative array with keys `root_domain` and `api_version` as the $options argument.
-Any options apart from this will be passed to Guzzle as custom options (e.g. custom headers or turning on debug mode).
+You may also pass in a [PSR-18](http://www.php-fig.org/psr/psr-18/) HTTP client as the second paramter. If this is not provided (or set to null), a default Guzzle client will be used.
+
+The API base URL and version are set automatically, but may be overridden by passing an associative array with keys `root_domain` and `api_version` as the third argument.
 
 For example:
 ```php
 $auth = new BasicAuth('abced123', 'user@example.com', 'pass123');
-$guzzleClient = (new GuzzleClientFactory($auth, ['api_version' => 2])->buildClient();
+$client = new \My\Own\Psr18Client;
+$options = [
+    'root_domain' => 'https://api.staging.justgiving.com', 
+    'api_version' => 2,
+];
 
-$client = new JustGivingClient($guzzleClient);
+$client = new JustGivingClient($auth, $client, $options);
 ```
 
 ### Querying the API
@@ -110,7 +110,7 @@ $team->target = 1000;
 
 ### Working with responses
 The SDK returns an instance of `JustGivingApiSdk\Support\Response` from each request.
-This implements the PSR-7 `ResponseInterface` and so allows access to the full HTTP response received by the client.
+This implements the [PSR-7](https://www.php-fig.org/psr/psr-7/) `ResponseInterface` and so allows access to the full HTTP response received by the client.
 
 #### Response body
 The raw response body can be accessed via
