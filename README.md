@@ -54,13 +54,13 @@ The API base URL and version are set automatically, but may be overridden by pas
 For example:
 ```php
 $auth = new BasicAuth('abced123', 'user@example.com', 'pass123');
-$client = new \My\Own\Psr18Client;
+$httpClient = new \My\Own\Psr18Client;
 $options = [
     'root_domain' => 'https://api.staging.justgiving.com', 
     'api_version' => 2,
 ];
 
-$client = new JustGivingClient($auth, $client, $options);
+$client = new JustGivingClient($auth, $httpClient, $options);
 ```
 
 ### Querying the API
@@ -106,6 +106,27 @@ $team = new Team;
 $team->name = 'My Team';
 $team->story = 'This is my story';
 $team->target = 1000;
+```
+
+#### Custom API requests
+The client allows custom requests via the `request()` method. This takes the HTTP method, the endpoint URI and any request options (e.g. headers). You may also override client options, for example the API version. These overrides will only apply for a single request.
+
+For example, to perform a request to the beta campaign endpoint:
+```php
+$endpoint = 'campaign/' . $campaignGUID;
+
+$client->request('GET', $endpoint, [], ['api_version' => 2]);
+```
+
+If the endpoint requires a payload, JSON may be passed in as an HTTP option. A more complete example:
+```php
+$client->request('POST', 'new-endpoint', [
+        'headers' => ['x-custom-header' => 'custom'],
+        'json'    => ['title' => 'The Title'],
+    ], [
+        'api_version' => 2,
+        'root_domain' => 'https://api.staging.justgiving.com',
+    ]);
 ```
 
 ### Working with responses
