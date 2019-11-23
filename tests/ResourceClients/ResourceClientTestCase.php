@@ -6,6 +6,7 @@ use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\Address;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
 use Konsulting\JustGivingApiSdk\Support\Auth\AppAuth;
+use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
 use Konsulting\JustGivingApiSdk\Support\Auth\BasicAuth;
 use Konsulting\JustGivingApiSdk\Support\Response;
 use Konsulting\JustGivingApiSdk\Tests\TestCase;
@@ -39,7 +40,7 @@ class ResourceClientTestCase extends TestCase
         parent::setUpBeforeClass();
 
         $auth = new AppAuth((new TestContext)->apiKey);
-        $client = new JustGivingClient($auth, new Client());
+        $client = static::makeClient($auth);
 
         $uniqueId = uniqid();
         static::$testEmail = "test+" . $uniqueId . "@testing.com";
@@ -68,6 +69,18 @@ class ResourceClientTestCase extends TestCase
             'Could not create test account.' . PHP_EOL . implode(PHP_EOL, $response->errors));
     }
 
+    /**
+     * @param AuthValue $auth
+     * @return JustGivingClient
+     * @throws \Exception
+     */
+    private static function makeClient(AuthValue $auth)
+    {
+        return new JustGivingClient($auth, new Client, [
+            'root_domain' => (new TestContext)->apiUrl,
+        ]);
+    }
+
 
     protected function setUp(): void
     {
@@ -76,8 +89,7 @@ class ResourceClientTestCase extends TestCase
         $this->context = new TestContext();
 
         $auth = new BasicAuth($this->context->apiKey, static::$testEmail, $this->context->testValidPassword);
-
-        $this->client = new JustGivingClient($auth, new Client);
+        $this->client = static::makeClient($auth);
     }
 
     /**
