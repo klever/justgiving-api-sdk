@@ -2,10 +2,7 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
+use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\BaseClient;
 use ReflectionClass;
 
@@ -33,7 +30,7 @@ class BaseClientTest extends ResourceClientTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        static::$childApi = static::$childApi ?: new BaseClientChild($this->guzzleClient);
+        static::$childApi = static::$childApi ?: new BaseClientChild($this->client);
     }
 
     /** @test */
@@ -42,7 +39,7 @@ class BaseClientTest extends ResourceClientTestCase
         // Cycle through all API client classes
         foreach ($this->childClients as $childClient) {
             $className = '\\Konsulting\\JustGivingApiSdk\\ResourceClients\\' . $childClient . 'Client';
-            $object = new $className($this->guzzleClient);
+            $object = new $className($this->client);
 
             // Get the protected alias properties via reflection
             $aliases = $this->exposeProperty($object, 'aliases');
@@ -114,15 +111,23 @@ class BaseClientTest extends ResourceClientTestCase
     /** @test */
     public function the_content_type_can_be_manually_set_when_posting_a_file()
     {
-        $handler = HandlerStack::create(new MockHandler([
-            new Response(200),
-        ]));
-        $httpClient = new MockHttpClient(['handler' => $handler]);
-        $baseClient = new BaseClientChild($httpClient);
+        $jgClient = \Mockery::mock(JustGivingClient::class);
+        $filename = __DIR__ . '/../img/jpg.jpg';
+        $content = file_get_contents($filename);
 
-        $baseClient->postFile('test', __DIR__ . '/../img/jpg.jpg', 'some content type');
+        $jgClient->shouldReceive('request')
+            ->withArgs(function ($method, $uri, $options) use ($content) {
+                $streamContent = stream_get_contents($options['body']);
 
-        $this->assertEquals(['Content-Type' => 'some content type'], $httpClient->options['headers']);
+                return $method === 'post' && $uri === 'test'
+                    && gettype($options['body']) === 'resource'
+                    && $streamContent === $content
+                    && $options['headers'] === ['Content-Type' => 'some content type'];
+            })->once();
+
+        $baseClient = new BaseClientChild($jgClient);
+
+        $baseClient->postFile('test', $filename, 'some content type');
     }
 }
 
@@ -141,22 +146,5 @@ class BaseClientChild extends BaseClient
     public function methodTwo()
     {
         return 'Method Two';
-    }
-
-    public function postFile($uri, $filename, $contentType = null)
-    {
-        return parent::postFile($uri, $filename, $contentType);
-    }
-}
-
-class MockHttpClient extends Client
-{
-    public $options;
-
-    public function request($method, $uri = '', array $options = [])
-    {
-        $this->options = $options;
-
-        return parent::request('post', $uri, $options);
     }
 }

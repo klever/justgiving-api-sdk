@@ -2,8 +2,8 @@
 
 namespace Konsulting\JustGivingApiSdk\ResourceClients;
 
-use GuzzleHttp\ClientInterface;
 use Illuminate\Support\Str;
+use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\Model;
 use Konsulting\JustGivingApiSdk\Support\Response;
 use Psr\Http\Message\ResponseInterface;
@@ -18,20 +18,20 @@ abstract class BaseClient
     protected $aliases = [];
 
     /**
-     * The HTTP client used to perform requests.
+     * The JustGiving client used to perform requests.
      *
-     * @var ClientInterface;
+     * @var JustGivingClient;
      */
-    public $httpClient;
+    private $client;
 
     /**
      * ClientBase constructor.
      *
-     * @param ClientInterface $httpClient
+     * @param JustGivingClient $client
      */
-    public function __construct(ClientInterface $httpClient)
+    public function __construct(JustGivingClient $client)
     {
-        $this->httpClient = $httpClient;
+        $this->client = $client;
     }
 
     /**
@@ -145,6 +145,6 @@ abstract class BaseClient
      */
     private function request($method, $uri, $options = [])
     {
-        return $this->httpClient->request($method, $uri, $options);
+        return $this->client->request($method, $uri, $options);
     }
 }

@@ -35,6 +35,12 @@ class DonationTest extends ResourceClientTestCase
     {
         $response = $this->client->donation->getTotalByReference('1234-my-sdi-ref');
 
-        $this->assertObjectHasAttributes(['CurrencyCode', 'DonationsTotal', 'NumberOfDonations', 'ThirdPartyReference', 'TotalEstimatedTaxReclaim'], $response->body);
+        $this->assertObjectHasAttributes([
+            'CurrencyCode',
+            'DonationsTotal',
+            'NumberOfDonations',
+            'ThirdPartyReference',
+            'TotalEstimatedTaxReclaim',
+        ], $response->body);
     }
 }

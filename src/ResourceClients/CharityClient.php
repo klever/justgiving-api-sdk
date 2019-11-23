@@ -47,13 +47,19 @@ class CharityClient extends BaseClient
         return $this->delete("charity/" . $charityId . "/pages/" . $pageShortName . "/attribution");
     }
 
-    public function updateFundraisingPageAttribution($charityId, $pageShortName, UpdateFundraisingPageAttributionRequest $updateRequest)
-    {
+    public function updateFundraisingPageAttribution(
+        $charityId,
+        $pageShortName,
+        UpdateFundraisingPageAttributionRequest $updateRequest
+    ) {
         return $this->put("charity/" . $charityId . "/pages/" . $pageShortName . "/attribution", $updateRequest);
     }
 
-    public function appendFundraisingPageAttribution($charityId, $pageShortName, UpdateFundraisingPageAttributionRequest $updateRequest)
-    {
+    public function appendFundraisingPageAttribution(
+        $charityId,
+        $pageShortName,
+        UpdateFundraisingPageAttributionRequest $updateRequest
+    ) {
         return $this->Post("charity/" . $charityId . "/pages/" . $pageShortName . "/attribution", $updateRequest);
     }
 
