@@ -7,7 +7,6 @@ use Konsulting\JustGivingApiSdk\ResourceClients\Models\Address;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
 use Konsulting\JustGivingApiSdk\Support\Auth\AppAuth;
 use Konsulting\JustGivingApiSdk\Support\Auth\BasicAuth;
-use Konsulting\JustGivingApiSdk\Support\GuzzleClientFactory;
 use Konsulting\JustGivingApiSdk\Support\Response;
 use Konsulting\JustGivingApiSdk\Tests\TestCase;
 use Konsulting\JustGivingApiSdk\Tests\TestContext;
