@@ -3,6 +3,7 @@
 namespace Konsulting\JustGivingApiSdk\ResourceClients;
 
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\AddImageRequest;
+use Konsulting\JustGivingApiSdk\ResourceClients\Models\AddPostToPageUpdateRequest;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\AddVideoRequest;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\StoryUpdateRequest;
@@ -92,6 +93,11 @@ class FundraisingClient extends BaseClient
         return $this->get("fundraising/pages/" . $pageShortName . "/updates/" . $updateId);
     }
 
+    /**
+     * @param $pageShortName
+     * @param AddPostToPageUpdateRequest|array $addPostToPageUpdateRequest
+     * @return \Konsulting\JustGivingApiSdk\Support\Response|\Psr\Http\Message\ResponseInterface
+     */
     public function addPostToPageUpdate($pageShortName, $addPostToPageUpdateRequest)
     {
         return $this->post("fundraising/pages/" . $pageShortName . "/updates/", $addPostToPageUpdateRequest);

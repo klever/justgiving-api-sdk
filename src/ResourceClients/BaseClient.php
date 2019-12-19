@@ -97,13 +97,28 @@ abstract class BaseClient
      * Perform a POST request.
      *
      * @param       $uri
-     * @param Model $payload
+     * @param Model|array $payload
      * @return Response|ResponseInterface
      */
-    protected function post($uri, Model $payload = null)
+    protected function post($uri, $payload = null)
     {
         return $this->request('post', $uri,
-            ['json' => isset($payload) ? $payload->getAttributes() : '']);
+            ['json' => $this->getPayloadAttributes($payload)]);
+    }
+
+    /**
+     * Get the payload as an array.
+     *
+     * @param Model|array|null $payload
+     * @return array
+     */
+    private function getPayloadAttributes($payload)
+    {
+        if ($payload instanceof Model) {
+            return $payload->getAttributes();
+        }
+
+        return is_array($payload) ? $payload : [];
     }
 
     /**
