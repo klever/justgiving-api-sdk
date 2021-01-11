@@ -21,7 +21,7 @@ use Konsulting\JustGivingApiSdk\ResourceClients\TeamClient;
 use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
 use Konsulting\JustGivingApiSdk\Support\Response;
 use Psr\Http\Client\ClientInterface;
-use RicardoFiorani\GuzzlePsr18Adapter\Client;
+use GuzzleHttp\Client;
 
 /**
  * Class JustGivingClient

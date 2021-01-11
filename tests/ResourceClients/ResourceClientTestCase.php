@@ -11,7 +11,7 @@ use Konsulting\JustGivingApiSdk\Support\Auth\BasicAuth;
 use Konsulting\JustGivingApiSdk\Support\Response;
 use Konsulting\JustGivingApiSdk\Tests\TestCase;
 use Konsulting\JustGivingApiSdk\Tests\TestContext;
-use RicardoFiorani\GuzzlePsr18Adapter\Client;
+use GuzzleHttp\Client;
 
 class ResourceClientTestCase extends TestCase
 {
