@@ -221,13 +221,22 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertSuccessfulResponse($response);
     }
 
-    /** @test */
-    public function it_adds_a_post_to_the_page_update()
+    /**
+     * @dataProvider postPAgeUpdateProvider
+     * @test
+     */
+    public function it_adds_a_post_to_the_page_update($payload)
     {
-        $request = new AddPostToPageUpdateRequest(['Message' => 'update story']);
-
-        $response = $this->client->fundraising->addPostToPageUpdate(static::$pageShortName, $request);
+        $response = $this->client->fundraising->addPostToPageUpdate(static::$pageShortName, $payload);
         $this->assertNotNull($response->Created, 'Created response not received.');
+    }
+
+    public function postPageUpdateProvider()
+    {
+        return [
+            [new AddPostToPageUpdateRequest(['Message' => 'update story'])],
+            [['Message' => 'update story']],
+        ];
     }
 
     /** @test */
