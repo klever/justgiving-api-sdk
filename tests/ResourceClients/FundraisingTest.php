@@ -57,6 +57,19 @@ class FundraisingTest extends ResourceClientTestCase
     }
 
     /** @test */
+    public function it_retrieves_page_data_when_given_a_page_id()
+    {
+        $response = $this->client->fundraising->getById(640916);
+
+        $this->assertSame('640916', $response->body->pageId);
+        $this->assertSame('73347', $response->body->activityId);
+        $this->assertSame("rasha25", $response->body->eventName);
+        $this->assertSame("rasha25", $response->body->pageShortName);
+        $this->assertSame("Completed", $response->body->status);
+        $this->assertSame("Rasha Hassan", $response->body->owner);
+    }
+
+    /** @test */
     public function it_retrieves_all_fundraising_pages()
     {
         $response = $this->client->fundraising->getAllPages();
