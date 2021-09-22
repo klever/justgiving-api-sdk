@@ -146,6 +146,15 @@ class FundraisingTest extends ResourceClientTestCase
     }
 
     /** @test */
+    public function it_gets_page_updates_with_v2()
+    {
+        $response = $this->client->fundraising->getUpdatesV2('mike-page5');
+
+        $this->assertTrue(is_array($response->body));
+        $this->assertObjectHasAttributes(['CreatedDate', 'Id', 'Message', 'Video'], $response->body[0]);
+    }
+
+    /** @test */
     public function it_gets_page_updates_by_id()
     {
         $response = $this->client->fundraising->getUpdatesById('mike-page5', 913425);
@@ -241,6 +250,16 @@ class FundraisingTest extends ResourceClientTestCase
     public function it_adds_a_post_to_the_page_update($payload)
     {
         $response = $this->client->fundraising->addPostToPageUpdate(static::$pageShortName, $payload);
+        $this->assertNotNull($response->Created, 'Created response not received.');
+    }
+
+    /**
+     * @dataProvider postPAgeUpdateProvider
+     * @test
+     */
+    public function it_adds_a_post_to_the_page_update_with_v2($payload)
+    {
+        $response = $this->client->fundraising->addPostToPageUpdateV2(static::$pageShortName, $payload);
         $this->assertNotNull($response->Created, 'Created response not received.');
     }
 

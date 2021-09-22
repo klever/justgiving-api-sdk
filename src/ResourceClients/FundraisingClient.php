@@ -12,28 +12,30 @@ use Konsulting\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttr
 class FundraisingClient extends BaseClient
 {
     protected $aliases = [
-        'urlCheck'            => 'FundraisingPageUrlCheck',
-        'suggestShortNames'   => 'SuggestPageShortNames',
-        'register'            => 'RegisterFundraisingPage',
-        'getById'             => 'GetFundraisingPageDetailsById',
-        'getByShortName'      => 'GetFundraisingPageDetails',
-        'getAllPages'         => 'GetFundraisingPages',
-        'getDonations'        => 'GetFundraisingPageDonations',
-        'getUpdates'          => 'PageUpdates',
-        'getUpdatesById'      => 'PageUpdateById',
-        'addPostToPageUpdate' => 'PageUpdatesAddPost',
-        'deletePageUpdate'    => 'DeleteFundraisingPageUpdates',
-        'deleteAttribution'   => 'DeleteFundraisingPageAttribution',
-        'updateAttribution'   => 'UpdateFundraisingPageAttribution',
-        'appendToAttribution' => 'AppendToFundraisingPageAttribution',
-        'getAttribution'      => 'GetFundraisingPageAttribution',
-        'uploadImage'         => 'UploadImage',
-        'uploadDefaultImage'  => 'UploadDefaultImage',
-        'addImage'            => 'AddImageToFundraisingPage',
-        'getImages'           => 'GetImagesForFundraisingPage',
-        'addVideo'            => 'AddVideoToFundraisingPage',
-        'getVideos'           => 'GetVideosForFundraisingPage',
-        'cancel'              => 'CancelFundraisingPage',
+        'urlCheck'              => 'FundraisingPageUrlCheck',
+        'suggestShortNames'     => 'SuggestPageShortNames',
+        'register'              => 'RegisterFundraisingPage',
+        'getById'               => 'GetFundraisingPageDetailsById',
+        'getByShortName'        => 'GetFundraisingPageDetails',
+        'getAllPages'           => 'GetFundraisingPages',
+        'getDonations'          => 'GetFundraisingPageDonations',
+        'getUpdates'            => 'PageUpdates',
+        'getUpdatesV2'          => 'PageUpdatesV2',
+        'getUpdatesById'        => 'PageUpdateById',
+        'addPostToPageUpdate'   => 'PageUpdatesAddPost',
+        'addPostToPageUpdateV2' => 'PageUpdatesAddPostV2',
+        'deletePageUpdate'      => 'DeleteFundraisingPageUpdates',
+        'deleteAttribution'     => 'DeleteFundraisingPageAttribution',
+        'updateAttribution'     => 'UpdateFundraisingPageAttribution',
+        'appendToAttribution'   => 'AppendToFundraisingPageAttribution',
+        'getAttribution'        => 'GetFundraisingPageAttribution',
+        'uploadImage'           => 'UploadImage',
+        'uploadDefaultImage'    => 'UploadDefaultImage',
+        'addImage'              => 'AddImageToFundraisingPage',
+        'getImages'             => 'GetImagesForFundraisingPage',
+        'addVideo'              => 'AddVideoToFundraisingPage',
+        'getVideos'             => 'GetVideosForFundraisingPage',
+        'cancel'                => 'CancelFundraisingPage',
     ];
 
     public function urlCheck($pageShortName)
@@ -94,6 +96,11 @@ class FundraisingClient extends BaseClient
         return $this->get("fundraising/pages/".$pageShortName."/updates/");
     }
 
+    public function getUpdatesV2($pageShortName)
+    {
+        return $this->get("fundraising/pages/".$pageShortName."/updatesv2/");
+    }
+
     public function getUpdatesById($pageShortName, $updateId)
     {
         return $this->get("fundraising/pages/".$pageShortName."/updates/".$updateId);
@@ -101,12 +108,24 @@ class FundraisingClient extends BaseClient
 
     /**
      * @param $pageShortName
-     * @param AddPostToPageUpdateRequest|array $addPostToPageUpdateRequest
+     * @param  AddPostToPageUpdateRequest|array  $addPostToPageUpdateRequest
+     *
      * @return \Konsulting\JustGivingApiSdk\Support\Response|\Psr\Http\Message\ResponseInterface
      */
     public function addPostToPageUpdate($pageShortName, $addPostToPageUpdateRequest)
     {
         return $this->post("fundraising/pages/".$pageShortName."/updates/", $addPostToPageUpdateRequest);
+    }
+
+    /**
+     * @param $pageShortName
+     * @param  AddPostToPageUpdateRequest|array  $addPostToPageUpdateRequest
+     *
+     * @return \Konsulting\JustGivingApiSdk\Support\Response|\Psr\Http\Message\ResponseInterface
+     */
+    public function addPostToPageUpdateV2($pageShortName, $addPostToPageUpdateRequest)
+    {
+        return $this->post("fundraising/pages/".$pageShortName."/updatesv2/", $addPostToPageUpdateRequest);
     }
 
     public function deletePageUpdate($pageShortName, $updateId)
