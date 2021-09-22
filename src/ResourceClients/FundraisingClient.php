@@ -96,9 +96,9 @@ class FundraisingClient extends BaseClient
         return $this->get("fundraising/pages/".$pageShortName."/updates/");
     }
 
-    public function getUpdatesV2($pageShortName)
+    public function getUpdatesV2($pageShortName, $pageSize = 25)
     {
-        return $this->get("fundraising/pages/".$pageShortName."/updatesv2/");
+        return $this->get("fundraising/pages/".$pageShortName."/updatesv2/?pageSize=".$pageSize);
     }
 
     public function getUpdatesById($pageShortName, $updateId)
