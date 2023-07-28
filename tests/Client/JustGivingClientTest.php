@@ -115,7 +115,7 @@ class JustGivingClientTest extends TestCase
     {
         // Overload the Guzzle client class to make sure the JustGiving client is instantiating it internally
         $http = Mockery::mock('overload:' . Client::class);
-        $http->shouldReceive('send')
+        $http->shouldReceive('sendRequest')
             ->withArgs(function (RequestInterface $request) {
                 return $request->getUri()->__toString() === 'https://api.justgiving.com/v1/account';
             })

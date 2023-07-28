@@ -204,7 +204,7 @@ class Response implements ResponseInterface
      *
      * @return string HTTP protocol version.
      */
-    public function getProtocolVersion()
+    public function getProtocolVersion(): string
     {
         return $this->response->getProtocolVersion();
     }
@@ -212,10 +212,9 @@ class Response implements ResponseInterface
     /**
      * Return an instance with the specified HTTP protocol version.
      *
-     * @param string $version HTTP protocol version
-     * @return ResponseInterface
+     * @param  string  $version HTTP protocol version
      */
-    public function withProtocolVersion($version)
+    public function withProtocolVersion(string $version): \Psr\Http\Message\MessageInterface
     {
         return $this->response->withProtocolVersion($version);
     }
@@ -227,7 +226,7 @@ class Response implements ResponseInterface
      *     key MUST be a header name, and each value MUST be an array of strings
      *     for that header.
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return $this->response->getHeaders();
     }
@@ -235,12 +234,13 @@ class Response implements ResponseInterface
     /**
      * Checks if a header exists by the given case-insensitive name.
      *
-     * @param string $name Case-insensitive header field name.
+     * @param  string  $name Case-insensitive header field name.
+     *
      * @return bool Returns true if any header names match the given header
      *                     name using a case-insensitive string comparison. Returns false if
      *                     no matching header name is found in the message.
      */
-    public function hasHeader($name)
+    public function hasHeader(string $name): bool
     {
         return $this->response->hasHeader($name);
     }
@@ -248,12 +248,13 @@ class Response implements ResponseInterface
     /**
      * Retrieves a message header value by the given case-insensitive name.
      *
-     * @param string $name Case-insensitive header field name.
+     * @param  string  $name Case-insensitive header field name.
+     *
      * @return string[] An array of string values as provided for the given
      *                     header. If the header does not appear in the message, this method MUST
      *                     return an empty array.
      */
-    public function getHeader($name)
+    public function getHeader(string $name): array
     {
         return $this->response->getHeader($name);
     }
@@ -261,12 +262,13 @@ class Response implements ResponseInterface
     /**
      * Retrieves a comma-separated string of the values for a single header.
      *
-     * @param string $name Case-insensitive header field name.
+     * @param  string  $name Case-insensitive header field name.
+     *
      * @return string A string of values as provided for the given header
      *                     concatenated together using a comma. If the header does not appear in
      *                     the message, this method MUST return an empty string.
      */
-    public function getHeaderLine($name)
+    public function getHeaderLine(string $name): string
     {
         return $this->response->getHeaderLine($name);
     }
@@ -274,12 +276,13 @@ class Response implements ResponseInterface
     /**
      * Return an instance with the provided value replacing the specified header.
      *
-     * @param string          $name  Case-insensitive header field name.
+     * @param  string  $name  Case-insensitive header field name.
      * @param string|string[] $value Header value(s).
+     *
      * @return ResponseInterface
      * @throws \InvalidArgumentException for invalid header names or values.
      */
-    public function withHeader($name, $value)
+    public function withHeader(string $name, $value): \Psr\Http\Message\MessageInterface
     {
         return $this->response->withHeader($name, $value);
     }
@@ -287,12 +290,13 @@ class Response implements ResponseInterface
     /**
      * Return an instance with the specified header appended with the given value.
      *
-     * @param string          $name  Case-insensitive header field name to add.
+     * @param  string  $name  Case-insensitive header field name to add.
      * @param string|string[] $value Header value(s).
+     *
      * @return ResponseInterface
      * @throws \InvalidArgumentException for invalid header names or values.
      */
-    public function withAddedHeader($name, $value)
+    public function withAddedHeader(string $name, $value): \Psr\Http\Message\MessageInterface
     {
         return $this->response->withAddedHeader($name, $value);
     }
@@ -300,10 +304,11 @@ class Response implements ResponseInterface
     /**
      * Return an instance without the specified header.
      *
-     * @param string $name Case-insensitive header field name to remove.
+     * @param  string  $name Case-insensitive header field name to remove.
+     *
      * @return ResponseInterface
      */
-    public function withoutHeader($name)
+    public function withoutHeader(string $name): \Psr\Http\Message\MessageInterface
     {
         return $this->response->withoutHeader($name);
     }
@@ -313,7 +318,7 @@ class Response implements ResponseInterface
      *
      * @return StreamInterface Returns the body as a stream.
      */
-    public function getBody()
+    public function getBody(): StreamInterface
     {
         return $this->response->getBody();
     }
@@ -325,7 +330,7 @@ class Response implements ResponseInterface
      * @return ResponseInterface
      * @throws \InvalidArgumentException When the body is not valid.
      */
-    public function withBody(StreamInterface $body)
+    public function withBody(StreamInterface $body): \Psr\Http\Message\MessageInterface
     {
         return $this->response->withBody($body);
     }
@@ -335,7 +340,7 @@ class Response implements ResponseInterface
      *
      * @return int Status code.
      */
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->response->getStatusCode();
     }
@@ -343,13 +348,14 @@ class Response implements ResponseInterface
     /**
      * Return an instance with the specified status code and, optionally, reason phrase.
      *
-     * @param int    $code         The 3-digit integer result code to set.
-     * @param string $reasonPhrase The reason phrase to use with the
+     * @param  int  $code         The 3-digit integer result code to set.
+     * @param  string  $reasonPhrase The reason phrase to use with the
      *                             provided status code; if none is provided, implementations MAY
      *                             use the defaults as suggested in the HTTP specification.
+     *
      * @return ResponseInterface * @throws \InvalidArgumentException For invalid status code arguments.
      */
-    public function withStatus($code, $reasonPhrase = '')
+    public function withStatus(int $code, string $reasonPhrase = ''): ResponseInterface
     {
         return $this->response->withStatus($code, $reasonPhrase);
     }
@@ -359,7 +365,7 @@ class Response implements ResponseInterface
      *
      * @return string Reason phrase; must return an empty string if none present.
      */
-    public function getReasonPhrase()
+    public function getReasonPhrase(): string
     {
         return $this->response->getReasonPhrase();
     }
