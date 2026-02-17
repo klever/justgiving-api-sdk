@@ -6,16 +6,16 @@ class LeaderboardClient extends BaseClient
 {
     protected $aliases = [
         'getCharityLeaderboard' => 'GetCharityLeaderboard',
-        'getEventLeaderboard'   => 'GetEventLeaderboard',
+        'getEventLeaderboard' => 'GetEventLeaderboard',
     ];
 
     public function getCharityLeaderboard($charityId)
     {
-        return $this->get("charity/" . $charityId . "/leaderboard");
+        return $this->get('charity/'.$charityId.'/leaderboard');
     }
 
     public function getEventLeaderboard($eventId)
     {
-        return $this->get("event/" . $eventId . "/leaderboard");
+        return $this->get('event/'.$eventId.'/leaderboard');
     }
 }

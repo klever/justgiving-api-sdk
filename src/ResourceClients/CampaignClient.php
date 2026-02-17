@@ -8,15 +8,15 @@ class CampaignClient extends BaseClient
 {
     protected $aliases = [
         'registerFundraisingPage' => 'RegisterCampaignFundraisingPage',
-        'retrieve'                => 'GetCampaignDetails',
-        'pages'                   => 'GetPagesForCampaign',
-        'create'                  => 'CreateCampaign',
-        'getAllByCharityId'       => 'GetCampaignsByCharityId',
+        'retrieve' => 'GetCampaignDetails',
+        'pages' => 'GetPagesForCampaign',
+        'create' => 'CreateCampaign',
+        'getAllByCharityId' => 'GetCampaignsByCharityId',
     ];
 
     public function retrieve($charityName, $campaignName)
     {
-        return $this->get("campaigns/" . $charityName . "/" . $campaignName);
+        return $this->get('campaigns/'.$charityName.'/'.$campaignName);
     }
 
     /**
@@ -31,12 +31,12 @@ class CampaignClient extends BaseClient
 
     public function pages($charityShortName, $campaignShortUrl)
     {
-        return $this->get("campaigns/" . $charityShortName . "/" . $campaignShortUrl . "/pages");
+        return $this->get('campaigns/'.$charityShortName.'/'.$campaignShortUrl.'/pages');
     }
 
     public function getAllByCharityId($charityId)
     {
-        return $this->get('campaigns/' . $charityId);
+        return $this->get('campaigns/'.$charityId);
     }
 
     /**

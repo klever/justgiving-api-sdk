@@ -4,7 +4,7 @@ namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
 class CountriesTest extends ResourceClientTestCase
 {
-    public function testGetCountries_ReturnCountries()
+    public function test_get_countries_return_countries()
     {
         $response = $this->client->countries->countries();
 

@@ -25,15 +25,15 @@ class AuthTest extends TestCase
             [
                 new BasicAuth('my_key', 'my user', 'pass123'),
                 [
-                    'Authorization' => 'Basic ' . base64_encode('my user:pass123'),
-                    'x-api-key'     => 'my_key',
+                    'Authorization' => 'Basic '.base64_encode('my user:pass123'),
+                    'x-api-key' => 'my_key',
                 ],
             ],
             [
                 new BearerAuth('my_key', 'oauth_secret', 'my_token'),
                 [
-                    'Authorization'     => 'Bearer my_token',
-                    'x-api-key'         => 'my_key',
+                    'Authorization' => 'Bearer my_token',
+                    'x-api-key' => 'my_key',
                     'x-application-key' => 'oauth_secret',
                 ],
             ],
@@ -41,7 +41,7 @@ class AuthTest extends TestCase
             [
                 new AppAuth('my_key', 'secret_key'),
                 [
-                    'x-api-key'         => 'my_key',
+                    'x-api-key' => 'my_key',
                     'x-application-key' => 'secret_key',
                 ],
             ],

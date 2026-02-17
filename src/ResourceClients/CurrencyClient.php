@@ -10,6 +10,6 @@ class CurrencyClient extends BaseClient
 
     public function getValidCodes()
     {
-        return $this->get("fundraising/currencies");
+        return $this->get('fundraising/currencies');
     }
 }

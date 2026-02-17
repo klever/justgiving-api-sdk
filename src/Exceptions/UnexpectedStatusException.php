@@ -7,9 +7,8 @@ use Throwable;
 
 class UnexpectedStatusException extends \Exception
 {
-    public function __construct(ResponseInterface $response, $code = 0, Throwable $previous = null)
+    public function __construct(ResponseInterface $response, $code = 0, ?Throwable $previous = null)
     {
-        parent::__construct('Unexpected status code returned: ' . $response->getStatusCode(), $code, $previous);
+        parent::__construct('Unexpected status code returned: '.$response->getStatusCode(), $code, $previous);
     }
-
 }

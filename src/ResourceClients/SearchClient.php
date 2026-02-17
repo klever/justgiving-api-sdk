@@ -2,13 +2,13 @@
 
 namespace Konsulting\JustGivingApiSdk\ResourceClients;
 
-
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\SearchInMemoryRequest;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\SearchTeamRequest;
 
 class SearchClient extends BaseClient
 {
     const DEFAULT_PAGE_SIZE = 50;
+
     const START_PAGE = 1;
 
     protected $aliases = [
@@ -21,12 +21,12 @@ class SearchClient extends BaseClient
 
     public function charity($searchTerms, $pageSize = self::DEFAULT_PAGE_SIZE, $pageNumber = self::START_PAGE)
     {
-        return $this->get("charity/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&page=" . $pageNumber);
+        return $this->get('charity/search?q='.urlencode($searchTerms).'&PageSize='.$pageSize.'&page='.$pageNumber);
     }
 
     public function event($searchTerms, $pageSize = self::DEFAULT_PAGE_SIZE, $pageNumber = self::START_PAGE)
     {
-        return $this->get("event/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&page=" . $pageNumber);
+        return $this->get('event/search?q='.urlencode($searchTerms).'&PageSize='.$pageSize.'&page='.$pageNumber);
     }
 
     public function fundraiser(
@@ -35,7 +35,7 @@ class SearchClient extends BaseClient
         $pageSize = self::DEFAULT_PAGE_SIZE,
         $pageNumber = self::START_PAGE
     ) {
-        return $this->get("fundraising/search?q=" . urlencode($searchTerms) . "&PageSize=" . $pageSize . "&page=" . $pageNumber . "&charityId=" . $charityId);
+        return $this->get('fundraising/search?q='.urlencode($searchTerms).'&PageSize='.$pageSize.'&page='.$pageNumber.'&charityId='.$charityId);
     }
 
     public function inMemory(
@@ -43,7 +43,7 @@ class SearchClient extends BaseClient
         $pageSize = self::DEFAULT_PAGE_SIZE,
         $pageNumber = self::START_PAGE
     ) {
-        return $this->get("remember/search?" . http_build_query($searchRequest->getAttributes()) . "&PageSize=" . $pageSize . "&page=" . $pageNumber);
+        return $this->get('remember/search?'.http_build_query($searchRequest->getAttributes()).'&PageSize='.$pageSize.'&page='.$pageNumber);
     }
 
     public function team(
@@ -51,6 +51,6 @@ class SearchClient extends BaseClient
         $pageSize = self::DEFAULT_PAGE_SIZE,
         $pageNumber = self::START_PAGE
     ) {
-        return $this->get("team/search?" . http_build_query($searchRequest->getAttributes()) . "&PageSize=" . $pageSize . "&page=" . $pageNumber);
+        return $this->get('team/search?'.http_build_query($searchRequest->getAttributes()).'&PageSize='.$pageSize.'&page='.$pageNumber);
     }
 }

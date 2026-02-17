@@ -8,7 +8,6 @@ use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\ValidateAccountRequest;
 use PHPUnit\Framework\Attributes\Test;
 
-
 class AccountTest extends ResourceClientTestCase
 {
     #[Test]
@@ -16,19 +15,19 @@ class AccountTest extends ResourceClientTestCase
     {
         $uniqueId = uniqid();
         $request = new CreateAccountRequest([
-            'email'                    => "test+" . $uniqueId . "@testing.com",
-            'firstName'                => "first" . $uniqueId,
-            'lastName'                 => "last" . $uniqueId,
-            'password'                 => $this->context->testValidPassword,
-            'title'                    => "Mr",
+            'email' => 'test+'.$uniqueId.'@testing.com',
+            'firstName' => 'first'.$uniqueId,
+            'lastName' => 'last'.$uniqueId,
+            'password' => $this->context->testValidPassword,
+            'title' => 'Mr',
             'acceptTermsAndConditions' => true,
-            'address'                  => new Address([
-                'line1'             => "testLine1" . $uniqueId,
-                'line2'             => "testLine2" . $uniqueId,
-                'country'           => "United Kingdom",
-                'countyOrState'     => "testCountyOrState" . $uniqueId,
-                'townOrCity'        => "testTownOrCity" . $uniqueId,
-                'postcodeOrZipcode' => "M130EJ",
+            'address' => new Address([
+                'line1' => 'testLine1'.$uniqueId,
+                'line2' => 'testLine2'.$uniqueId,
+                'country' => 'United Kingdom',
+                'countyOrState' => 'testCountyOrState'.$uniqueId,
+                'townOrCity' => 'testTownOrCity'.$uniqueId,
+                'postcodeOrZipcode' => 'M130EJ',
             ]),
         ]);
 
@@ -40,7 +39,7 @@ class AccountTest extends ResourceClientTestCase
     #[Test]
     public function it_lists_all_fundraising_pages_when_supplied_with_a_valid_account()
     {
-        $response = $this->client->account->listAllPages("support@justgiving.com");
+        $response = $this->client->account->listAllPages('support@justgiving.com');
 
         $attributes = [
             'pageId',
@@ -62,7 +61,7 @@ class AccountTest extends ResourceClientTestCase
     #[Test]
     public function it_checks_for_a_registered_email()
     {
-        $nonRegisteredEmailResponse = $this->client->account->isEmailRegistered(uniqid() . "@" . uniqid() . "-justgiving.com");
+        $nonRegisteredEmailResponse = $this->client->account->isEmailRegistered(uniqid().'@'.uniqid().'-justgiving.com');
         $alreadyRegisteredEmailResponse = $this->client->account->isEmailRegistered('support@justgiving.com');
 
         $this->assertFalse($nonRegisteredEmailResponse->existenceCheck());
@@ -73,7 +72,7 @@ class AccountTest extends ResourceClientTestCase
     public function it_validates_that_supplied_account_credentials_are_correct()
     {
         $request = new ValidateAccountRequest([
-            'email'    => static::$testEmail,
+            'email' => static::$testEmail,
             'password' => $this->context->testValidPassword,
         ]);
         $response = $this->client->account->validate($request);
@@ -86,7 +85,7 @@ class AccountTest extends ResourceClientTestCase
     public function it_validates_account_credentials_and_returns_false_if_they_are_incorrect()
     {
         $request = new ValidateAccountRequest([
-            'email'    => $this->context->testUsername,
+            'email' => $this->context->testUsername,
             'password' => $this->context->testInvalidPassword,
         ]);
         $response = $this->client->account->validate($request);
@@ -104,17 +103,17 @@ class AccountTest extends ResourceClientTestCase
         $this->assertEquals(static::$testEmail, $response->body->email);
     }
 
-    //test change password
+    // test change password
 
     #[Test]
     public function it_fails_to_change_the_account_password_when_supplied_with_an_incorrect_current_password()
     {
-        $email = 'user' . uniqid() . '@testing.com';
+        $email = 'user'.uniqid().'@testing.com';
         $this->createAccount($email);
 
         $request = new ChangePasswordRequest([
-            'emailAddress'    => $email,
-            'newPassword'     => 'newPassword',
+            'emailAddress' => $email,
+            'newPassword' => 'newPassword',
             'currentPassword' => 'INVALID PASSWORD',
         ]);
         $response = $this->client->account->changePassword($request);
@@ -125,12 +124,12 @@ class AccountTest extends ResourceClientTestCase
     #[Test]
     public function it_changes_the_account_password_when_supplied_with_the_current_password()
     {
-        $email = 'user' . uniqid() . '@testing.com';
+        $email = 'user'.uniqid().'@testing.com';
         $this->createAccount($email);
 
         $request = new ChangePasswordRequest([
-            'emailAddress'    => $email,
-            'newPassword'     => 'newPassword',
+            'emailAddress' => $email,
+            'newPassword' => 'newPassword',
             'currentPassword' => $this->context->testValidPassword,
         ]);
         $response = $this->client->account->changePassword($request);
@@ -139,7 +138,7 @@ class AccountTest extends ResourceClientTestCase
     }
 
     #[Test]
-    public function it_retrieves_donations_by_charity()
+    public function it_retrieves_donations_by_charity(): never
     {
         $this->markTestSkipped('No donations on test account');
         $response = $this->client->account->getDonationsByCharity('249335');
@@ -158,7 +157,7 @@ class AccountTest extends ResourceClientTestCase
     }
 
     #[Test]
-    public function it_retrieves_a_list_of_all_donations_when_supplied_with_the_correct_credentials()
+    public function it_retrieves_a_list_of_all_donations_when_supplied_with_the_correct_credentials(): never
     {
         $this->markTestSkipped('No donations on test account');
         $response = $this->client->account->getDonations();

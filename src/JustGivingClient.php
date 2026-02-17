@@ -2,6 +2,7 @@
 
 namespace Konsulting\JustGivingApiSdk;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Konsulting\JustGivingApiSdk\Exceptions\ClassNotFoundException;
 use Konsulting\JustGivingApiSdk\ResourceClients\AccountClient;
@@ -21,7 +22,6 @@ use Konsulting\JustGivingApiSdk\ResourceClients\TeamClient;
 use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
 use Konsulting\JustGivingApiSdk\Support\Response;
 use Psr\Http\Client\ClientInterface;
-use GuzzleHttp\Client;
 
 /**
  * Class JustGivingClient
@@ -80,28 +80,18 @@ class JustGivingClient
     ];
 
     /**
-     * @var AuthValue
-     */
-    private $auth;
-
-    /**
      * JustGivingClient constructor.
      *
-     * @param AuthValue       $auth
-     * @param ClientInterface $client
-     * @param array           $options
+     * @param  array  $options
      */
-    public function __construct(AuthValue $auth, ?ClientInterface $client = null, $options = [])
+    public function __construct(private readonly AuthValue $auth, ?ClientInterface $client = null, $options = [])
     {
-        $this->auth = $auth;
         $this->httpClient = $client ?: new Client;
         $this->setOptions($options);
     }
 
     /**
      * Set the client options, using defaults for any that are not provided.
-     *
-     * @param array $options
      */
     private function setOptions(array $options)
     {
@@ -112,11 +102,12 @@ class JustGivingClient
     /**
      * Proxy a request onto the HTTP client, using the fully qualified URI.
      *
-     * @param string $method
-     * @param string $uri
-     * @param array  $httpOptions   Custom options for the HTTP client (e.g. headers)
-     * @param array  $clientOptions Custom options for the JustGiving client (e.g. API version)
+     * @param  string  $method
+     * @param  string  $uri
+     * @param  array  $httpOptions  Custom options for the HTTP client (e.g. headers)
+     * @param  array  $clientOptions  Custom options for the JustGiving client (e.g. API version)
      * @return Response
+     *
      * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function request($method, $uri, $httpOptions = [], $clientOptions = [])
@@ -135,9 +126,9 @@ class JustGivingClient
     /**
      * Build the PSR-7 request object. Encode JSON payload and set headers if needed.
      *
-     * @param string $method
-     * @param string $uri
-     * @param array  $options
+     * @param  string  $method
+     * @param  string  $uri
+     * @param  array  $options
      * @return Request
      */
     private function buildRequest($method, $uri, $options)
@@ -157,18 +148,18 @@ class JustGivingClient
     /**
      * Build the full URI using the root URI and API version.
      *
-     * @param string $uri
+     * @param  string  $uri
      * @return string
      */
     private function buildUri($uri)
     {
-        return $this->options['root_domain'] . '/v' . $this->options['api_version'] . '/' . $uri;
+        return $this->options['root_domain'].'/v'.$this->options['api_version'].'/'.$uri;
     }
 
     /**
      * Merge the per-request headers with the auth headers.
      *
-     * @param array $requestHeaders
+     * @param  array  $requestHeaders
      * @return array
      */
     private function buildHeaders($requestHeaders)
@@ -181,21 +172,20 @@ class JustGivingClient
     /**
      * Allow API classes to be called as properties. Return a singleton client class.
      *
-     * @param string $property
+     * @param  string  $property
      * @return mixed
+     *
      * @throws \Exception
      */
     public function __get($property)
     {
-        $class = __NAMESPACE__ . '\\ResourceClients\\' . ucfirst($property) . 'Client';
+        $class = __NAMESPACE__.'\\ResourceClients\\'.ucfirst($property).'Client';
 
         if (! class_exists($class)) {
             throw new ClassNotFoundException($class);
         }
 
-        $this->clients[$class] = isset($this->clients[$class])
-            ? $this->clients[$class]
-            : new $class($this);
+        $this->clients[$class] ??= new $class($this);
 
         return $this->clients[$class];
     }

@@ -18,8 +18,11 @@ class RememberedPerson extends Model
      * @var string
      */
     public $relationship;
+
     public $rememberedPerson;
+
     public $firstName;
+
     public $lastName;
 
     /**
@@ -28,7 +31,10 @@ class RememberedPerson extends Model
      * @var string
      */
     public $gender;
+
     public $town;
+
     public $dateOfBirth;
+
     public $dateOfDeath;
 }

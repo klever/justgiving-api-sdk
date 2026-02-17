@@ -11,6 +11,6 @@ class OneSearchClient extends BaseClient
     public function index($searchTerm, $resultByIndex = '', $limit = 10)
     {
         // TODO: implement other query parameters
-        return $this->get("onesearch?q=" . $searchTerm . "&i=" . $resultByIndex . "&limit=" . $limit);
+        return $this->get('onesearch?q='.$searchTerm.'&i='.$resultByIndex.'&limit='.$limit);
     }
 }

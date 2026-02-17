@@ -20,7 +20,7 @@ class SearchTest extends ResourceClientTestCase
 
         foreach ($response->body->charitySearchResults as $charity) {
             if ($charity->charityId === '189701') {
-                $this->assertSame('citizens uk', strtolower($charity->name));
+                $this->assertSame('citizens uk', strtolower((string) $charity->name));
             }
         }
     }
@@ -74,7 +74,7 @@ class SearchTest extends ResourceClientTestCase
     {
         $searchRequest = new SearchInMemoryRequest([
             'firstName' => 'Bob',
-            'lastName'  => 'Smith',
+            'lastName' => 'Smith',
         ]);
 
         $response = $this->client->search->inMemory($searchRequest);

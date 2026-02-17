@@ -11,14 +11,16 @@ use PHPUnit\Framework\Attributes\Test;
 class TeamTest extends ResourceClientTestCase
 {
     protected $pageShortName;
+
     protected static $team;
+
     protected static $teamShortName;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        static::$teamShortName = static::$teamShortName ?: 'team' . uniqid();
+        static::$teamShortName = static::$teamShortName ?: 'team'.uniqid();
         static::$team = static::$team ?: $this->createTeam(static::$teamShortName);
     }
 
@@ -33,7 +35,7 @@ class TeamTest extends ResourceClientTestCase
     #[Test]
     public function it_checks_if_a_team_exists()
     {
-        $teamShortName = 'team' . uniqid();
+        $teamShortName = 'team'.uniqid();
         $this->createTeam($teamShortName);
         $response = $this->client->team->checkIfExists($teamShortName);
 
@@ -45,11 +47,11 @@ class TeamTest extends ResourceClientTestCase
     {
         $updatedTeam = new Team([
             'teamShortName' => static::$teamShortName,
-            'name'          => 'New Team Name',
-            'story'         => 'New story',
-            'targetType'    => 'Fixed',
-            'teamType'      => 'Open',
-            'teamTarget'    => 10000,
+            'name' => 'New Team Name',
+            'story' => 'New story',
+            'targetType' => 'Fixed',
+            'teamType' => 'Open',
+            'teamTarget' => 10000,
         ]);
 
         $response = $this->client->team->update(static::$teamShortName, $updatedTeam);
@@ -61,8 +63,8 @@ class TeamTest extends ResourceClientTestCase
     #[Test]
     public function it_allows_a_user_to_join_a_team()
     {
-        $teamShortName = 'team' . uniqid();
-        $pageShortName = 'page' . uniqid();
+        $teamShortName = 'team'.uniqid();
+        $pageShortName = 'page'.uniqid();
         $this->createTeam($teamShortName, $pageShortName);
 
         $response = $this->client->team->join(
@@ -76,29 +78,29 @@ class TeamTest extends ResourceClientTestCase
 
     protected function createTeam($teamShortName = null, $pageShortName = null)
     {
-        $pageShortName = $pageShortName ?: "api-test-" . uniqid();
+        $pageShortName = $pageShortName ?: 'api-test-'.uniqid();
         $this->client->fundraising->register(new FundraisingPage([
-            'reference'     => "12345",
+            'reference' => '12345',
             'pageShortName' => $pageShortName,
-            'activityType'  => "OtherCelebration",
-            'pageTitle'     => "api test",
-            'pageStory'     => "This is my custom page story, which will override the default.",
-            'eventName'     => "The Other Occasion of ApTest and APITest",
-            'charityId'     => 2050,
-            'targetAmount'  => 20,
-            'eventDate'     => "/Date(1235764800000)/",
-            'charityOptIn'  => true,
+            'activityType' => 'OtherCelebration',
+            'pageTitle' => 'api test',
+            'pageStory' => 'This is my custom page story, which will override the default.',
+            'eventName' => 'The Other Occasion of ApTest and APITest',
+            'charityId' => 2050,
+            'targetAmount' => 20,
+            'eventDate' => '/Date(1235764800000)/',
+            'charityOptIn' => true,
             'charityFunded' => false,
         ]));
 
         $team = new Team([
-            'teamShortName' => $teamShortName ?: 'myTeam' . uniqid(),
-            'name'          => 'My Team',
-            'story'         => 'This is my team.',
-            'targetType'    => 'Fixed',
-            'teamType'      => 'Open',
-            'teamTarget'    => 10000,
-            'teamMembers'   => [new TeamMember(['pageShortName' => $pageShortName])],
+            'teamShortName' => $teamShortName ?: 'myTeam'.uniqid(),
+            'name' => 'My Team',
+            'story' => 'This is my team.',
+            'targetType' => 'Fixed',
+            'teamType' => 'Open',
+            'teamTarget' => 10000,
+            'teamMembers' => [new TeamMember(['pageShortName' => $pageShortName])],
         ]);
 
         return $this->client->team->create($team);

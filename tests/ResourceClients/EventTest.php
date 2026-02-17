@@ -11,13 +11,13 @@ class EventTest extends ResourceClientTestCase
     public function it_registers_an_event()
     {
         $eventRequest = new EventRequest([
-            'name'           => 'My Event',
-            'description'    => 'A description',
-            "completionDate" => "/Date(1524814487875+0000)/",
-            "expiryDate"     => "/Date(1524814487875+0000)/",
-            "startDate"      => "/Date(1493451287875+0000)/",
-            "eventType"      => "OtherCelebration",
-            "location"       => "Some location",
+            'name' => 'My Event',
+            'description' => 'A description',
+            'completionDate' => '/Date(1524814487875+0000)/',
+            'expiryDate' => '/Date(1524814487875+0000)/',
+            'startDate' => '/Date(1493451287875+0000)/',
+            'eventType' => 'OtherCelebration',
+            'location' => 'Some location',
         ]);
 
         $response = $this->client->event->create($eventRequest);

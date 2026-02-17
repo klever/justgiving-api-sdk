@@ -18,28 +18,14 @@ abstract class BaseClient
     protected $aliases = [];
 
     /**
-     * The JustGiving client used to perform requests.
-     *
-     * @var JustGivingClient;
-     */
-    private $client;
-
-    /**
      * ClientBase constructor.
-     *
-     * @param JustGivingClient $client
      */
-    public function __construct(JustGivingClient $client)
-    {
-        $this->client = $client;
-    }
+    public function __construct(private readonly JustGivingClient $client) {}
 
     /**
      * Check if the called method is valid if it's converted to camel case. If not, look for a defined method alias
      * that's either an exact match, or the Pascal-cased version of the called method.
      *
-     * @param $calledMethod
-     * @param $args
      * @return mixed
      */
     public function __call($calledMethod, $args)
@@ -61,7 +47,7 @@ abstract class BaseClient
     /**
      * Perform a GET request.
      *
-     * @param string $uri
+     * @param  string  $uri
      * @return Response|ResponseInterface
      */
     protected function get($uri)
@@ -72,7 +58,7 @@ abstract class BaseClient
     /**
      * Perform a HEAD request.
      *
-     * @param string $uri
+     * @param  string  $uri
      * @return Response|ResponseInterface
      */
     protected function head($uri)
@@ -83,8 +69,6 @@ abstract class BaseClient
     /**
      * Perform a PUT request.
      *
-     * @param       $uri
-     * @param Model $payload
      * @return Response|ResponseInterface
      */
     protected function put($uri, ?Model $payload = null)
@@ -96,8 +80,7 @@ abstract class BaseClient
     /**
      * Perform a POST request.
      *
-     * @param       $uri
-     * @param Model|array $payload
+     * @param  Model|array  $payload
      * @return Response|ResponseInterface
      */
     protected function post($uri, $payload = null)
@@ -109,7 +92,7 @@ abstract class BaseClient
     /**
      * Get the payload as an array.
      *
-     * @param Model|array|null $payload
+     * @param  Model|array|null  $payload
      * @return array
      */
     private function getPayloadAttributes($payload)
@@ -124,9 +107,9 @@ abstract class BaseClient
     /**
      * Perform a POST request with data from a file sent as the request body.
      *
-     * @param string $uri
-     * @param string $filename
-     * @param string $contentType
+     * @param  string  $uri
+     * @param  string  $filename
+     * @param  string  $contentType
      * @return Response|ResponseInterface
      */
     protected function postFile($uri, $filename, $contentType = null)
@@ -143,7 +126,7 @@ abstract class BaseClient
     /**
      * Perform a DELETE request.
      *
-     * @param string $uri
+     * @param  string  $uri
      * @return Response|ResponseInterface
      */
     protected function delete($uri)
@@ -154,9 +137,9 @@ abstract class BaseClient
     /**
      * Perform a request on the HTTP client.
      *
-     * @param string $method
-     * @param string $uri
-     * @param array  $options
+     * @param  string  $method
+     * @param  string  $uri
+     * @param  array  $options
      */
     private function request($method, $uri, $options = [])
     {

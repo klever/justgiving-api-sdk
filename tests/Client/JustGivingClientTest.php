@@ -39,7 +39,7 @@ class JustGivingClientTest extends TestCase
         $auth = Mockery::mock(AuthValue::class);
         $auth->shouldReceive('getHeaders')
             ->andReturn([
-                'x-api-key'         => 'abcdef',
+                'x-api-key' => 'abcdef',
                 'x-application-key' => 'secret',
             ]);
 
@@ -77,9 +77,7 @@ class JustGivingClientTest extends TestCase
     {
         $http = Mockery::mock(ClientInterface::class);
         $http->shouldReceive('sendRequest')
-            ->withArgs(function (RequestInterface $request) {
-                return $request->getUri()->__toString() === 'https://api.justgiving.com/v1/account';
-            })
+            ->withArgs(fn (RequestInterface $request) => $request->getUri()->__toString() === 'https://api.justgiving.com/v1/account')
             ->once()
             ->andReturn(new Response);
 
@@ -93,9 +91,7 @@ class JustGivingClientTest extends TestCase
     {
         $http = Mockery::mock(ClientInterface::class);
         $http->shouldReceive('sendRequest')
-            ->withArgs(function (RequestInterface $request) {
-                return $request->getUri()->__toString() === 'https://example.com/v3/account';
-            })
+            ->withArgs(fn (RequestInterface $request) => $request->getUri()->__toString() === 'https://example.com/v3/account')
             ->once()
             ->andReturn(new Response);
 
@@ -116,11 +112,9 @@ class JustGivingClientTest extends TestCase
     public function it_automatically_instantiates_a_psr_18_client()
     {
         // Overload the Guzzle client class to make sure the JustGiving client is instantiating it internally
-        $http = Mockery::mock('overload:' . Client::class);
+        $http = Mockery::mock('overload:'.Client::class);
         $http->shouldReceive('sendRequest')
-            ->withArgs(function (RequestInterface $request) {
-                return $request->getUri()->__toString() === 'https://api.justgiving.com/v1/account';
-            })
+            ->withArgs(fn (RequestInterface $request) => $request->getUri()->__toString() === 'https://api.justgiving.com/v1/account')
             ->once()
             ->andReturn(new Response);
 
@@ -135,31 +129,27 @@ class JustGivingClientTest extends TestCase
         $http = Mockery::mock(ClientInterface::class);
 
         $expectedHeaders = [
-            'Host'              => ['example3.com'],
-            'Accept'            => ['application/json'],
-            'x-api-key'         => ['abcdef'],
+            'Host' => ['example3.com'],
+            'Accept' => ['application/json'],
+            'x-api-key' => ['abcdef'],
             'x-application-key' => ['secret'],
-            'x-custom-header'   => ['custom'],
-            'Content-Type'      => ['application/json'],
+            'x-custom-header' => ['custom'],
+            'Content-Type' => ['application/json'],
         ];
 
         // Test custom request
         $http->shouldReceive('sendRequest')
-            ->withArgs(function (RequestInterface $request) use ($expectedHeaders) {
-                return $request->getUri()->__toString() === 'https://example3.com/v5/new-endpoint'
-                    && $request->getHeaders() === $expectedHeaders
-                    && $request->getMethod() === 'MY METHOD'
-                    && $request->getBody()->getContents() === '{"test":"json"}';
-            })
+            ->withArgs(fn (RequestInterface $request) => $request->getUri()->__toString() === 'https://example3.com/v5/new-endpoint'
+                && $request->getHeaders() === $expectedHeaders
+                && $request->getMethod() === 'MY METHOD'
+                && $request->getBody()->getContents() === '{"test":"json"}')
             ->once()
             ->andReturn(new Response)
             ->ordered();
 
         // Check everything has been restored to how it was before
         $http->shouldReceive('sendRequest')
-            ->withArgs(function (RequestInterface $request) {
-                return $request->getUri()->__toString() === 'https://example.com/v3/account';
-            })
+            ->withArgs(fn (RequestInterface $request) => $request->getUri()->__toString() === 'https://example.com/v3/account')
             ->once()
             ->andReturn(new Response)
             ->ordered();
@@ -171,7 +161,7 @@ class JustGivingClientTest extends TestCase
 
         $client->request('my method', 'new-endpoint', [
             'headers' => ['x-custom-header' => 'custom'],
-            'json'    => ['test' => 'json'],
+            'json' => ['test' => 'json'],
         ], [
             'root_domain' => 'https://example3.com',
             'api_version' => 5,

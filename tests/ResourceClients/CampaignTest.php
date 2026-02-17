@@ -9,9 +9,9 @@ class CampaignTest extends ResourceClientTestCase
     #[Test]
     public function it_retrieves_campaign_details_given_the_charity_and_campaign_names()
     {
-        $charityName = "porthospcf";
-        $campaignName = "supportporthospcharity";
-        $expectedCampaignPageName = "Portsmouth Hospitals Charity";
+        $charityName = 'porthospcf';
+        $campaignName = 'supportporthospcharity';
+        $expectedCampaignPageName = 'Portsmouth Hospitals Charity';
 
         $response = $this->client->Campaign->retrieve($charityName, $campaignName);
 
@@ -22,7 +22,7 @@ class CampaignTest extends ResourceClientTestCase
     #[Test]
     public function it_retrieves_a_list_of_campaigns_given_a_charity_id()
     {
-        $expectedCampaignPageName = "test";
+        $expectedCampaignPageName = 'test';
 
         $response = $this->client->Campaign->getAllByCharityId('249335');
 
@@ -33,8 +33,8 @@ class CampaignTest extends ResourceClientTestCase
     #[Test]
     public function it_retrieves_campaign_pages_when_given_a_charity_short_name_and_short_url()
     {
-        $charityShortName = "porthospcf";
-        $campaignShortUrl = "supportporthospcharity";
+        $charityShortName = 'porthospcf';
+        $campaignShortUrl = 'supportporthospcharity';
 
         $response = $this->client->Campaign->pages($charityShortName, $campaignShortUrl);
 

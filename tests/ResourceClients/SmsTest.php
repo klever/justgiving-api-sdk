@@ -3,7 +3,6 @@
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
-use Konsulting\JustGivingApiSdk\ResourceClients\Models\RegisterPageRequest;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\UpdatePageSmsCodeRequest;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -18,33 +17,31 @@ class SmsTest extends ResourceClientTestCase
     }
 
     #[Test]
-    public function it_updates_the_sms_code_for_a_page()
+    public function it_updates_the_sms_code_for_a_page(): never
     {
         $this->markTestSkipped('No documentation found for this endpoint.');
-        $pageShortName = "api-test-" . uniqid();
+        $pageShortName = 'api-test-'.uniqid();
         $pageResponse = $this->client->fundraising->register(new FundraisingPage([
-            'reference'     => "12345",
+            'reference' => '12345',
             'pageShortName' => $pageShortName,
-            'activityType'  => "OtherCelebration",
-            'pageTitle'     => "api test",
-            'pageStory'     => "This is my custom page story, which will override the default.",
-            'eventName'     => "The Other Occasion of ApTest and APITest",
-            'charityId'     => 2050,
-            'targetAmount'  => 20,
-            'eventDate'     => "/Date(1235764800000)/",
-            'charityOptIn'  => true,
+            'activityType' => 'OtherCelebration',
+            'pageTitle' => 'api test',
+            'pageStory' => 'This is my custom page story, which will override the default.',
+            'eventName' => 'The Other Occasion of ApTest and APITest',
+            'charityId' => 2050,
+            'targetAmount' => 20,
+            'eventDate' => '/Date(1235764800000)/',
+            'charityOptIn' => true,
             'charityFunded' => false,
         ]));
 
         $this->assertSuccessfulResponse($pageResponse);
 
-        $randomChar = function () {
-            return chr(rand(65, 90));
-        };
+        $randomChar = (fn () => chr(random_int(65, 90)));
 
         $payload = new UpdatePageSmsCodeRequest([
             // SMS code must be 4 letters followed by a number between 47 and 99
-            'urn' => $randomChar() . $randomChar() . $randomChar() . $randomChar() . rand(47, 99),
+            'urn' => $randomChar().$randomChar().$randomChar().$randomChar().random_int(47, 99),
         ]);
 
         $response = $this->client->sms->updatePageCode($pageShortName, $payload);

@@ -10,6 +10,6 @@ class CountriesClient extends BaseClient
 
     public function countries()
     {
-        return $this->get("countries");
+        return $this->get('countries');
     }
 }

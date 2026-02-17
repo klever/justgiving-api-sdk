@@ -6,12 +6,17 @@ use Exception;
 
 class TestContext
 {
-    public $apiUrl = "https://api.staging.justgiving.com/";
+    public $apiUrl = 'https://api.staging.justgiving.com/';
+
     public $apiKey;
+
     public $apiVersion = 1;
-    public $testUsername = "support@justgiving.com";
-    public $testValidPassword = "password";
-    public $testInvalidPassword = "badPassword";
+
+    public $testUsername = 'support@justgiving.com';
+
+    public $testValidPassword = 'password';
+
+    public $testInvalidPassword = 'badPassword';
 
     /**
      * Pull in the test API key from the test config.

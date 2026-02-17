@@ -39,7 +39,7 @@ class BaseClientTest extends ResourceClientTestCase
     {
         // Cycle through all API client classes
         foreach ($this->childClients as $childClient) {
-            $className = '\\Konsulting\\JustGivingApiSdk\\ResourceClients\\' . $childClient . 'Client';
+            $className = '\\Konsulting\\JustGivingApiSdk\\ResourceClients\\'.$childClient.'Client';
             $object = new $className($this->client);
 
             // Get the protected alias properties via reflection
@@ -47,7 +47,7 @@ class BaseClientTest extends ResourceClientTestCase
 
             foreach ($aliases as $method => $alias) {
                 $this->assertTrue(method_exists($object, $method),
-                    "The method `{$method}` does not exist on " . get_class($object));
+                    "The method `{$method}` does not exist on ".$object::class);
             }
         }
     }
@@ -55,14 +55,13 @@ class BaseClientTest extends ResourceClientTestCase
     /**
      * Use Reflection to obtain the value of a property on an object.
      *
-     * @param object $object
-     * @param string $propertyName
+     * @param  object  $object
+     * @param  string  $propertyName
      * @return mixed
      */
     protected function exposeProperty($object, $propertyName)
     {
         $property = (new ReflectionClass($object))->getProperty($propertyName);
-        $property->setAccessible(true);
 
         return $property->getValue($object);
     }
@@ -113,7 +112,7 @@ class BaseClientTest extends ResourceClientTestCase
     public function the_content_type_can_be_manually_set_when_posting_a_file()
     {
         $jgClient = \Mockery::mock(JustGivingClient::class);
-        $filename = __DIR__ . '/../img/jpg.jpg';
+        $filename = __DIR__.'/../img/jpg.jpg';
         $content = file_get_contents($filename);
 
         $jgClient->shouldReceive('request')

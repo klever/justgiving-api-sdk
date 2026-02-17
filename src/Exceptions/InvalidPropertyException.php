@@ -2,7 +2,4 @@
 
 namespace Konsulting\JustGivingApiSdk\Exceptions;
 
-class InvalidPropertyException extends \Exception
-{
-
-}
+class InvalidPropertyException extends \Exception {}

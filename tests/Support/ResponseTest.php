@@ -71,23 +71,23 @@ class ResponseTest extends ResourceClientTestCase
     public function the_errors_attribute_returns_an_array_containing_many_errors()
     {
         $uniqueId = uniqid();
-        $email = 'user' . $uniqueId . '@testing.com';
+        $email = 'user'.$uniqueId.'@testing.com';
         $response = $this->createAccount($email, [
-            'firstName'                => '',
+            'firstName' => '',
             'acceptTermsAndConditions' => false,
         ]);
 
         $this->assertEquals([
-            'FirstNameNotSpecified'              => 'The FirstName field is required.',
+            'FirstNameNotSpecified' => 'The FirstName field is required.',
             'AcceptTermsAndConditionsMustBeTrue' => 'You must agree to the terms and conditions',
-            'ReasonPhrase'                       => 'Validation errors occured.',
+            'ReasonPhrase' => 'Validation errors occured.',
         ], $response->errors);
     }
 
     #[Test]
     public function the_errors_attribute_returns_an_array_containing_a_single_general_error_message()
     {
-        $email = 'user' . uniqid() . '@testing.com';
+        $email = 'user'.uniqid().'@testing.com';
         $this->createAccount($email);
         $response = $this->createAccount($email);
 
@@ -98,7 +98,7 @@ class ResponseTest extends ResourceClientTestCase
     public function it_checks_if_any_errors_are_present()
     {
         $responseWithoutErrors = $this->exampleResponse();
-        $responseWithErrors = $this->client->account->create(new CreateAccountRequest());
+        $responseWithErrors = $this->client->account->create(new CreateAccountRequest);
 
         $this->assertFalse($responseWithoutErrors->hasErrorMessages());
         $this->assertTrue($responseWithErrors->hasErrorMessages());
@@ -108,7 +108,7 @@ class ResponseTest extends ResourceClientTestCase
     public function it_throws_an_exception_if_an_existence_check_does_not_receive_a_valid_response_code()
     {
         $response = new Response(
-            (new GuzzleResponse())->withStatus(100)
+            (new GuzzleResponse)->withStatus(100)
         );
 
         $this->expectException(UnexpectedStatusException::class);
@@ -120,7 +120,7 @@ class ResponseTest extends ResourceClientTestCase
     public function it_returns_an_empty_errors_array_if_the_request_was_successful()
     {
         $response = new Response(
-            (new GuzzleResponse())->withStatus(200)
+            (new GuzzleResponse)->withStatus(200)
         );
 
         $this->assertEquals([], $response->errors);

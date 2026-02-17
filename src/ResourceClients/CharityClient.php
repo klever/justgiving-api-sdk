@@ -8,35 +8,35 @@ use Konsulting\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttr
 class CharityClient extends BaseClient
 {
     protected $aliases = [
-        'getById'                          => 'GetCharityById',
-        'authenticate'                     => 'AuthenticateCharityAccount',
-        'getEventsByCharityId'             => 'GetEventsByCharityId',
-        'getDonations'                     => 'GetCharityDonations',
+        'getById' => 'GetCharityById',
+        'authenticate' => 'AuthenticateCharityAccount',
+        'getEventsByCharityId' => 'GetEventsByCharityId',
+        'getDonations' => 'GetCharityDonations',
         'deleteFundraisingPageAttribution' => 'CharityDeleteFundraisingPageAttribution',
         'updateFundraisingPageAttribution' => 'CharityUpdateFundraisingPageAttribution',
         'appendFundraisingPageAttribution' => 'CharityAppendToFundraisingPageAttribution',
-        'getFundraisingPageAttribution'    => 'CharityGetFundraisingPageAttribution',
-        'categories'                       => 'GetCharityCategories',
+        'getFundraisingPageAttribution' => 'CharityGetFundraisingPageAttribution',
+        'categories' => 'GetCharityCategories',
     ];
 
     public function getById($charityId)
     {
-        return $this->get("charity/" . $charityId);
+        return $this->get('charity/'.$charityId);
     }
 
     public function authenticate(AuthenticateCharityAccountRequest $authenticateRequest)
     {
-        return $this->post("charity/authenticate", $authenticateRequest);
+        return $this->post('charity/authenticate', $authenticateRequest);
     }
 
     public function getEventsByCharityId($charityId)
     {
-        return $this->get("charity/" . $charityId . "/events");
+        return $this->get('charity/'.$charityId.'/events');
     }
 
     public function getDonations($charityId)
     {
-        return $this->get("charity/" . $charityId . "/donations");
+        return $this->get('charity/'.$charityId.'/donations');
     }
 
     // Test account does not have permission to edit charity fundraising pages.
@@ -44,7 +44,7 @@ class CharityClient extends BaseClient
 
     public function deleteFundraisingPageAttribution($charityId, $pageShortName)
     {
-        return $this->delete("charity/" . $charityId . "/pages/" . $pageShortName . "/attribution");
+        return $this->delete('charity/'.$charityId.'/pages/'.$pageShortName.'/attribution');
     }
 
     public function updateFundraisingPageAttribution(
@@ -52,7 +52,7 @@ class CharityClient extends BaseClient
         $pageShortName,
         UpdateFundraisingPageAttributionRequest $updateRequest
     ) {
-        return $this->put("charity/" . $charityId . "/pages/" . $pageShortName . "/attribution", $updateRequest);
+        return $this->put('charity/'.$charityId.'/pages/'.$pageShortName.'/attribution', $updateRequest);
     }
 
     public function appendFundraisingPageAttribution(
@@ -60,18 +60,18 @@ class CharityClient extends BaseClient
         $pageShortName,
         UpdateFundraisingPageAttributionRequest $updateRequest
     ) {
-        return $this->Post("charity/" . $charityId . "/pages/" . $pageShortName . "/attribution", $updateRequest);
+        return $this->Post('charity/'.$charityId.'/pages/'.$pageShortName.'/attribution', $updateRequest);
     }
 
     public function getFundraisingPageAttribution($charityId, $pageShortName)
     {
-        return $this->get("charity/" . $charityId . "/pages/" . $pageShortName . "/attribution");
+        return $this->get('charity/'.$charityId.'/pages/'.$pageShortName.'/attribution');
     }
 
     // @codeCoverageIgnoreEnd
 
     public function categories()
     {
-        return $this->get("charity/categories");
+        return $this->get('charity/categories');
     }
 }

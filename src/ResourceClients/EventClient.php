@@ -7,15 +7,15 @@ use Konsulting\JustGivingApiSdk\ResourceClients\Models\EventRequest;
 class EventClient extends BaseClient
 {
     protected $aliases = [
-        'getById'  => 'GetEventById',
+        'getById' => 'GetEventById',
         'getTypes' => 'GetEventTypes',
         'getPages' => 'GetPagesForEvent',
-        'create'   => 'RegisterEvent',
+        'create' => 'RegisterEvent',
     ];
 
     public function getById($eventId)
     {
-        return $this->get("event/" . $eventId);
+        return $this->get('event/'.$eventId);
     }
 
     public function getTypes()
@@ -25,11 +25,11 @@ class EventClient extends BaseClient
 
     public function getPages($eventId, $pageSize = 50, $pageNumber = 0)
     {
-        return $this->get("event/" . $eventId . "/pages?PageSize=" . $pageSize . "&PageNum=" . $pageNumber);
+        return $this->get('event/'.$eventId.'/pages?PageSize='.$pageSize.'&PageNum='.$pageNumber);
     }
 
     public function create(EventRequest $event)
     {
-        return $this->post("event", $event);
+        return $this->post('event', $event);
     }
 }

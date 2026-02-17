@@ -10,7 +10,7 @@ class Helpers
     /**
      * Return a Carbon instance from a string or DateTime instance.
      *
-     * @param string|DateTime|Carbon $date
+     * @param  string|DateTime|Carbon  $date
      * @return Carbon
      */
     public static function dateToCarbon($date)
@@ -34,7 +34,7 @@ class Helpers
      * Create a Carbon instance from a string. Can be in '/Date(1365004652303-0500)/' format or any other standard
      * format that Carbon will parse.
      *
-     * @param string $date
+     * @param  string  $date
      * @return Carbon
      */
     protected static function dateFromString($date)
@@ -42,7 +42,7 @@ class Helpers
         preg_match('/(\d{10})(\d{3})([\+\-]\d{4})/', $date, $matches);
 
         if (count($matches) == 4) {
-            return Carbon::createFromFormat("U.u.O", vsprintf('%2$s.%3$s.%4$s', $matches));
+            return Carbon::createFromFormat('U.u.O', vsprintf('%2$s.%3$s.%4$s', $matches));
         }
 
         return Carbon::parse($date);

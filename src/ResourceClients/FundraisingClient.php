@@ -12,65 +12,65 @@ use Konsulting\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttr
 class FundraisingClient extends BaseClient
 {
     protected $aliases = [
-        'urlCheck'              => 'FundraisingPageUrlCheck',
-        'suggestShortNames'     => 'SuggestPageShortNames',
-        'register'              => 'RegisterFundraisingPage',
-        'getById'               => 'GetFundraisingPageDetailsById',
-        'getByShortName'        => 'GetFundraisingPageDetails',
-        'getAllPages'           => 'GetFundraisingPages',
-        'getDonations'          => 'GetFundraisingPageDonations',
-        'getUpdates'            => 'PageUpdates',
-        'getUpdatesV2'          => 'PageUpdatesV2',
-        'getUpdatesById'        => 'PageUpdateById',
-        'addPostToPageUpdate'   => 'PageUpdatesAddPost',
+        'urlCheck' => 'FundraisingPageUrlCheck',
+        'suggestShortNames' => 'SuggestPageShortNames',
+        'register' => 'RegisterFundraisingPage',
+        'getById' => 'GetFundraisingPageDetailsById',
+        'getByShortName' => 'GetFundraisingPageDetails',
+        'getAllPages' => 'GetFundraisingPages',
+        'getDonations' => 'GetFundraisingPageDonations',
+        'getUpdates' => 'PageUpdates',
+        'getUpdatesV2' => 'PageUpdatesV2',
+        'getUpdatesById' => 'PageUpdateById',
+        'addPostToPageUpdate' => 'PageUpdatesAddPost',
         'addPostToPageUpdateV2' => 'PageUpdatesAddPostV2',
-        'deletePageUpdate'      => 'DeleteFundraisingPageUpdates',
-        'deleteAttribution'     => 'DeleteFundraisingPageAttribution',
-        'updateAttribution'     => 'UpdateFundraisingPageAttribution',
-        'appendToAttribution'   => 'AppendToFundraisingPageAttribution',
-        'getAttribution'        => 'GetFundraisingPageAttribution',
-        'uploadImage'           => 'UploadImage',
-        'uploadDefaultImage'    => 'UploadDefaultImage',
-        'addImage'              => 'AddImageToFundraisingPage',
-        'getImages'             => 'GetImagesForFundraisingPage',
-        'addVideo'              => 'AddVideoToFundraisingPage',
-        'getVideos'             => 'GetVideosForFundraisingPage',
-        'cancel'                => 'CancelFundraisingPage',
+        'deletePageUpdate' => 'DeleteFundraisingPageUpdates',
+        'deleteAttribution' => 'DeleteFundraisingPageAttribution',
+        'updateAttribution' => 'UpdateFundraisingPageAttribution',
+        'appendToAttribution' => 'AppendToFundraisingPageAttribution',
+        'getAttribution' => 'GetFundraisingPageAttribution',
+        'uploadImage' => 'UploadImage',
+        'uploadDefaultImage' => 'UploadDefaultImage',
+        'addImage' => 'AddImageToFundraisingPage',
+        'getImages' => 'GetImagesForFundraisingPage',
+        'addVideo' => 'AddVideoToFundraisingPage',
+        'getVideos' => 'GetVideosForFundraisingPage',
+        'cancel' => 'CancelFundraisingPage',
     ];
 
     public function urlCheck($pageShortName)
     {
-        return $this->head("fundraising/pages/".$pageShortName);
+        return $this->head('fundraising/pages/'.$pageShortName);
     }
 
     public function suggestShortNames($preferredName)
     {
-        return $this->get("fundraising/pages/suggest?preferredName=".urlencode($preferredName));
+        return $this->get('fundraising/pages/suggest?preferredName='.urlencode((string) $preferredName));
     }
 
     public function register(FundraisingPage $pageCreationRequest)
     {
-        return $this->put("fundraising/pages", $pageCreationRequest);
+        return $this->put('fundraising/pages', $pageCreationRequest);
     }
 
     public function getById($id)
     {
-        return $this->get("/fundraising/pagebyid/".$id);
+        return $this->get('/fundraising/pagebyid/'.$id);
     }
 
     public function getByShortName($pageShortName)
     {
-        return $this->get("fundraising/pages/".$pageShortName);
+        return $this->get('fundraising/pages/'.$pageShortName);
     }
 
     public function getAllPages()
     {
-        return $this->get("fundraising/pages");
+        return $this->get('fundraising/pages');
     }
 
     public function getDonations($pageShortName, $pageSize = 50, $pageNumber = 0)
     {
-        return $this->get("fundraising/pages/".$pageShortName."/donations"."?PageSize=".$pageSize."&PageNum=".$pageNumber);
+        return $this->get('fundraising/pages/'.$pageShortName.'/donations'.'?PageSize='.$pageSize.'&PageNum='.$pageNumber);
     }
 
     /**
@@ -80,120 +80,116 @@ class FundraisingClient extends BaseClient
      */
     public function getDonationsByReference($pageShortName, $reference)
     {
-        return $this->get("fundraising/pages/".$pageShortName."/donations/ref/".$reference);
+        return $this->get('fundraising/pages/'.$pageShortName.'/donations/ref/'.$reference);
     }
 
     public function UpdateStory($pageShortName, $storyUpdate)
     {
-        $storyUpdateRequest = new StoryUpdateRequest();
+        $storyUpdateRequest = new StoryUpdateRequest;
         $storyUpdateRequest->storySupplement = $storyUpdate;
 
-        return $this->post("fundraising/pages/".$pageShortName, $storyUpdateRequest);
+        return $this->post('fundraising/pages/'.$pageShortName, $storyUpdateRequest);
     }
 
     public function getUpdates($pageShortName)
     {
-        return $this->get("fundraising/pages/".$pageShortName."/updates/");
+        return $this->get('fundraising/pages/'.$pageShortName.'/updates/');
     }
 
     public function getUpdatesV2($pageShortName, $pageSize = 25)
     {
-        return $this->get("fundraising/pages/".$pageShortName."/updatesv2/?pageSize=".$pageSize);
+        return $this->get('fundraising/pages/'.$pageShortName.'/updatesv2/?pageSize='.$pageSize);
     }
 
     public function getUpdatesById($pageShortName, $updateId)
     {
-        return $this->get("fundraising/pages/".$pageShortName."/updates/".$updateId);
+        return $this->get('fundraising/pages/'.$pageShortName.'/updates/'.$updateId);
     }
 
     /**
-     * @param $pageShortName
      * @param  AddPostToPageUpdateRequest|array  $addPostToPageUpdateRequest
-     *
      * @return \Konsulting\JustGivingApiSdk\Support\Response|\Psr\Http\Message\ResponseInterface
      */
     public function addPostToPageUpdate($pageShortName, $addPostToPageUpdateRequest)
     {
-        return $this->post("fundraising/pages/".$pageShortName."/updates/", $addPostToPageUpdateRequest);
+        return $this->post('fundraising/pages/'.$pageShortName.'/updates/', $addPostToPageUpdateRequest);
     }
 
     /**
-     * @param $pageShortName
      * @param  AddPostToPageUpdateRequest|array  $addPostToPageUpdateRequest
-     *
      * @return \Konsulting\JustGivingApiSdk\Support\Response|\Psr\Http\Message\ResponseInterface
      */
     public function addPostToPageUpdateV2($pageShortName, $addPostToPageUpdateRequest)
     {
-        return $this->post("fundraising/pages/".$pageShortName."/updatesv2/", $addPostToPageUpdateRequest);
+        return $this->post('fundraising/pages/'.$pageShortName.'/updatesv2/', $addPostToPageUpdateRequest);
     }
 
     public function deletePageUpdate($pageShortName, $updateId)
     {
-        return $this->delete("fundraising/pages/".$pageShortName."/updates/".$updateId);
+        return $this->delete('fundraising/pages/'.$pageShortName.'/updates/'.$updateId);
     }
 
     public function deleteAttribution($pageShortName)
     {
-        return $this->delete("fundraising/pages/".$pageShortName."/attribution");
+        return $this->delete('fundraising/pages/'.$pageShortName.'/attribution');
     }
 
     public function updateAttribution($pageShortName, UpdateFundraisingPageAttributionRequest $updateAttributionRequest)
     {
-        return $this->put("fundraising/pages/".$pageShortName."/attribution", $updateAttributionRequest);
+        return $this->put('fundraising/pages/'.$pageShortName.'/attribution', $updateAttributionRequest);
     }
 
     public function appendToAttribution($pageShortName, $appendToAttributionRequest)
     {
-        return $this->post("fundraising/pages/".$pageShortName."/attribution", $appendToAttributionRequest);
+        return $this->post('fundraising/pages/'.$pageShortName.'/attribution', $appendToAttributionRequest);
     }
 
     public function getAttribution($pageShortName)
     {
-        return $this->get("fundraising/pages/".$pageShortName."/attribution");
+        return $this->get('fundraising/pages/'.$pageShortName.'/attribution');
     }
 
     public function uploadImage($pageShortName, $caption, $filename, $imageContentType = null)
     {
-        $url = "fundraising/pages/".$pageShortName."/images?caption=".urlencode($caption);
+        $url = 'fundraising/pages/'.$pageShortName.'/images?caption='.urlencode((string) $caption);
 
         return $this->postFile($url, $filename, $imageContentType);
     }
 
     public function uploadDefaultImage($pageShortName, $filename, $imageContentType = null)
     {
-        $url = "fundraising/pages/".$pageShortName."/images/default";
+        $url = 'fundraising/pages/'.$pageShortName.'/images/default';
 
         return $this->postFile($url, $filename, $imageContentType);
     }
 
     public function addImage($pageShortName, AddImageRequest $addImageRequest)
     {
-        return $this->put("fundraising/pages/".$pageShortName."/images", $addImageRequest);
+        return $this->put('fundraising/pages/'.$pageShortName.'/images', $addImageRequest);
     }
 
     public function getImages($pageShortName)
     {
-        return $this->get("fundraising/pages/".$pageShortName."/images");
+        return $this->get('fundraising/pages/'.$pageShortName.'/images');
     }
 
     public function deleteImage($pageShortName, $imageName)
     {
-        return $this->delete("fundraising/pages/".$pageShortName."/images/".$imageName);
+        return $this->delete('fundraising/pages/'.$pageShortName.'/images/'.$imageName);
     }
 
     public function addVideo($pageShortName, AddVideoRequest $addVideoRequest)
     {
-        return $this->put("fundraising/pages/".$pageShortName."/videos", $addVideoRequest);
+        return $this->put('fundraising/pages/'.$pageShortName.'/videos', $addVideoRequest);
     }
 
     public function getVideos($pageShortName)
     {
-        return $this->get("fundraising/pages/".$pageShortName."/videos");
+        return $this->get('fundraising/pages/'.$pageShortName.'/videos');
     }
 
     public function cancel($pageShortName)
     {
-        return $this->delete("fundraising/pages/".$pageShortName);
+        return $this->delete('fundraising/pages/'.$pageShortName);
     }
 }

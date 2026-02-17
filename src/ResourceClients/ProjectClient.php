@@ -10,6 +10,6 @@ class ProjectClient extends BaseClient
 
     public function retrieve($projectId)
     {
-        return $this->get("project/global/" . $projectId);
+        return $this->get('project/global/'.$projectId);
     }
 }

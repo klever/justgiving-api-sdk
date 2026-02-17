@@ -9,7 +9,7 @@ class Model
     /**
      * Allow data to be filled via the constructor.
      *
-     * @param iterable $data
+     * @param  iterable  $data
      */
     public function __construct($data = null)
     {
@@ -41,15 +41,16 @@ class Model
     /**
      * Populate the model with the supplied data.
      *
-     * @param iterable $data
+     * @param  iterable  $data
      * @return $this
+     *
      * @throws InvalidPropertyException
      */
     public function fill($data)
     {
         foreach ($data as $key => $value) {
             if (! property_exists($this, $key)) {
-                throw new InvalidPropertyException($key . ' is not a property on ' . get_class($this));
+                throw new InvalidPropertyException($key.' is not a property on '.static::class);
             }
 
             $this->$key = $value;

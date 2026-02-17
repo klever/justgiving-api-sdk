@@ -21,7 +21,7 @@ class CharityTest extends ResourceClientTestCase
         $authenticateRequest = new AuthenticateCharityAccountRequest([
             'username' => 'myUsername',
             'password' => 'badPassword',
-            'pin'      => 'badPin',
+            'pin' => 'badPin',
         ]);
 
         $response = $this->client->charity->authenticate($authenticateRequest);

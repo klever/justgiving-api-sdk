@@ -21,7 +21,7 @@ class FundraisingTest extends ResourceClientTestCase
         // Create one test page to use across tests to help with API timeouts/lockouts
         // DO NOT MODIFY this response within tests
         if (! isset(static::$pageShortName)) {
-            static::$pageShortName = "api-test-" . uniqid();
+            static::$pageShortName = 'api-test-'.uniqid();
             $this->client->fundraising->register(
                 $this->newPage(['pageShortName' => static::$pageShortName])
             );
@@ -31,16 +31,16 @@ class FundraisingTest extends ResourceClientTestCase
     protected function newPage($options = [])
     {
         return new FundraisingPage(array_merge([
-            'reference'     => "12345",
-            'pageShortName' => "api-test-" . uniqid(),
-            'activityType'  => "OtherCelebration",
-            'pageTitle'     => "api test",
-            'pageStory'     => "This is my custom page story, which will override the default.",
-            'eventName'     => "The Other Occasion of ApTest and APITest",
-            'charityId'     => 2050,
-            'targetAmount'  => 20,
-            'eventDate'     => "/Date(1235764800000)/",
-            'charityOptIn'  => true,
+            'reference' => '12345',
+            'pageShortName' => 'api-test-'.uniqid(),
+            'activityType' => 'OtherCelebration',
+            'pageTitle' => 'api test',
+            'pageStory' => 'This is my custom page story, which will override the default.',
+            'eventName' => 'The Other Occasion of ApTest and APITest',
+            'charityId' => 2050,
+            'targetAmount' => 20,
+            'eventDate' => '/Date(1235764800000)/',
+            'charityOptIn' => true,
             'charityFunded' => false,
         ], $options));
     }
@@ -48,14 +48,14 @@ class FundraisingTest extends ResourceClientTestCase
     #[Test]
     public function it_retrieves_page_data_when_given_a_page_short_name()
     {
-        $response = $this->client->fundraising->getByShortName("rasha25");
+        $response = $this->client->fundraising->getByShortName('rasha25');
 
         $this->assertSame('640916', $response->body->pageId);
         $this->assertSame('73347', $response->body->activityId);
-        $this->assertSame("rasha25", $response->body->eventName);
-        $this->assertSame("rasha25", $response->body->pageShortName);
-        $this->assertSame("Completed", $response->body->status);
-        $this->assertSame("Rasha Hassan", $response->body->owner);
+        $this->assertSame('rasha25', $response->body->eventName);
+        $this->assertSame('rasha25', $response->body->pageShortName);
+        $this->assertSame('Completed', $response->body->status);
+        $this->assertSame('Rasha Hassan', $response->body->owner);
     }
 
     #[Test]
@@ -65,10 +65,10 @@ class FundraisingTest extends ResourceClientTestCase
 
         $this->assertSame('640916', $response->body->pageId);
         $this->assertSame('73347', $response->body->activityId);
-        $this->assertSame("rasha25", $response->body->eventName);
-        $this->assertSame("rasha25", $response->body->pageShortName);
-        $this->assertSame("Completed", $response->body->status);
-        $this->assertSame("Rasha Hassan", $response->body->owner);
+        $this->assertSame('rasha25', $response->body->eventName);
+        $this->assertSame('rasha25', $response->body->pageShortName);
+        $this->assertSame('Completed', $response->body->status);
+        $this->assertSame('Rasha Hassan', $response->body->owner);
     }
 
     #[Test]
@@ -119,7 +119,7 @@ class FundraisingTest extends ResourceClientTestCase
     #[Test]
     public function it_checks_if_a_short_name_has_been_registered()
     {
-        $pageShortName = "rasha25";
+        $pageShortName = 'rasha25';
         $booleanResponse = $this->client->fundraising->urlCheck($pageShortName);
         $this->assertTrue($booleanResponse->existenceCheck());
 
@@ -177,7 +177,7 @@ class FundraisingTest extends ResourceClientTestCase
     #[Test]
     public function it_updates_the_story_on_a_page()
     {
-        $update = "Updated this story with update - " . uniqid();
+        $update = 'Updated this story with update - '.uniqid();
         $response = $this->client->fundraising->UpdateStory(static::$pageShortName, $update);
 
         $this->assertSuccessfulResponse($response);
@@ -186,8 +186,8 @@ class FundraisingTest extends ResourceClientTestCase
     #[Test]
     public function it_uploads_an_image_and_caption_to_a_page()
     {
-        $caption = "PHP Image Caption - " . uniqid();
-        $filename = __DIR__ . "/../img/jpg.jpg";
+        $caption = 'PHP Image Caption - '.uniqid();
+        $filename = __DIR__.'/../img/jpg.jpg';
         $response = $this->client->fundraising->uploadImage(static::$pageShortName, $caption, $filename);
 
         $this->assertSuccessfulResponse($response);
@@ -196,7 +196,7 @@ class FundraisingTest extends ResourceClientTestCase
     #[Test]
     public function it_uploads_a_default_image_to_a_page()
     {
-        $filename = __DIR__ . "/../img/jpg.jpg";
+        $filename = __DIR__.'/../img/jpg.jpg';
         $response = $this->client->fundraising->uploadDefaultImage(static::$pageShortName, $filename);
 
         $this->assertSuccessfulResponse($response);
@@ -206,9 +206,9 @@ class FundraisingTest extends ResourceClientTestCase
     public function it_adds_an_image_to_the_page()
     {
         $newImage = new AddImageRequest([
-            'caption'   => 'An image',
+            'caption' => 'An image',
             'isDefault' => true,
-            'url'       => 'https://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png',
+            'url' => 'https://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png',
         ]);
 
         $response = $this->client->fundraising->addImage(static::$pageShortName, $newImage);
@@ -230,17 +230,17 @@ class FundraisingTest extends ResourceClientTestCase
     public function it_deletes_an_image_from_a_page()
     {
         $newImage = new AddImageRequest([
-            'caption'   => 'An image to delete',
+            'caption' => 'An image to delete',
             'isDefault' => false,
-            'url'       => 'https://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png',
+            'url' => 'https://upload.wikimedia.org/wikipedia/commons/c/c4/PM5544_with_non-PAL_signals.png',
         ]);
         $this->client->fundraising->addImage(static::$pageShortName, $newImage);
 
         // Get the image listing from the server, because images are renamed on upload
         $getImageResponse = $this->client->fundraising->getImages(static::$pageShortName);
-        $fileNameOnServer = pathinfo(array_slice($getImageResponse->body, -1)[0]->url, PATHINFO_FILENAME);
+        $fileNameOnServer = pathinfo((string) array_slice($getImageResponse->body, -1)[0]->url, PATHINFO_FILENAME);
 
-        $response = $this->client->fundraising->deleteImage(static::$pageShortName, $fileNameOnServer . '.png');
+        $response = $this->client->fundraising->deleteImage(static::$pageShortName, $fileNameOnServer.'.png');
 
         $this->assertSuccessfulResponse($response);
     }
@@ -274,7 +274,7 @@ class FundraisingTest extends ResourceClientTestCase
     {
         $newUpdate = new AddPostToPageUpdateRequest(['Message' => 'A message']);
         $updateResponse = $this->client->fundraising->addPostToPageUpdate(static::$pageShortName, $newUpdate);
-        $updateId = pathinfo($updateResponse->body->Created->uri, PATHINFO_FILENAME);
+        $updateId = pathinfo((string) $updateResponse->body->Created->uri, PATHINFO_FILENAME);
 
         $response = $this->client->fundraising->deletePageUpdate(static::$pageShortName, $updateId);
 
@@ -293,9 +293,9 @@ class FundraisingTest extends ResourceClientTestCase
     public function it_adds_a_video_to_the_page()
     {
         $newVideo = new AddVideoRequest([
-            'caption'   => 'A video',
+            'caption' => 'A video',
             'isDefault' => true,
-            'url'       => 'https://www.youtube.com/watch?v=XTrqHP17kBw',
+            'url' => 'https://www.youtube.com/watch?v=XTrqHP17kBw',
         ]);
 
         $response = $this->client->fundraising->addVideo(static::$pageShortName, $newVideo);
@@ -316,7 +316,7 @@ class FundraisingTest extends ResourceClientTestCase
     #[Test]
     public function it_deletes_a_page()
     {
-        $pageShortName = 'page' . uniqid();
+        $pageShortName = 'page'.uniqid();
         $this->client->fundraising->register($this->newPage(['pageShortName' => $pageShortName]));
 
         $response = $this->client->fundraising->cancel($pageShortName);

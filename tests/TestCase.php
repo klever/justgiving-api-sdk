@@ -11,8 +11,8 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Tests if two objects have the same attributes.
      *
-     * @param object|string $expectedObject
-     * @param object        $actualObject
+     * @param  object|string  $expectedObject
+     * @param  object  $actualObject
      */
     protected function assertEqualAttributes($expectedObject, $actualObject)
     {
@@ -26,8 +26,8 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * Check if an object has all of an array of attributes.
      *
-     * @param array  $attributes
-     * @param object $object
+     * @param  array  $attributes
+     * @param  object  $object
      */
     protected function assertObjectHasAttributes($attributes, $object)
     {

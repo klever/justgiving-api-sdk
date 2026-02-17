@@ -28,8 +28,6 @@ class Response implements ResponseInterface
 
     /**
      * Store the response object.
-     *
-     * @param ResponseInterface $response
      */
     public function __construct(ResponseInterface $response)
     {
@@ -41,26 +39,23 @@ class Response implements ResponseInterface
     /**
      * Allow attributes to be retrieved as if properties on the class.
      *
-     * @param string $name
+     * @param  string  $name
      * @return mixed
      */
     public function __get($name)
     {
-        switch ($name) {
-            case 'body':
-                return $this->getBodyAsObject();
-            case 'errors':
-                return $this->formatErrors($this->body);
-        }
-
-        return $this->getAttribute($name);
+        return match ($name) {
+            'body' => $this->getBodyAsObject(),
+            'errors' => $this->formatErrors($this->body),
+            default => $this->getAttribute($name),
+        };
     }
 
     /**
      * Format errors in a unified object format, regardless of whether the supplied errors are a list of objects or a
      * single error message string.
      *
-     * @param object $errorBody
+     * @param  object  $errorBody
      * @return array
      */
     protected function formatErrors($errorBody)
@@ -90,7 +85,7 @@ class Response implements ResponseInterface
      * Take in an array of errors with separate ID and description, and format them as an associative array of [$id =>
      * $description].
      *
-     * @param array $inputErrors
+     * @param  array  $inputErrors
      * @return array
      */
     protected function errorsToArray($inputErrors)
@@ -116,7 +111,7 @@ class Response implements ResponseInterface
     /**
      * Get the specified attribute.
      *
-     * @param string $name
+     * @param  string  $name
      * @return mixed
      */
     public function getAttribute($name)
@@ -163,6 +158,7 @@ class Response implements ResponseInterface
      * Check if the requested resource exists. Throw an exception if the status is not 200 or 404.
      *
      * @return bool
+     *
      * @throws UnexpectedStatusException
      */
     public function existenceCheck()
@@ -190,8 +186,6 @@ class Response implements ResponseInterface
     /**
      * Defer all unknown methods to main response class.
      *
-     * @param $method
-     * @param $args
      * @return mixed
      */
     public function __call($method, $args)
@@ -212,7 +206,7 @@ class Response implements ResponseInterface
     /**
      * Return an instance with the specified HTTP protocol version.
      *
-     * @param  string  $version HTTP protocol version
+     * @param  string  $version  HTTP protocol version
      */
     public function withProtocolVersion(string $version): \Psr\Http\Message\MessageInterface
     {
@@ -223,8 +217,8 @@ class Response implements ResponseInterface
      * Retrieves all message header values.
      *
      * @return string[][] Returns an associative array of the message's headers. Each
-     *     key MUST be a header name, and each value MUST be an array of strings
-     *     for that header.
+     *                    key MUST be a header name, and each value MUST be an array of strings
+     *                    for that header.
      */
     public function getHeaders(): array
     {
@@ -234,11 +228,10 @@ class Response implements ResponseInterface
     /**
      * Checks if a header exists by the given case-insensitive name.
      *
-     * @param  string  $name Case-insensitive header field name.
-     *
+     * @param  string  $name  Case-insensitive header field name.
      * @return bool Returns true if any header names match the given header
-     *                     name using a case-insensitive string comparison. Returns false if
-     *                     no matching header name is found in the message.
+     *              name using a case-insensitive string comparison. Returns false if
+     *              no matching header name is found in the message.
      */
     public function hasHeader(string $name): bool
     {
@@ -248,11 +241,10 @@ class Response implements ResponseInterface
     /**
      * Retrieves a message header value by the given case-insensitive name.
      *
-     * @param  string  $name Case-insensitive header field name.
-     *
+     * @param  string  $name  Case-insensitive header field name.
      * @return string[] An array of string values as provided for the given
-     *                     header. If the header does not appear in the message, this method MUST
-     *                     return an empty array.
+     *                  header. If the header does not appear in the message, this method MUST
+     *                  return an empty array.
      */
     public function getHeader(string $name): array
     {
@@ -262,11 +254,10 @@ class Response implements ResponseInterface
     /**
      * Retrieves a comma-separated string of the values for a single header.
      *
-     * @param  string  $name Case-insensitive header field name.
-     *
+     * @param  string  $name  Case-insensitive header field name.
      * @return string A string of values as provided for the given header
-     *                     concatenated together using a comma. If the header does not appear in
-     *                     the message, this method MUST return an empty string.
+     *                concatenated together using a comma. If the header does not appear in
+     *                the message, this method MUST return an empty string.
      */
     public function getHeaderLine(string $name): string
     {
@@ -277,9 +268,9 @@ class Response implements ResponseInterface
      * Return an instance with the provided value replacing the specified header.
      *
      * @param  string  $name  Case-insensitive header field name.
-     * @param string|string[] $value Header value(s).
-     *
+     * @param  string|string[]  $value  Header value(s).
      * @return ResponseInterface
+     *
      * @throws \InvalidArgumentException for invalid header names or values.
      */
     public function withHeader(string $name, $value): \Psr\Http\Message\MessageInterface
@@ -291,9 +282,9 @@ class Response implements ResponseInterface
      * Return an instance with the specified header appended with the given value.
      *
      * @param  string  $name  Case-insensitive header field name to add.
-     * @param string|string[] $value Header value(s).
-     *
+     * @param  string|string[]  $value  Header value(s).
      * @return ResponseInterface
+     *
      * @throws \InvalidArgumentException for invalid header names or values.
      */
     public function withAddedHeader(string $name, $value): \Psr\Http\Message\MessageInterface
@@ -304,8 +295,7 @@ class Response implements ResponseInterface
     /**
      * Return an instance without the specified header.
      *
-     * @param  string  $name Case-insensitive header field name to remove.
-     *
+     * @param  string  $name  Case-insensitive header field name to remove.
      * @return ResponseInterface
      */
     public function withoutHeader(string $name): \Psr\Http\Message\MessageInterface
@@ -326,8 +316,9 @@ class Response implements ResponseInterface
     /**
      * Return an instance with the specified message body.
      *
-     * @param StreamInterface $body Body.
+     * @param  StreamInterface  $body  Body.
      * @return ResponseInterface
+     *
      * @throws \InvalidArgumentException When the body is not valid.
      */
     public function withBody(StreamInterface $body): \Psr\Http\Message\MessageInterface
@@ -348,11 +339,10 @@ class Response implements ResponseInterface
     /**
      * Return an instance with the specified status code and, optionally, reason phrase.
      *
-     * @param  int  $code         The 3-digit integer result code to set.
-     * @param  string  $reasonPhrase The reason phrase to use with the
-     *                             provided status code; if none is provided, implementations MAY
-     *                             use the defaults as suggested in the HTTP specification.
-     *
+     * @param  int  $code  The 3-digit integer result code to set.
+     * @param  string  $reasonPhrase  The reason phrase to use with the
+     *                                provided status code; if none is provided, implementations MAY
+     *                                use the defaults as suggested in the HTTP specification.
      * @return ResponseInterface * @throws \InvalidArgumentException For invalid status code arguments.
      */
     public function withStatus(int $code, string $reasonPhrase = ''): ResponseInterface
