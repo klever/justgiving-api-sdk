@@ -5,18 +5,19 @@ namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\RegisterPageRequest;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\UpdatePageSmsCodeRequest;
+use PHPUnit\Framework\Attributes\Test;
 
 class SmsTest extends ResourceClientTestCase
 {
-    /** @test */
+    #[Test]
     public function it_retrieves_the_sms_code_for_a_page()
     {
         $response = $this->client->sms->getPageCode('rasha25');
 
-        $this->assertObjectHasAttribute('urn', $response->body);
+        $this->assertObjectHasProperty('urn', $response->body);
     }
 
-    /** @test */
+    #[Test]
     public function it_updates_the_sms_code_for_a_page()
     {
         $this->markTestSkipped('No documentation found for this endpoint.');
@@ -51,7 +52,7 @@ class SmsTest extends ResourceClientTestCase
         $this->assertSuccessfulResponse($response);
     }
 
-    /** @test */
+    #[Test]
     public function it_checks_the_availability_of_an_sms_code()
     {
         $response = $this->client->sms->checkCodeAvailability('FOOB93');

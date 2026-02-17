@@ -6,10 +6,11 @@ use Carbon\Carbon;
 use DateTime;
 use Konsulting\JustGivingApiSdk\Support\Helpers;
 use Konsulting\JustGivingApiSdk\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class HelpersTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function it_converts_an_epoch_date_to_carbon()
     {
         $date = Helpers::dateToCarbon('/Date(1365004652303-0500)/');
@@ -18,7 +19,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('2013-04-03 15:57:32', $date->__toString());
     }
 
-    /** @test */
+    #[Test]
     public function it_converts_a_string_date_to_carbon()
     {
         $date = Helpers::dateToCarbon('2013-04-03 15:57:32');
@@ -27,7 +28,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('2013-04-03 15:57:32', $date->__toString());
     }
 
-    /** @test */
+    #[Test]
     public function it_converts_a_datetime_instance_to_carbon()
     {
         $date = Helpers::dateToCarbon(new DateTime('2013-04-03 15:57:32'));
@@ -36,7 +37,7 @@ class HelpersTest extends TestCase
         $this->assertEquals('2013-04-03 15:57:32', $date->__toString());
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_a_carbon_instance_to_be_passed_into_the_date_to_carbon_function()
     {
         $date = Helpers::dateToCarbon(Carbon::parse('2013-04-03 15:57:32'));
@@ -44,7 +45,7 @@ class HelpersTest extends TestCase
         $this->assertEquals(Carbon::parse('2013-04-03 15:57:32'), $date);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_null_if_a_non_string_or_datetime_instance_is_passed_in()
     {
         $result = Helpers::dateToCarbon(1);

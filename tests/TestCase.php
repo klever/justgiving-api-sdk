@@ -32,7 +32,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function assertObjectHasAttributes($attributes, $object)
     {
         foreach ($attributes as $attribute) {
-            $this->assertObjectHasAttribute($attribute, $object);
+            $this->assertObjectHasProperty($attribute, $object);
         }
     }
 }

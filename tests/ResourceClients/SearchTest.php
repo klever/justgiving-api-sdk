@@ -4,10 +4,11 @@ namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\SearchInMemoryRequest;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\SearchTeamRequest;
+use PHPUnit\Framework\Attributes\Test;
 
 class SearchTest extends ResourceClientTestCase
 {
-    /** @test */
+    #[Test]
     public function it_finds_a_charity_from_a_search_string()
     {
         $response = $this->client->Search->charity('the demo charity');
@@ -24,7 +25,7 @@ class SearchTest extends ResourceClientTestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function it_searches_for_events()
     {
         $response = $this->client->search->event('event');
@@ -51,7 +52,7 @@ class SearchTest extends ResourceClientTestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_searches_for_fundraisers()
     {
         $response = $this->client->search->fundraiser('fundraiser', 2050);
@@ -68,7 +69,7 @@ class SearchTest extends ResourceClientTestCase
         ], $response->body->SearchResults[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_searches_for_a_remembered_person()
     {
         $searchRequest = new SearchInMemoryRequest([
@@ -93,7 +94,7 @@ class SearchTest extends ResourceClientTestCase
         ], $response->body->results[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_searches_for_a_team()
     {
         $searchRequest = new SearchTeamRequest([

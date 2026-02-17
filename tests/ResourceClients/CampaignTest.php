@@ -2,9 +2,11 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
+use PHPUnit\Framework\Attributes\Test;
+
 class CampaignTest extends ResourceClientTestCase
 {
-    /** @test */
+    #[Test]
     public function it_retrieves_campaign_details_given_the_charity_and_campaign_names()
     {
         $charityName = "porthospcf";
@@ -17,7 +19,7 @@ class CampaignTest extends ResourceClientTestCase
         $this->assertEquals($response->campaignPageName, $expectedCampaignPageName);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_a_list_of_campaigns_given_a_charity_id()
     {
         $expectedCampaignPageName = "test";
@@ -28,7 +30,7 @@ class CampaignTest extends ResourceClientTestCase
         $this->assertEquals($expectedCampaignPageName, $response->body->campaignsDetails[0]->campaignPageName);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_campaign_pages_when_given_a_charity_short_name_and_short_url()
     {
         $charityShortName = "porthospcf";

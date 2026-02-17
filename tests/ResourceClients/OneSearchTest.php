@@ -2,9 +2,11 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
+use PHPUnit\Framework\Attributes\Test;
+
 class OneSearchTest extends ResourceClientTestCase
 {
-    /** @test */
+    #[Test]
     public function it_searches_the_entire_site()
     {
         $response = $this->client->oneSearch->index('charity');

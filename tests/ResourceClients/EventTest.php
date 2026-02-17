@@ -3,10 +3,11 @@
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\EventRequest;
+use PHPUnit\Framework\Attributes\Test;
 
 class EventTest extends ResourceClientTestCase
 {
-    /** @test */
+    #[Test]
     public function it_registers_an_event()
     {
         $eventRequest = new EventRequest([
@@ -24,7 +25,7 @@ class EventTest extends ResourceClientTestCase
         $this->assertSuccessfulResponse($response);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_an_event_given_an_event_id()
     {
         $response = $this->client->event->getById(479546);
@@ -32,7 +33,7 @@ class EventTest extends ResourceClientTestCase
         $this->assertEquals('Virgin London Marathon 2011 - Applying for a charity place', $response->body->name);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_an_event_listing()
     {
         $response = $this->client->event->getById(479546);
@@ -48,7 +49,7 @@ class EventTest extends ResourceClientTestCase
         ], $response->body);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_fundraising_pages_for_a_given_event()
     {
         $response = $this->client->event->getPages(479546);
@@ -57,7 +58,7 @@ class EventTest extends ResourceClientTestCase
             $response->body->fundraisingPages[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_a_list_of_types_of_events()
     {
         $response = $this->client->event->getTypes();

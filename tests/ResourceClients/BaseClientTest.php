@@ -4,6 +4,7 @@ namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
 use Konsulting\JustGivingApiSdk\JustGivingClient;
 use Konsulting\JustGivingApiSdk\ResourceClients\BaseClient;
+use PHPUnit\Framework\Attributes\Test;
 use ReflectionClass;
 
 class BaseClientTest extends ResourceClientTestCase
@@ -33,7 +34,7 @@ class BaseClientTest extends ResourceClientTestCase
         static::$childApi = static::$childApi ?: new BaseClientChild($this->client);
     }
 
-    /** @test */
+    #[Test]
     public function all_method_aliases_refer_to_actual_methods()
     {
         // Cycle through all API client classes
@@ -66,7 +67,7 @@ class BaseClientTest extends ResourceClientTestCase
         return $property->getValue($object);
     }
 
-    /** @test */
+    #[Test]
     public function a_client_method_can_have_one_alias()
     {
         $result = static::$childApi->MethodOneAlias();
@@ -74,7 +75,7 @@ class BaseClientTest extends ResourceClientTestCase
         $this->assertEquals('Method One', $result);
     }
 
-    /** @test */
+    #[Test]
     public function a_client_method_can_have_multiple_aliases()
     {
         $nullResult = static::$childApi->notAnAlias();
@@ -86,7 +87,7 @@ class BaseClientTest extends ResourceClientTestCase
         $this->assertEquals('Method Two', $resultTwo);
     }
 
-    /** @test */
+    #[Test]
     public function a_client_method_can_be_called_in_any_case()
     {
         $resultOne = static::$childApi->METHOD_ONE();
@@ -98,7 +99,7 @@ class BaseClientTest extends ResourceClientTestCase
         $this->assertEquals('Method Two', $resultThree);
     }
 
-    /** @test */
+    #[Test]
     public function a_method_alias_can_be_called_in_any_case()
     {
         $resultOne = static::$childApi->method_one_Alias();
@@ -108,7 +109,7 @@ class BaseClientTest extends ResourceClientTestCase
         $this->assertEquals('Method Two', $resultTwo);
     }
 
-    /** @test */
+    #[Test]
     public function the_content_type_can_be_manually_set_when_posting_a_file()
     {
         $jgClient = \Mockery::mock(JustGivingClient::class);

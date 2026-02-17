@@ -7,19 +7,19 @@ use Konsulting\JustGivingApiSdk\Support\Auth\AuthValue;
 use Konsulting\JustGivingApiSdk\Support\Auth\BasicAuth;
 use Konsulting\JustGivingApiSdk\Support\Auth\BearerAuth;
 use Konsulting\JustGivingApiSdk\Tests\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
 class AuthTest extends TestCase
 {
-    /**
-     * @test
-     * @dataProvider clientAuthProvider
-     */
+    #[Test]
+    #[DataProvider('clientAuthProvider')]
     public function it_returns_the_expected_headers_for_the_given_credentials(AuthValue $auth, $expectedHeaders)
     {
         $this->assertSame($auth->getHeaders(), $expectedHeaders);
     }
 
-    public function clientAuthProvider()
+    public static function clientAuthProvider()
     {
         return [
             [

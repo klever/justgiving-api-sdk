@@ -3,10 +3,11 @@
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\AuthenticateCharityAccountRequest;
+use PHPUnit\Framework\Attributes\Test;
 
 class CharityTest extends ResourceClientTestCase
 {
-    /** @test */
+    #[Test]
     public function it_retrieves_a_charity_by_charity_id()
     {
         $response = $this->client->Charity->getById(2050);
@@ -14,7 +15,7 @@ class CharityTest extends ResourceClientTestCase
         $this->assertSame('The Demo Charity', $response->name);
     }
 
-    /** @test */
+    #[Test]
     public function it_fails_charity_authentication_when_false_credentials_supplied()
     {
         $authenticateRequest = new AuthenticateCharityAccountRequest([
@@ -29,7 +30,7 @@ class CharityTest extends ResourceClientTestCase
         $this->assertEquals('Invalid charity details', $response->getReasonPhrase());
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_charity_events_by_charity_id()
     {
         $response = $this->client->Charity->getEventsByCharityId(2050);
@@ -46,7 +47,7 @@ class CharityTest extends ResourceClientTestCase
         ], $response->events[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_charity_donations_by_charity_id()
     {
         $response = $this->client->Charity->getDonations(2050);
@@ -54,7 +55,7 @@ class CharityTest extends ResourceClientTestCase
         $this->assertObjectHasAttributes(['amount', 'currencyCode'], $response->donations[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_all_charity_categories()
     {
         $response = $this->client->Charity->categories();

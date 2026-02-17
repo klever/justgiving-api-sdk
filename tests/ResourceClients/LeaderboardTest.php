@@ -2,9 +2,11 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
+use PHPUnit\Framework\Attributes\Test;
+
 class LeaderboardTest extends ResourceClientTestCase
 {
-    /** @test */
+    #[Test]
     public function it_retrieves_the_charity_leaderboard_listing_for_a_charity_id()
     {
         $response = $this->client->leaderboard->getCharityLeaderboard(2050);
@@ -12,7 +14,7 @@ class LeaderboardTest extends ResourceClientTestCase
         $this->assertObjectHasAttributes(['charityId', 'currency', 'pages'], $response->body);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_the_event_leaderboard_listing_for_an_event_id()
     {
         $response = $this->client->leaderboard->getEventLeaderboard(479546);

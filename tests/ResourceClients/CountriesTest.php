@@ -8,7 +8,7 @@ class CountriesTest extends ResourceClientTestCase
     {
         $response = $this->client->countries->countries();
 
-        $this->assertObjectHasAttribute('countryCode', $response->getAttributes()[0]);
-        $this->assertObjectHasAttribute('name', $response->getAttributes()[0]);
+        $this->assertObjectHasProperty('countryCode', $response->getAttributes()[0]);
+        $this->assertObjectHasProperty('name', $response->getAttributes()[0]);
     }
 }

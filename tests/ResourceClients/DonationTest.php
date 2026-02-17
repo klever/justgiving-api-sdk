@@ -2,9 +2,11 @@
 
 namespace Konsulting\JustGivingApiSdk\Tests\ResourceClients;
 
+use PHPUnit\Framework\Attributes\Test;
+
 class DonationTest extends ResourceClientTestCase
 {
-    /** @test */
+    #[Test]
     public function it_retrieves_a_donation_by_id()
     {
         $response = $this->client->donation->getById(21303723);
@@ -14,7 +16,7 @@ class DonationTest extends ResourceClientTestCase
         $this->assertEquals($response->body->status, "Accepted");
     }
 
-    /** @test */
+    #[Test]
     public function it_gets_the_status_of_a_donation()
     {
         $response = $this->client->donation->getStatus(21303723);
@@ -22,7 +24,7 @@ class DonationTest extends ResourceClientTestCase
         $this->assertObjectHasAttributes(['amount', 'donationId', 'donationRef', 'ref', 'status'], $response->body);
     }
 
-    /** @test */
+    #[Test]
     public function it_gets_donation_details_by_a_third_party_reference()
     {
         $response = $this->client->donation->getDetailsByReference('1234-my-sdi-ref');
@@ -30,7 +32,7 @@ class DonationTest extends ResourceClientTestCase
         $this->assertTrue(is_array($response->body->donations));
     }
 
-    /** @test */
+    #[Test]
     public function it_gets_donation_totals_by_a_third_party_reference()
     {
         $response = $this->client->donation->getTotalByReference('1234-my-sdi-ref');

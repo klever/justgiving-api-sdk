@@ -7,6 +7,8 @@ use Konsulting\JustGivingApiSdk\ResourceClients\Models\AddPostToPageUpdateReques
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\AddVideoRequest;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\UpdateFundraisingPageAttributionRequest;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
 class FundraisingTest extends ResourceClientTestCase
 {
@@ -43,7 +45,7 @@ class FundraisingTest extends ResourceClientTestCase
         ], $options));
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_page_data_when_given_a_page_short_name()
     {
         $response = $this->client->fundraising->getByShortName("rasha25");
@@ -56,7 +58,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertSame("Rasha Hassan", $response->body->owner);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_page_data_when_given_a_page_id()
     {
         $response = $this->client->fundraising->getById(640916);
@@ -69,7 +71,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertSame("Rasha Hassan", $response->body->owner);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_all_fundraising_pages()
     {
         $response = $this->client->fundraising->getAllPages();
@@ -90,7 +92,7 @@ class FundraisingTest extends ResourceClientTestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_a_fundraising_page_with_a_story()
     {
         $newPage = $this->newPage(['pageStory' => 'This is my custom page story, which will override the default.']);
@@ -103,7 +105,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertEquals('<p>This is my custom page story, which will override the default.</p>', $response->story);
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_a_fundraising_page()
     {
         $newPage = $this->newPage();
@@ -114,7 +116,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertNotNull($response->body->pageId);
     }
 
-    /** @test */
+    #[Test]
     public function it_checks_if_a_short_name_has_been_registered()
     {
         $pageShortName = "rasha25";
@@ -126,7 +128,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertFalse($booleanResponse->existenceCheck());
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_donations_by_page()
     {
         $response = $this->client->fundraising->getDonations('rasha25');
@@ -136,7 +138,7 @@ class FundraisingTest extends ResourceClientTestCase
             $response->body->donations[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_gets_page_updates()
     {
         $response = $this->client->fundraising->getUpdates('mike-page5');
@@ -145,7 +147,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertObjectHasAttributes(['CreatedDate', 'Id', 'Message', 'Video'], $response->body[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_gets_page_updates_with_v2()
     {
         $response = $this->client->fundraising->getUpdatesV2('mike-page5');
@@ -154,7 +156,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertObjectHasAttributes(['CreatedDate', 'Id', 'Message', 'Video'], $response->body[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_gets_page_updates_by_id()
     {
         $response = $this->client->fundraising->getUpdatesById('mike-page5', 913425);
@@ -163,7 +165,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertObjectHasAttributes(['CreatedDate', 'Id', 'Message', 'Video'], $response->body);
     }
 
-    /** @test */
+    #[Test]
     public function it_suggests_page_short_names()
     {
         $response = $this->client->fundraising->suggestShortNames('name');
@@ -172,7 +174,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertTrue(is_string($response->body->Names[0]));
     }
 
-    /** @test */
+    #[Test]
     public function it_updates_the_story_on_a_page()
     {
         $update = "Updated this story with update - " . uniqid();
@@ -181,7 +183,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertSuccessfulResponse($response);
     }
 
-    /** @test */
+    #[Test]
     public function it_uploads_an_image_and_caption_to_a_page()
     {
         $caption = "PHP Image Caption - " . uniqid();
@@ -191,7 +193,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertSuccessfulResponse($response);
     }
 
-    /** @test */
+    #[Test]
     public function it_uploads_a_default_image_to_a_page()
     {
         $filename = __DIR__ . "/../img/jpg.jpg";
@@ -200,7 +202,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertSuccessfulResponse($response);
     }
 
-    /** @test */
+    #[Test]
     public function it_adds_an_image_to_the_page()
     {
         $newImage = new AddImageRequest([
@@ -215,7 +217,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertObjectHasAttributes(['rel', 'uri', 'type'], $response->body->next);
     }
 
-    /** @test */
+    #[Test]
     public function it_gets_images_for_a_page()
     {
         $response = $this->client->fundraising->getImages('rasha25');
@@ -224,7 +226,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertObjectHasAttributes(['caption', 'url', 'absoluteUrl'], $response->body[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_deletes_an_image_from_a_page()
     {
         $newImage = new AddImageRequest([
@@ -243,27 +245,23 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertSuccessfulResponse($response);
     }
 
-    /**
-     * @dataProvider postPAgeUpdateProvider
-     * @test
-     */
+    #[Test]
+    #[DataProvider('postPageUpdateProvider')]
     public function it_adds_a_post_to_the_page_update($payload)
     {
         $response = $this->client->fundraising->addPostToPageUpdate(static::$pageShortName, $payload);
         $this->assertNotNull($response->Created, 'Created response not received.');
     }
 
-    /**
-     * @dataProvider postPAgeUpdateProvider
-     * @test
-     */
+    #[Test]
+    #[DataProvider('postPageUpdateProvider')]
     public function it_adds_a_post_to_the_page_update_with_v2($payload)
     {
         $response = $this->client->fundraising->addPostToPageUpdateV2(static::$pageShortName, $payload);
         $this->assertNotNull($response->Created, 'Created response not received.');
     }
 
-    public function postPageUpdateProvider()
+    public static function postPageUpdateProvider()
     {
         return [
             [new AddPostToPageUpdateRequest(['Message' => 'update story'])],
@@ -271,7 +269,7 @@ class FundraisingTest extends ResourceClientTestCase
         ];
     }
 
-    /** @test */
+    #[Test]
     public function it_deletes_a_page_update()
     {
         $newUpdate = new AddPostToPageUpdateRequest(['Message' => 'A message']);
@@ -283,7 +281,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertSuccessfulResponse($response);
     }
 
-    /** @test */
+    #[Test]
     public function it_checks_if_a_page_short_name_is_registered()
     {
         $response = $this->client->fundraising->urlCheck('rasha25');
@@ -291,7 +289,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertTrue($response->existenceCheck());
     }
 
-    /** @test */
+    #[Test]
     public function it_adds_a_video_to_the_page()
     {
         $newVideo = new AddVideoRequest([
@@ -306,7 +304,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertObjectHasAttributes(['rel', 'uri', 'type'], $response->body->next);
     }
 
-    /** @test */
+    #[Test]
     public function it_gets_videos_for_a_page()
     {
         $response = $this->client->fundraising->getVideos('rasha25');
@@ -315,7 +313,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertObjectHasAttributes(['caption', 'url'], $response->body[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_deletes_a_page()
     {
         $pageShortName = 'page' . uniqid();
@@ -326,7 +324,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertSuccessfulResponse($response);
     }
 
-    /** @test */
+    #[Test]
     public function it_updates_and_gets_a_page_attribution()
     {
         $update = new UpdateFundraisingPageAttributionRequest(['attribution' => 'An updated attribution']);
@@ -337,7 +335,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertEquals('An updated attribution', $getAttribution->body->attribution);
     }
 
-    /** @test */
+    #[Test]
     public function it_appends_to_and_gets_a_page_attribution()
     {
         $update = new UpdateFundraisingPageAttributionRequest(['attribution' => 'Attribution. ']);
@@ -349,7 +347,7 @@ class FundraisingTest extends ResourceClientTestCase
         $this->assertEquals('Attribution. Attribution. ', $getAttribution->body->attribution);
     }
 
-    /** @test */
+    #[Test]
     public function it_deletes_a_page_attribution()
     {
         $update = new UpdateFundraisingPageAttributionRequest(['attribution' => 'Attribution. ']);

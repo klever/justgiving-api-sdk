@@ -6,11 +6,12 @@ use Konsulting\JustGivingApiSdk\ResourceClients\Models\Address;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\ChangePasswordRequest;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\ValidateAccountRequest;
+use PHPUnit\Framework\Attributes\Test;
 
 
 class AccountTest extends ResourceClientTestCase
 {
-    /** @test */
+    #[Test]
     public function it_creates_a_new_account()
     {
         $uniqueId = uniqid();
@@ -36,7 +37,7 @@ class AccountTest extends ResourceClientTestCase
         $this->assertSuccessfulResponse($response);
     }
 
-    /** @test */
+    #[Test]
     public function it_lists_all_fundraising_pages_when_supplied_with_a_valid_account()
     {
         $response = $this->client->account->listAllPages("support@justgiving.com");
@@ -58,7 +59,7 @@ class AccountTest extends ResourceClientTestCase
         $this->assertObjectHasAttributes($attributes, $response->getAttributes()[0]);
     }
 
-    /** @test */
+    #[Test]
     public function it_checks_for_a_registered_email()
     {
         $nonRegisteredEmailResponse = $this->client->account->isEmailRegistered(uniqid() . "@" . uniqid() . "-justgiving.com");
@@ -68,7 +69,7 @@ class AccountTest extends ResourceClientTestCase
         $this->assertTrue($alreadyRegisteredEmailResponse->existenceCheck());
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_that_supplied_account_credentials_are_correct()
     {
         $request = new ValidateAccountRequest([
@@ -81,7 +82,7 @@ class AccountTest extends ResourceClientTestCase
         $this->assertTrue($response->body->isValid);
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_account_credentials_and_returns_false_if_they_are_incorrect()
     {
         $request = new ValidateAccountRequest([
@@ -94,7 +95,7 @@ class AccountTest extends ResourceClientTestCase
         $this->assertFalse($response->body->isValid);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_account_details_when_logged_in_with_correct_credentials()
     {
         $response = $this->client->account->retrieve();
@@ -105,7 +106,7 @@ class AccountTest extends ResourceClientTestCase
 
     //test change password
 
-    /** @test */
+    #[Test]
     public function it_fails_to_change_the_account_password_when_supplied_with_an_incorrect_current_password()
     {
         $email = 'user' . uniqid() . '@testing.com';
@@ -121,7 +122,7 @@ class AccountTest extends ResourceClientTestCase
         $this->assertFalse($response->wasSuccessful());
     }
 
-    /** @test */
+    #[Test]
     public function it_changes_the_account_password_when_supplied_with_the_current_password()
     {
         $email = 'user' . uniqid() . '@testing.com';
@@ -137,7 +138,7 @@ class AccountTest extends ResourceClientTestCase
         $this->assertSuccessfulResponse($response);
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_donations_by_charity()
     {
         $this->markTestSkipped('No donations on test account');
@@ -156,7 +157,7 @@ class AccountTest extends ResourceClientTestCase
         $this->assertTrue(is_array($response->body->donations));
     }
 
-    /** @test */
+    #[Test]
     public function it_retrieves_a_list_of_all_donations_when_supplied_with_the_correct_credentials()
     {
         $this->markTestSkipped('No donations on test account');
@@ -177,7 +178,7 @@ class AccountTest extends ResourceClientTestCase
         $this->assertTrue(is_array($response->body->donations));
     }
 
-    /** @test */
+    #[Test]
     public function it_requests_a_password_reminder()
     {
         $response = $this->client->account->requestPasswordReminder($this->context->testUsername);

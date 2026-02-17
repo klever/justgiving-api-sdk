@@ -91,7 +91,7 @@ class JustGivingClient
      * @param ClientInterface $client
      * @param array           $options
      */
-    public function __construct(AuthValue $auth, ClientInterface $client = null, $options = [])
+    public function __construct(AuthValue $auth, ?ClientInterface $client = null, $options = [])
     {
         $this->auth = $auth;
         $this->httpClient = $client ?: new Client;

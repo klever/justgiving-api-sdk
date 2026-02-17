@@ -6,6 +6,7 @@ use Konsulting\JustGivingApiSdk\ResourceClients\Models\FundraisingPage;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\JoinTeamRequest;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\Team;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\TeamMember;
+use PHPUnit\Framework\Attributes\Test;
 
 class TeamTest extends ResourceClientTestCase
 {
@@ -21,7 +22,7 @@ class TeamTest extends ResourceClientTestCase
         static::$team = static::$team ?: $this->createTeam(static::$teamShortName);
     }
 
-    /** @test */
+    #[Test]
     public function it_creates_a_team()
     {
         $response = $this->createTeam();
@@ -29,7 +30,7 @@ class TeamTest extends ResourceClientTestCase
         $this->assertTrue($response->body->id > 0);
     }
 
-    /** @test */
+    #[Test]
     public function it_checks_if_a_team_exists()
     {
         $teamShortName = 'team' . uniqid();
@@ -39,7 +40,7 @@ class TeamTest extends ResourceClientTestCase
         $this->assertTrue($response->existenceCheck());
     }
 
-    /** @test */
+    #[Test]
     public function it_updates_a_team()
     {
         $updatedTeam = new Team([
@@ -57,7 +58,7 @@ class TeamTest extends ResourceClientTestCase
         $this->assertEquals('New Team Name', $this->client->team->getByShortName(static::$teamShortName)->body->name);
     }
 
-    /** @test */
+    #[Test]
     public function it_allows_a_user_to_join_a_team()
     {
         $teamShortName = 'team' . uniqid();

@@ -7,6 +7,7 @@ use Konsulting\JustGivingApiSdk\Exceptions\UnexpectedStatusException;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\CreateAccountRequest;
 use Konsulting\JustGivingApiSdk\Support\Response;
 use Konsulting\JustGivingApiSdk\Tests\ResourceClients\ResourceClientTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class ResponseTest extends ResourceClientTestCase
 {
@@ -34,7 +35,7 @@ class ResponseTest extends ResourceClientTestCase
         return new Response($guzzleResponse);
     }
 
-    /** @test */
+    #[Test]
     public function attributes_can_be_called_as_magic_properties()
     {
         $response = $this->exampleResponse();
@@ -42,7 +43,7 @@ class ResponseTest extends ResourceClientTestCase
         $this->assertTrue(is_numeric($response->body->donations[0]->amount));
     }
 
-    /** @test */
+    #[Test]
     public function attributes_can_be_retrieved_with_the_get_attribute_method()
     {
         $response = $this->exampleResponse();
@@ -50,7 +51,7 @@ class ResponseTest extends ResourceClientTestCase
         $this->assertTrue(is_numeric($response->getAttribute('donations')[0]->amount));
     }
 
-    /** @test */
+    #[Test]
     public function the_body_attribute_returns_the_decoded_json_response()
     {
         $response = $this->exampleResponse();
@@ -58,7 +59,7 @@ class ResponseTest extends ResourceClientTestCase
         $this->assertTrue(is_numeric($response->body->donations[0]->amount));
     }
 
-    /** @test */
+    #[Test]
     public function the_errors_attribute_returns_an_empty_array_if_no_valid_errors_are_sent()
     {
         $response = $this->exampleResponse();
@@ -66,7 +67,7 @@ class ResponseTest extends ResourceClientTestCase
         $this->assertEquals([], $response->errors);
     }
 
-    /** @test */
+    #[Test]
     public function the_errors_attribute_returns_an_array_containing_many_errors()
     {
         $uniqueId = uniqid();
@@ -83,7 +84,7 @@ class ResponseTest extends ResourceClientTestCase
         ], $response->errors);
     }
 
-    /** @test */
+    #[Test]
     public function the_errors_attribute_returns_an_array_containing_a_single_general_error_message()
     {
         $email = 'user' . uniqid() . '@testing.com';
@@ -93,7 +94,7 @@ class ResponseTest extends ResourceClientTestCase
         $this->assertContains('That email address is already in use', $response->errors);
     }
 
-    /** @test */
+    #[Test]
     public function it_checks_if_any_errors_are_present()
     {
         $responseWithoutErrors = $this->exampleResponse();
@@ -103,7 +104,7 @@ class ResponseTest extends ResourceClientTestCase
         $this->assertTrue($responseWithErrors->hasErrorMessages());
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_an_exception_if_an_existence_check_does_not_receive_a_valid_response_code()
     {
         $response = new Response(
@@ -115,7 +116,7 @@ class ResponseTest extends ResourceClientTestCase
         $response->existenceCheck();
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_an_empty_errors_array_if_the_request_was_successful()
     {
         $response = new Response(

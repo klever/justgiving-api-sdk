@@ -5,6 +5,7 @@ namespace Konsulting\JustGivingApiSdk\Tests\Models;
 use Konsulting\JustGivingApiSdk\Exceptions\InvalidPropertyException;
 use Konsulting\JustGivingApiSdk\ResourceClients\Models\Team;
 use Konsulting\JustGivingApiSdk\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class ModelTest extends TestCase
 {
@@ -32,19 +33,19 @@ class ModelTest extends TestCase
         $this->team = (new Team)->fill($this->teamData);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_a_list_of_attributes_and_values_on_the_model()
     {
         $this->assertEquals($this->teamData, $this->team->getAttributes());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_a_list_of_attribute_names_on_the_model()
     {
         $this->assertEquals(array_keys($this->teamData), $this->team->getAttributeNames());
     }
 
-    /** @test */
+    #[Test]
     public function it_throws_an_exception_if_a_property_is_filled_that_does_not_exist()
     {
         $this->expectException(InvalidPropertyException::class);

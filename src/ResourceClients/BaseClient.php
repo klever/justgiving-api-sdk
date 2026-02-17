@@ -87,7 +87,7 @@ abstract class BaseClient
      * @param Model $payload
      * @return Response|ResponseInterface
      */
-    protected function put($uri, Model $payload = null)
+    protected function put($uri, ?Model $payload = null)
     {
         return $this->request('put', $uri,
             ['json' => isset($payload) ? $payload->getAttributes() : '']);
